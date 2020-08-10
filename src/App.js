@@ -8,13 +8,15 @@ import TipoEmprendimiento from "./components/tipoEmprendimiento";
 import Navbar from "./components/navbar";
 import { useSelector } from "react-redux";
 import { selectMenuValor } from "./components/menuSlice";
+import ListaProductos from "./components/listaProductos";
+import FormProductoModificar from "./components/formProductoModificar";
 //<FormProducto />
 //<Categoria />
 //<Marca />
 // <Rubro />
 
-const MenuSwitch = (valor) => {
-  switch (valor) {
+const MenuSwitch = (menuOption) => {
+  switch (menuOption) {
     case 1:
       return <TipoEmprendimiento />;
     case 2:
@@ -25,6 +27,10 @@ const MenuSwitch = (valor) => {
       return <Rubro />;
     case 5:
       return <Marca />;
+    case 6:
+      return <ListaProductos />;
+    case 7:
+      return <FormProductoModificar />;
     default:
       return <FormProducto />;
   }
@@ -32,6 +38,7 @@ const MenuSwitch = (valor) => {
 
 function App() {
   const menuOption = useSelector(selectMenuValor);
+  console.log(menuOption);
   return (
     <div>
       <Navbar />

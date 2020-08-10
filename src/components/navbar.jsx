@@ -67,6 +67,24 @@ const Navbar = () => {
               form5
             </a>
           </li>
+          <li className="nav-item">
+            <a
+              className="nav-link"
+              href="#"
+              onClick={() => dispatch(cambiarVista(6))}
+            >
+              productos
+            </a>
+          </li>
+          <li className="nav-item">
+            <a
+              className="nav-link"
+              href="#"
+              onClick={() => dispatch(cambiarVista(7))}
+            >
+              prodsMod
+            </a>
+          </li>
         </ul>
       </div>
     </nav>
