@@ -9,7 +9,11 @@ import Navbar from "./components/navbar";
 import { useSelector } from "react-redux";
 import { selectMenuValor } from "./components/menuSlice";
 import ListaProductos from "./components/listaProductos";
+import ListaCategorias from "./components/listaCategorias";
 import FormProductoModificar from "./components/formProductoModificar";
+import FormCategoriaModificar from "./components/formCategoriaModificar";
+import ListaMarcas from "./components/listaMarcas";
+import FormMarcaModificar from "./components/formMarcaModificar";
 //<FormProducto />
 //<Categoria />
 //<Marca />
@@ -31,6 +35,15 @@ const MenuSwitch = (menuOption) => {
       return <ListaProductos />;
     case 7:
       return <FormProductoModificar />;
+    case 8:
+      return <ListaCategorias />;
+    case 9:
+      return <FormCategoriaModificar />;
+    case 10:
+      return <ListaMarcas />;
+    case 11:
+      return <FormMarcaModificar />;
+
     default:
       return <FormProducto />;
   }

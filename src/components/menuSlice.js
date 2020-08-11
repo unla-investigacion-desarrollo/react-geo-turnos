@@ -3,7 +3,7 @@ import React, { useState } from "react";
 export const menuSlice = createSlice({
   name: "menu",
   initialState: {
-    value: 7,
+    value: 10,
     setDeDatos: {},
   },
   reducers: {

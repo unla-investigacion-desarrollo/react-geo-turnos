@@ -85,6 +85,42 @@ const Navbar = () => {
               prodsMod
             </a>
           </li>
+          <li className="nav-item">
+            <a
+              className="nav-link"
+              href="#"
+              onClick={() => dispatch(cambiarVista(8))}
+            >
+              categorias
+            </a>
+          </li>
+          <li className="nav-item">
+            <a
+              className="nav-link"
+              href="#"
+              onClick={() => dispatch(cambiarVista(9))}
+            >
+              categoriasModificadas
+            </a>
+          </li>
+          <li className="nav-item">
+            <a
+              className="nav-link"
+              href="#"
+              onClick={() => dispatch(cambiarVista(10))}
+            >
+              marcas
+            </a>
+          </li>
+          <li className="nav-item">
+            <a
+              className="nav-link"
+              href="#"
+              onClick={() => dispatch(cambiarVista(11))}
+            >
+              marcasModificadas
+            </a>
+          </li>
         </ul>
       </div>
     </nav>
