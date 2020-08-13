@@ -1,6 +1,15 @@
 import React from "react";
+import TextField from "@material-ui/core/TextField";
+import FormControl from "@material-ui/core/FormControl";
 import { Formik } from "formik";
 import { useState } from "react";
+import {
+  InputLabel,
+  Select,
+  MenuItem,
+  FormHelperText,
+  Button,
+} from "@material-ui/core";
 
 const FormProducto = () => {
   const [state, setState] = useState({
@@ -38,13 +47,13 @@ const FormProducto = () => {
     if (!values.peso) {
       errors.peso = "Requerido";
     }
-    if (!values.categoria) {
+    if (values.categoria === "-1") {
       errors.categoria = "Requerido";
     }
-    if (!values.marca) {
+    if (values.marca === "-1") {
       errors.marca = "Requerido";
     }
-    if (!values.unidadMedida) {
+    if (values.unidadMedida === "-1") {
       errors.unidadMedida = "Requerido";
     }
     return errors;
@@ -65,11 +74,11 @@ const FormProducto = () => {
           nombre: "",
           descripcion: "",
           codBarra: "",
-          precioReferencia: 0,
+          precioReferencia: "",
           peso: "",
-          categoria: "",
-          marca: "",
-          unidadMedida: "",
+          categoria: "-1",
+          marca: "-1",
+          unidadMedida: "-1",
         }}
         validate={validar}
         onSubmit={enviar}
@@ -85,195 +94,181 @@ const FormProducto = () => {
         }) => (
           <form onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="nombre">Nombre:</label>
-              <input
+              <TextField
+                error={errors.nombre && touched.nombre ? true : false}
                 id="nombre"
-                className={
-                  "form-control " +
-                  (errors.nombre && touched.nombre ? "is-invalid" : "")
-                }
-                type="text"
+                label="Nombre"
                 name="nombre"
-                placeholder="Ingrese nombre"
-                onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.nombre}
+                onChange={handleChange}
+                helperText={errors.nombre && touched.nombre && errors.nombre}
               />
-              <div className="invalid-feedback">
-                {errors.nombre && touched.nombre && errors.nombre}
-              </div>
             </div>
             <div>
-              <label htmlFor="descripcion">Descripcion:</label>
-              <input
+              <TextField
+                error={errors.descripcion && touched.descripcion ? true : false}
                 id="descripcion"
-                className={
-                  "form-control " +
-                  (errors.descripcion && touched.descripcion
-                    ? "is-invalid"
-                    : "")
-                }
-                type="text"
+                label="Descripcion"
                 name="descripcion"
-                onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.descripcion}
-              />
-              <div className="invalid-feedback">
-                {errors.descripcion &&
+                onChange={handleChange}
+                helperText={
+                  errors.descripcion &&
                   touched.descripcion &&
-                  errors.descripcion}
-              </div>
+                  errors.descripcion
+                }
+              />
             </div>
             <div>
-              <label htmlFor="codBarra">Código de barra:</label>
-              <input
+              <TextField
+                error={errors.codBarra && touched.codBarra ? true : false}
                 id="codBarra"
-                className={
-                  "form-control " +
-                  (errors.codBarra && touched.codBarra ? "is-invalid" : "")
-                }
-                type="number"
+                label="Codigo de Barra"
                 name="codBarra"
-                onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.codBarra}
+                onChange={handleChange}
+                helperText={
+                  errors.codBarra && touched.codBarra && errors.codBarra
+                }
               />
-              <div className="invalid-feedback">
-                {errors.codBarra && touched.codBarra && errors.codBarra}
-              </div>
             </div>
             <div>
-              <label htmlFor="precioReferencia">Precio de referencia:</label>
-              <input
-                id="precioReferencia"
-                className={
-                  "form-control " +
-                  (errors.precioReferencia && touched.precioReferencia
-                    ? "is-invalid"
-                    : "")
+              <TextField
+                error={
+                  errors.precioReferencia && touched.precioReferencia
+                    ? true
+                    : false
                 }
+                id="precioReferencia"
+                label="Precio de Referencia"
                 type="number"
                 name="precioReferencia"
-                onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.precioReferencia}
-              />
-              <div className="invalid-feedback">
-                {errors.precioReferencia &&
+                onChange={handleChange}
+                helperText={
+                  errors.precioReferencia &&
                   touched.precioReferencia &&
-                  errors.precioReferencia}
-              </div>
+                  errors.precioReferencia
+                }
+              />
             </div>
             <div>
-              <label htmlFor="peso">Peso:</label>
-              <input
+              <TextField
+                error={errors.peso && touched.peso ? true : false}
                 id="peso"
-                className={
-                  "form-control " +
-                  (errors.peso && touched.peso ? "is-invalid" : "")
-                }
-                type="text"
+                label="Peso"
                 name="peso"
-                onChange={handleChange}
+                type="number"
                 onBlur={handleBlur}
                 value={values.peso}
+                onChange={handleChange}
+                helperText={errors.peso && touched.peso && errors.peso}
               />
-              <div className="invalid-feedback">
-                {errors.peso && touched.peso && errors.peso}
-              </div>
             </div>
-
             <div>
-              <label htmlFor="categoria">Categoria:</label>
-              <select
-                className={
-                  "form-control " +
-                  (errors.categoria && touched.categoria ? "is-invalid" : "")
-                }
-                id="categoria"
-                name="categoria"
-                value={values.categoria}
-                onChange={handleChange}
-                onBlur={handleBlur}
+              <FormControl
+                error={errors.categoria && touched.categoria ? true : false}
               >
-                <option value="" defaultValue disabled>
-                  Elija una categoria
-                </option>
-                {state.categorias.map((categoria) => {
-                  return (
-                    <option value={categoria.id} key={categoria.id}>
-                      {categoria.nombre}
-                    </option>
-                  );
-                })}
-              </select>
-              <div className="invalid-feedback">
-                {errors.categoria && touched.categoria && errors.categoria}
-              </div>
+                <InputLabel id="labelCategoria">Categoria:</InputLabel>
+                <Select
+                  id="categoria"
+                  name="categoria"
+                  labelId="labelCategoria"
+                  value={values.categoria}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                >
+                  <MenuItem value="-1" disabled>
+                    <em>Elija una categoria</em>
+                  </MenuItem>
+                  {state.categorias.map((categoria) => {
+                    return (
+                      <MenuItem value={categoria.id} key={categoria.id}>
+                        {categoria.nombre}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+                <FormHelperText>
+                  {errors.categoria && touched.categoria && errors.categoria}
+                </FormHelperText>
+              </FormControl>
             </div>
             <div>
-              <label htmlFor="marca">Marca:</label>
-              <select
-                className={
-                  "form-control " +
-                  (errors.marca && touched.marca ? "is-invalid" : "")
+              <FormControl error={errors.marca && touched.marca ? true : false}>
+                <InputLabel id="labelMarca">Marca:</InputLabel>
+                <Select
+                  id="marca"
+                  name="marca"
+                  labelId="labelMarca"
+                  value={values.marca}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                >
+                  <MenuItem value="-1" disabled>
+                    <em>Elija una marca</em>
+                  </MenuItem>
+                  {state.marcas.map((marca) => {
+                    return (
+                      <MenuItem value={marca.id} key={marca.id}>
+                        {marca.nombre}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+                <FormHelperText>
+                  {errors.marca && touched.marca && errors.marca}
+                </FormHelperText>
+              </FormControl>
+            </div>
+            <div>
+              <FormControl
+                error={
+                  errors.unidadMedida && touched.unidadMedida ? true : false
                 }
-                id="marca"
-                name="marca"
-                value={values.marca}
-                onChange={handleChange}
-                onBlur={handleBlur}
               >
-                {state.marcas.map((marca) => {
-                  return (
-                    <option value={marca.id} key={marca.id}>
-                      {marca.nombre}
-                    </option>
-                  );
-                })}
-              </select>
-              <div className="invalid-feedback">
-                {errors.marca && touched.marca && errors.marca}
-              </div>
+                <InputLabel id="labelUnidadMedida">
+                  Unidad de Medida:
+                </InputLabel>
+                <Select
+                  id="unidadMedida"
+                  name="unidadMedida"
+                  labelId="labelUnidadMedida"
+                  value={values.unidadMedida}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                >
+                  <MenuItem value="-1" disabled>
+                    <em>Elija una unidad de medida</em>
+                  </MenuItem>
+                  {state.unidadesMedida.map((unidadMedida) => {
+                    return (
+                      <MenuItem value={unidadMedida.id} key={unidadMedida.id}>
+                        {unidadMedida.nombre}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+                <FormHelperText>
+                  {errors.unidadMedida &&
+                    touched.unidadMedida &&
+                    errors.unidadMedida}
+                </FormHelperText>
+              </FormControl>
             </div>
             <div>
-              <label htmlFor="unidadMedida">Unidad de Medida:</label>
-              <select
-                className={
-                  "form-control " +
-                  (errors.unidadMedida && touched.unidadMedida
-                    ? "is-invalid"
-                    : "")
-                }
-                id="unidadMedida"
-                name="unidadMedida"
-                value={values.unidadMedida}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              >
-                {state.unidadesMedida.map((unidadMedida) => {
-                  return (
-                    <option value={unidadMedida.id} key={unidadMedida.id}>
-                      {unidadMedida.nombre}
-                    </option>
-                  );
-                })}
-              </select>
-              <div className="invalid-feedback">
-                {errors.unidadMedida &&
-                  touched.unidadMedida &&
-                  errors.unidadMedida}
-              </div>
-            </div>
-            <div>
-              <button
-                className="btn btn-primary m-2"
+              <Button
+                variant="contained"
+                color="primary"
                 type="submit"
                 disabled={isSubmitting}
               >
                 Submit
-              </button>
+              </Button>
             </div>
             {JSON.stringify(values)}
           </form>

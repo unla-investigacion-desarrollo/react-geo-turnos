@@ -14,6 +14,7 @@ import FormProductoModificar from "./components/formProductoModificar";
 import FormCategoriaModificar from "./components/formCategoriaModificar";
 import ListaMarcas from "./components/listaMarcas";
 import FormMarcaModificar from "./components/formMarcaModificar";
+import ProductoMaterial from "./components/formProductoMaterial";
 //<FormProducto />
 //<Categoria />
 //<Marca />
@@ -45,7 +46,7 @@ const MenuSwitch = (menuOption) => {
       return <FormMarcaModificar />;
 
     default:
-      return <FormProducto />;
+      return <ProductoMaterial />;
   }
 };
 
