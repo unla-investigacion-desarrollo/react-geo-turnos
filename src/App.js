@@ -1,62 +1,43 @@
 import React from "react";
 import "./App.css";
-import FormProducto from "./components/formProductoFormik";
-import Categoria from "./components/categoria";
-import Marca from "./components/marca";
-import Rubro from "./components/rubro";
-import TipoEmprendimiento from "./components/tipoEmprendimiento";
-import Navbar from "./components/navbar";
+import Navbar from "./components/navbar/navbar";
 import { useSelector } from "react-redux";
-import { selectMenuValor } from "./components/menuSlice";
-import ListaProductos from "./components/listaProductos";
-import ListaCategorias from "./components/listaCategorias";
-import FormProductoModificar from "./components/formProductoModificar";
-import FormCategoriaModificar from "./components/formCategoriaModificar";
-import ListaMarcas from "./components/listaMarcas";
-import FormMarcaModificar from "./components/formMarcaModificar";
-import ProductoMaterial from "./components/formProductoMaterial";
-//<FormProducto />
-//<Categoria />
-//<Marca />
-// <Rubro />
+import { selectMenuValor } from "./components/navbar/menuSlice";
+import MenuDrawer from "./components/navbar/menuDrawer";
+import FormProducto from "./components/producto/formProductoFormik";
+import { makeStyles } from "@material-ui/core/styles";
 
 const MenuSwitch = (menuOption) => {
   switch (menuOption) {
-    case 1:
-      return <TipoEmprendimiento />;
-    case 2:
-      return <FormProducto />;
-    case 3:
-      return <Categoria />;
-    case 4:
-      return <Rubro />;
-    case 5:
-      return <Marca />;
-    case 6:
-      return <ListaProductos />;
-    case 7:
-      return <FormProductoModificar />;
-    case 8:
-      return <ListaCategorias />;
-    case 9:
-      return <FormCategoriaModificar />;
-    case 10:
-      return <ListaMarcas />;
-    case 11:
-      return <FormMarcaModificar />;
-
     default:
-      return <ProductoMaterial />;
+      return <FormProducto />;
   }
 };
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+  },
+  toolbar: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing(3),
+  },
+}));
+
 function App() {
   const menuOption = useSelector(selectMenuValor);
+  const classes = useStyles();
   console.log(menuOption);
   return (
-    <div>
+    <div className={classes.root}>
       <Navbar />
-      {MenuSwitch(menuOption)}
+      <MenuDrawer />
+      <main className={classes.content}>
+        <div className={classes.toolbar}></div>
+        {MenuSwitch(menuOption)}
+      </main>
     </div>
   );
 }
