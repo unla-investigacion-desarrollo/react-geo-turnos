@@ -1,9 +1,11 @@
-import React from "react";
-
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import ListaMenu from "./listaMenu";
 import { Typography, Divider } from "@material-ui/core";
+import { useSelector, useDispatch } from "react-redux";
+import { mostrarMenu, switchMostrarMenu } from "../navbar/menuSlice";
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -20,15 +22,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MenuDrawer = () => {
+const MenuDrawer = (props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  let mostrarMenuSelector = useSelector(mostrarMenu);
   return (
     <Drawer
       className={classes.drawer}
-      variant="permanent"
+      variant={props.variante}
       classes={{
         paper: classes.drawerPaper,
       }}
+      open={mostrarMenuSelector}
+      onClose={() => dispatch(switchMostrarMenu())}
       anchor="left"
     >
       <div className={classes.toolbar}>
