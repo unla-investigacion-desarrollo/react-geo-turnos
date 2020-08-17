@@ -5,6 +5,7 @@ import MenuDrawer from "./components/navbar/menuDrawer";
 import { makeStyles } from "@material-ui/core/styles";
 import Contenido from "./components/contenido/contenido";
 import Hidden from "@material-ui/core/Hidden";
+import { BrowserRouter as Router } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,18 +16,20 @@ const useStyles = makeStyles((theme) => ({
 function App() {
   const classes = useStyles();
   return (
-    <div className={classes.root}>
-      <Navbar />
-      <Hidden xsDown>
-        {/* Para PC */}
-        <MenuDrawer variante="permanent" />
-      </Hidden>
-      <Hidden smUp>
-        {/* Para mobile */}
-        <MenuDrawer variante="temporary" />
-      </Hidden>
-      <Contenido />
-    </div>
+    <Router>
+      <div className={classes.root}>
+        <Navbar />
+        <Hidden xsDown>
+          {/* Para PC */}
+          <MenuDrawer variante="permanent" />
+        </Hidden>
+        <Hidden smUp>
+          {/* Para mobile */}
+          <MenuDrawer variante="temporary" />
+        </Hidden>
+        <Contenido />
+      </div>
+    </Router>
   );
 }
 

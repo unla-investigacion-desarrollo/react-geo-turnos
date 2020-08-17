@@ -1,15 +1,10 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import FormProducto from "../producto/formProductoFormik";
-import { selectMenuValor } from "../navbar/menuSlice";
 import { makeStyles } from "@material-ui/core/styles";
-
-const MenuSwitch = (menuOption) => {
-  switch (menuOption) {
-    default:
-      return <FormProducto />;
-  }
-};
+import { Switch, Route } from "react-router-dom";
+import ListaProductos from "../producto/listaProductos";
+import ListaMarcas from "../marca/listaMarcas";
+import FormProductoModificar from "../producto/formProductoModificar";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
@@ -22,11 +17,23 @@ const useStyles = makeStyles((theme) => ({
 
 const Contenido = () => {
   const classes = useStyles();
-  const menuOption = useSelector(selectMenuValor);
   return (
     <main className={classes.content}>
       <div className={classes.toolbar}></div>
-      {MenuSwitch(menuOption)}
+      <Switch>
+        <Route path="/" exact>
+          Raiz
+        </Route>
+        <Route path="/modificarProducto/:id">
+          <FormProductoModificar />
+        </Route>
+        <Route path="/listaProducto">
+          <ListaProductos />
+        </Route>
+        <Route path="/listaMarca">
+          <ListaMarcas />
+        </Route>
+      </Switch>
     </main>
   );
 };

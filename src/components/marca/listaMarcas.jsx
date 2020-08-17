@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux"; //metodo que sirva para usar los reducers
-import { cambiarVistaConDatos } from "./menuSlice"; //reducer para cambiar el estado
+import { cambiarVistaConDatos } from "../navbar/menuSlice"; //reducer para cambiar el estado
 
 const ListaMarcas = () => {
   const dispatch = useDispatch();

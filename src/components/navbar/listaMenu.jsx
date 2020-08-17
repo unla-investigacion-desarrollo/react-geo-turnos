@@ -8,6 +8,7 @@ import Divider from "@material-ui/core/Divider";
 import InboxIcon from "@material-ui/icons/Inbox";
 import DraftsIcon from "@material-ui/icons/Drafts";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   lista: {
@@ -21,17 +22,27 @@ const ListaMenu = () => {
   return (
     <div className={classes.lista}>
       <List component="nav">
-        <ListItem button>
+        <ListItem
+          button
+          onClick={() => {
+            window.location.assign("/listaProducto");
+          }}
+        >
           <ListItemIcon>
             <AddCircleIcon />
           </ListItemIcon>
-          <ListItemText primary="AltaProd" />
+          <ListItemText primary="Productos" />
         </ListItem>
-        <ListItem button>
+        <ListItem
+          button
+          onClick={() => {
+            window.location.assign("/listaMarca");
+          }}
+        >
           <ListItemIcon>
-            <DraftsIcon />
+            <AddCircleIcon />
           </ListItemIcon>
-          <ListItemText primary="Drafts" />
+          <ListItemText primary="Marcas" />
         </ListItem>
       </List>
       <Divider />

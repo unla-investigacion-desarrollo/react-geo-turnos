@@ -1,10 +1,12 @@
 import React from "react";
 import { Formik } from "formik";
 import { useState } from "react";
-import { selectMenuSetDeDatos } from "./menuSlice";
+import { selectMenuSetDeDatos } from "../navbar/menuSlice";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const FormProductoModificar = () => {
+  const { id } = useParams();
   const prod = useSelector(selectMenuSetDeDatos);
   const [state, setState] = useState({
     categorias: [
@@ -61,6 +63,7 @@ const FormProductoModificar = () => {
   };
 
   let valoresIniciales = {
+    id: id,
     nombre: prod.nombre,
     descripcion: "",
     codBarra: prod.codigo,

@@ -1,8 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux"; //metodo que sirva para usar los reducers
-import { cambiarVistaConDatos } from "./menuSlice"; //reducer para cambiar el estado
+import { cambiarVistaConDatos } from "../navbar/menuSlice"; //reducer para cambiar el estado
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+  },
+});
 
 const ListaProductos = () => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const [state, setState] = useState({
     productos: [
@@ -41,41 +57,42 @@ const ListaProductos = () => {
       codigo: 351513,
       precio: 136263,
     };
-    dispatch(cambiarVistaConDatos(7, producto));
+    window.location.assign("/modificarProducto/" + id);
   };
 
   return (
-    <div>
-      <table className="table table-hover">
-        <thead className="thead-dark">
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Codigo</th>
-            <th scope="col">Precio</th>
-            <th scope="col">Accion</th>
-          </tr>
-        </thead>
-        <tbody>
+    <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>#</TableCell>
+            <TableCell>Nombre</TableCell>
+            <TableCell>Codigo</TableCell>
+            <TableCell>Precio</TableCell>
+            <TableCell>Accion</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
           {state.productos.map((prod) => (
-            <tr key={prod.id}>
-              <th>{prod.id}</th>
-              <td>{prod.nombre}</td>
-              <td>{prod.codigo}</td>
-              <td>{prod.precio}</td>
-              <td>
-                <button
-                  className="btn btn-success"
+            <TableRow key={prod.id}>
+              <TableCell>{prod.id}</TableCell>
+              <TableCell>{prod.nombre}</TableCell>
+              <TableCell>{prod.codigo}</TableCell>
+              <TableCell>{prod.precio}</TableCell>
+              <TableCell>
+                <Button
+                  color="primary"
+                  variant="contained"
                   onClick={() => buscarProducto(prod.id)}
                 >
                   Ver
-                </button>
-              </td>
-            </tr>
+                </Button>
+              </TableCell>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
-    </div>
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 
