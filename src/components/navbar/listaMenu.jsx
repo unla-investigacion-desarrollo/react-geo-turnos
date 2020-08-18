@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -8,7 +8,7 @@ import Divider from "@material-ui/core/Divider";
 import InboxIcon from "@material-ui/icons/Inbox";
 import DraftsIcon from "@material-ui/icons/Drafts";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   lista: {
@@ -19,31 +19,34 @@ const useStyles = makeStyles((theme) => ({
 
 const ListaMenu = () => {
   const classes = useStyles();
+  const [activeItem, setActiveItem] = useState("");
+
+  const Item = (props) => {
+    return (
+      <ListItem
+        button
+        selected={activeItem === props.text}
+        component={NavLink}
+        to={props.to}
+        isActive={(match) => {
+          if (!match) {
+            return false;
+          }
+          setActiveItem(props.text);
+        }}
+      >
+        <ListItemIcon>{props.icon}</ListItemIcon>
+        <ListItemText primary={props.text} />
+      </ListItem>
+    );
+  };
+
   return (
     <div className={classes.lista}>
       <List component="nav">
-        <ListItem
-          button
-          onClick={() => {
-            window.location.assign("/listaProducto");
-          }}
-        >
-          <ListItemIcon>
-            <AddCircleIcon />
-          </ListItemIcon>
-          <ListItemText primary="Productos" />
-        </ListItem>
-        <ListItem
-          button
-          onClick={() => {
-            window.location.assign("/listaMarca");
-          }}
-        >
-          <ListItemIcon>
-            <AddCircleIcon />
-          </ListItemIcon>
-          <ListItemText primary="Marcas" />
-        </ListItem>
+        <Item to="/productos" icon={<AddCircleIcon />} text="Productos" />
+        <Item to="/marcas" icon={<AddCircleIcon />} text="Marcas" />
+        <Item to="/categorias" icon={<AddCircleIcon />} text="Categorias" />
       </List>
       <Divider />
       <List component="nav">
