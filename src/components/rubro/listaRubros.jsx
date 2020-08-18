@@ -22,68 +22,68 @@ const useStyles = makeStyles({
   },
 });
 
-const ListaCategorias = () => {
+const ListaRubros = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [state, setState] = useState({
-    categorias: [
+    rubros: [
       {
         id: "1",
-        categoria: "producto alimenticio",
+        rubro: "textil",
       },
       {
         id: "2",
-        categoria: "producto de higiene personal",
+        rubro: "agricola",
       },
       {
         id: "3",
-        categoria: "producto de limpieza",
+        rubro: "ganadero",
       },
     ],
   });
 
-  const buscarCategoria = (nombreCategoria) => {
-    let categoriaProd = {
+  const buscarRubro = (nombreRubro) => {
+    let categoriaRubro = {
       id: "1",
-      categoria: "producto alimenticio",
+      rubro: "textil",
     };
-    dispatch(cambiarVistaConDatos(9, categoriaProd));
+    dispatch(cambiarVistaConDatos(11, categoriaRubro));
   };
 
   return (
     <>
       <Typography variant="h3" color="initial">
-        Lista Categorias:
+        Lista Rubros:
       </Typography>
       <Button
         color="primary"
         variant="contained"
         component={Link}
-        to="/categorias/nuevo"
+        to="/rubros/nuevo"
       >
-        Agregar Categoria
+        Agregar Rubro
       </Button>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>#</TableCell>
-              <TableCell>Nombre Categoria</TableCell>
+              <TableCell>Nombre Rubro</TableCell>
               <TableCell>Accion</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {state.categorias.map((categ) => (
-              <TableRow key={categ.id}>
-                <TableCell>{categ.id}</TableCell>
-                <TableCell>{categ.categoria}</TableCell>
+            {state.rubros.map((rub) => (
+              <TableRow key={rub.id}>
+                <TableCell>{rub.id}</TableCell>
+                <TableCell>{rub.rubro}</TableCell>
                 <TableCell>
                   <Button
                     color="primary"
                     variant="contained"
-                    onClick={() => buscarCategoria(categ.categoria)}
+                    onClick={() => buscarRubro(rub.rubro)}
                     component={Link}
-                    to={"/categorias/" + categ.id}
+                    to={"/rubros/" + rub.id}
                   >
                     Ver
                   </Button>
@@ -97,4 +97,4 @@ const ListaCategorias = () => {
   );
 };
 
-export default ListaCategorias;
+export default ListaRubros;

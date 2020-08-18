@@ -5,8 +5,6 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
-import InboxIcon from "@material-ui/icons/Inbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import { NavLink } from "react-router-dom";
 
@@ -47,6 +45,12 @@ const ListaMenu = () => {
         <Item to="/productos" icon={<AddCircleIcon />} text="Productos" />
         <Item to="/marcas" icon={<AddCircleIcon />} text="Marcas" />
         <Item to="/categorias" icon={<AddCircleIcon />} text="Categorias" />
+        <Item to="/rubros" icon={<AddCircleIcon />} text="Rubros" />
+        <Item
+          to="/tipoEmprendimientos"
+          icon={<AddCircleIcon />}
+          text="TipoEmprendimientos"
+        />
       </List>
       <Divider />
       <List component="nav">

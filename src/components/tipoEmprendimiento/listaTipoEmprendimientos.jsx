@@ -22,68 +22,70 @@ const useStyles = makeStyles({
   },
 });
 
-const ListaCategorias = () => {
+const ListaTipoEmprendimientos = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [state, setState] = useState({
-    categorias: [
+    tipoEmprendimientos: [
       {
         id: "1",
-        categoria: "producto alimenticio",
+        tipoEmprendimiento: "anual",
       },
       {
         id: "2",
-        categoria: "producto de higiene personal",
+        tipoEmprendimiento: "mensual",
       },
       {
         id: "3",
-        categoria: "producto de limpieza",
+        tipoEmprendimiento: "semestral",
       },
     ],
   });
 
-  const buscarCategoria = (nombreCategoria) => {
-    let categoriaProd = {
+  const buscarTipoEmprendimiento = (nombreTipoEmprendimiento) => {
+    let categoriaTipoEmprendimiento = {
       id: "1",
-      categoria: "producto alimenticio",
+      tipoEmprendimiento: "anual",
     };
-    dispatch(cambiarVistaConDatos(9, categoriaProd));
+    dispatch(cambiarVistaConDatos(11, categoriaTipoEmprendimiento));
   };
 
   return (
     <>
       <Typography variant="h3" color="initial">
-        Lista Categorias:
+        Lista Tipo de emprendimientos:
       </Typography>
       <Button
         color="primary"
         variant="contained"
         component={Link}
-        to="/categorias/nuevo"
+        to="/tipoEmprendimientos/nuevo"
       >
-        Agregar Categoria
+        Agregar Emprendimiento
       </Button>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>#</TableCell>
-              <TableCell>Nombre Categoria</TableCell>
+              <TableCell>Nombre Tipo de Emprendimiento</TableCell>
               <TableCell>Accion</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {state.categorias.map((categ) => (
-              <TableRow key={categ.id}>
-                <TableCell>{categ.id}</TableCell>
-                <TableCell>{categ.categoria}</TableCell>
+            {state.tipoEmprendimientos.map((tipoEmp) => (
+              <TableRow key={tipoEmp.id}>
+                <TableCell>{tipoEmp.id}</TableCell>
+                <TableCell>{tipoEmp.tipoEmprendimiento}</TableCell>
                 <TableCell>
                   <Button
                     color="primary"
                     variant="contained"
-                    onClick={() => buscarCategoria(categ.categoria)}
+                    onClick={() =>
+                      buscarTipoEmprendimiento(tipoEmp.tipoEmprendimiento)
+                    }
                     component={Link}
-                    to={"/categorias/" + categ.id}
+                    to={"/tipoEmprendimientos/" + tipoEmp.id}
                   >
                     Ver
                   </Button>
@@ -97,4 +99,4 @@ const ListaCategorias = () => {
   );
 };
 
-export default ListaCategorias;
+export default ListaTipoEmprendimientos;

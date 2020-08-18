@@ -4,8 +4,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Switch, Route } from "react-router-dom";
 import ListaProductos from "../producto/listaProductos";
 import ListaMarcas from "../marca/listaMarcas";
-import FormProductoModificar from "../producto/formProductoModificar";
 import ListaCategorias from "../categoria/listaCategorias";
+import Categoria from "../categoria/categoria";
+import Marca from "../marca/marca";
+import Rubro from "../rubro/rubro";
+import ListaRubros from "../rubro/listaRubros";
+import TipoEmprendimiento from "../tipoEmprendimiento/tipoEmprendimiento";
+import ListaTipoEmprendimientos from "../tipoEmprendimiento/listaTipoEmprendimientos";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
@@ -34,11 +39,43 @@ const Contenido = () => {
         <Route path="/productos">
           <ListaProductos />
         </Route>
+        <Route path="/marcas/nuevo">
+          <Marca />
+        </Route>
+        <Route path="/marcas/:id">
+          <Marca variante="modificar" />
+        </Route>
         <Route path="/marcas">
           <ListaMarcas />
         </Route>
+        <Route path="/categorias/nuevo">
+          <Categoria />
+        </Route>
+        <Route path="/categorias/:id">
+          <Categoria variante="modificar" />
+        </Route>
         <Route path="/categorias">
           <ListaCategorias />
+        </Route>
+
+        <Route path="/rubros/nuevo">
+          <Rubro />
+        </Route>
+        <Route path="/rubros/:id">
+          <Rubro variante="modificar" />
+        </Route>
+        <Route path="/rubros">
+          <ListaRubros />
+        </Route>
+
+        <Route path="/tipoEmprendimientos/nuevo">
+          <TipoEmprendimiento />
+        </Route>
+        <Route path="/tipoEmprendimientos/:id">
+          <TipoEmprendimiento variante="modificar" />
+        </Route>
+        <Route path="/tipoEmprendimientos">
+          <ListaTipoEmprendimientos />
         </Route>
       </Switch>
     </main>

@@ -1,7 +1,84 @@
-import React, { Component } from "react";
-import { Formik } from "formik";
+import React from "react";
+import TextField from "@material-ui/core/TextField";
+import FormControl from "@material-ui/core/FormControl";
+import { Formik, Field } from "formik";
+import { useState } from "react";
+import {
+  Button,
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContentText,
+  DialogContent,
+  DialogActions,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { Link, useParams } from "react-router-dom";
 
-const Rubro = () => {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& .MuiTextField-root": {
+      margin: theme.spacing(1),
+      minWidth: 300,
+    },
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 300,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+  botonForm: {
+    marginRight: theme.spacing(3),
+  },
+  botonOculto: {
+    display: "none",
+  },
+}));
+
+const traerRubro = (id) => {
+  //traer de la base de datos los datos
+  return {
+    idRubro: id,
+    rubro: "",
+  };
+};
+
+const Rubro = (props) => {
+  const classes = useStyles();
+  const { id } = useParams();
+
+  let titulo = "";
+  let valoresIniciales = {};
+  let claseBotonCrear;
+  let claseBotonModificar;
+
+  if (props.variante === "modificar") {
+    titulo = "Modificar Rubro:";
+    valoresIniciales = traerRubro(id);
+    claseBotonCrear = classes.botonOculto;
+    claseBotonModificar = classes.botonForm;
+  } else {
+    titulo = "Nuevo Rubro:";
+    claseBotonCrear = classes.botonForm;
+    claseBotonModificar = classes.botonOculto;
+    valoresIniciales = {
+      rubro: "",
+    };
+  }
+
+  const [stateOpenDialogCrear, setStateOpenDialogCrear] = useState(false);
+  const [stateOpenDialogMod, setStateOpenDialogMod] = useState(false);
+
+  const openDialogCrear = () => {
+    setStateOpenDialogCrear(true);
+  };
+
+  const closeDialogCrear = () => {
+    setStateOpenDialogCrear(false);
+  };
+
   const validar = (values) => {
     const errors = {};
     if (!values.rubro) {
@@ -19,13 +96,14 @@ const Rubro = () => {
 
   return (
     <div>
-      <h1>Rubro</h1>
+      <Typography variant="h4" color="initial">
+        {titulo}
+      </Typography>
       <Formik
-        initialValues={{
-          rubro: "",
-        }}
+        initialValues={valoresIniciales}
         validate={validar}
         onSubmit={enviar}
+        initialErrors={{ rubro: "error" }}
       >
         {({
           values,
@@ -35,38 +113,132 @@ const Rubro = () => {
           handleBlur,
           handleSubmit,
           isSubmitting,
+          validateForm,
+          setTouched,
+          isValid,
         }) => (
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className={classes.root}>
             <div>
-              <label htmlFor="rubro">Ingrese nueva rubro:</label>
-              <input
+              <TextField
+                error={errors.rubro && touched.rubro ? true : false}
                 id="rubro"
-                className={
-                  "form-control " +
-                  (errors.rubro && touched.rubro ? "is-invalid" : "")
-                }
-                type="text"
+                label="Rubro"
                 name="rubro"
-                placeholder="Ingrese rubro"
-                onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.rubro}
+                onChange={handleChange}
+                helperText={errors.rubro && touched.rubro && errors.rubro}
               />
-              <div className="invalid-feedback">
-                {errors.rubro && touched.rubro && errors.rubro}
-              </div>
             </div>
 
             <div>
-              <button
-                className="btn btn-primary m-2"
-                type="submit"
-                disabled={isSubmitting}
+              <Button
+                className={classes.botonForm}
+                variant="contained"
+                color="primary"
+                component={Link}
+                to="/rubros"
               >
-                Submit
-              </button>
+                Atras
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className={claseBotonCrear}
+                onClick={() => {
+                  validateForm();
+                  let nuevoTouched = {};
+                  Object.entries(values).map((value) => {
+                    nuevoTouched[value[0]] = true;
+                  });
+                  setTouched(nuevoTouched, false);
+                  if (isValid) openDialogCrear();
+                }}
+              >
+                Crear
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className={claseBotonModificar}
+                onClick={() => {
+                  validateForm();
+                  let nuevoTouched = {};
+                  Object.entries(values).map((value) => {
+                    nuevoTouched[value[0]] = true;
+                  });
+                  setTouched(nuevoTouched, false);
+                  if (isValid) setStateOpenDialogMod(true);
+                }}
+              >
+                Modificar
+              </Button>
+
+              <Dialog
+                open={stateOpenDialogCrear}
+                onClose={closeDialogCrear}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"Estas seguro de agregar el nuevo rubro?"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    texto de ayuda
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={closeDialogCrear} color="primary">
+                    Cancelar
+                  </Button>
+                  <Button
+                    color="primary"
+                    autoFocus
+                    variant="contained"
+                    disabled={isSubmitting}
+                    onClick={handleSubmit}
+                  >
+                    Aceptar
+                  </Button>
+                </DialogActions>
+              </Dialog>
+              <Dialog
+                open={stateOpenDialogMod}
+                onClose={() => setStateOpenDialogMod(false)}
+                aria-labelledby="alert-dialog-title-mod"
+                aria-describedby="alert-dialog-description-mod"
+              >
+                <DialogTitle id="alert-dialog-title-mod">
+                  {"Estas seguro de modificar el rubro?"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description-mod">
+                    texto de ayuda al modificar
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button
+                    onClick={() => setStateOpenDialogMod(false)}
+                    color="primary"
+                  >
+                    Cancelar
+                  </Button>
+                  <Button
+                    color="primary"
+                    autoFocus
+                    variant="contained"
+                    disabled={isSubmitting}
+                    onClick={handleSubmit}
+                  >
+                    Aceptar
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </div>
             {JSON.stringify(values)}
+            <br></br>
+            {JSON.stringify(errors)}
           </form>
         )}
       </Formik>
