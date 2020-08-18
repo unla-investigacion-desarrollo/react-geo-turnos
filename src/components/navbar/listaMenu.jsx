@@ -6,7 +6,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   lista: {
@@ -17,21 +17,15 @@ const useStyles = makeStyles((theme) => ({
 
 const ListaMenu = () => {
   const classes = useStyles();
-  const [activeItem, setActiveItem] = useState("");
+  const location = useLocation();
 
   const Item = (props) => {
     return (
       <ListItem
         button
-        selected={activeItem === props.text}
+        selected={location.pathname.includes(props.to)}
         component={NavLink}
         to={props.to}
-        isActive={(match) => {
-          if (!match) {
-            return false;
-          }
-          setActiveItem(props.text);
-        }}
       >
         <ListItemIcon>{props.icon}</ListItemIcon>
         <ListItemText primary={props.text} />
