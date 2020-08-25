@@ -45,6 +45,7 @@ const ListaMenu = () => {
           icon={<AddCircleIcon />}
           text="TipoEmprendimientos"
         />
+        <Item to="/turnos" icon={<AddCircleIcon />} text="Turnos" />
       </List>
       <Divider />
       <List component="nav">

@@ -11,6 +11,9 @@ import Rubro from "../rubro/rubro";
 import ListaRubros from "../rubro/listaRubros";
 import TipoEmprendimiento from "../tipoEmprendimiento/tipoEmprendimiento";
 import ListaTipoEmprendimientos from "../tipoEmprendimiento/listaTipoEmprendimientos";
+import ListaSolicitudes from "../solicitud/listaSolicitudes";
+import ListaAceptados from "../solicitud/listaAceptados";
+import VistaTurnos from "../solicitud/vistaTurnos";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
@@ -76,6 +79,10 @@ const Contenido = () => {
         </Route>
         <Route path="/tipoEmprendimientos">
           <ListaTipoEmprendimientos />
+        </Route>
+
+        <Route path="/turnos">
+          <VistaTurnos />
         </Route>
       </Switch>
     </main>
