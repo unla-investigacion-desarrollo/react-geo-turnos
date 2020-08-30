@@ -15,6 +15,8 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
+import login from "../login/datos";
+import { apiCalls } from "../../api/apiCalls";
 
 const useStyles = makeStyles({
   table: {
@@ -49,6 +51,26 @@ const ListaRubros = () => {
     };
     dispatch(cambiarVistaConDatos(11, categoriaRubro));
   };
+
+  useEffect(() => {
+    const json = login;
+    console.log("entro al effect");
+
+    //me logeo
+    apiCalls.postLogin(login).then((response) => {
+      const token = response.data.token;
+      console.log(token);
+      fetch("http://localhost:8080/reactivar/api/rubro", {
+        method: "GET",
+        "Content-Type": "application/json",
+        headers: {
+          token_auth: token,
+        },
+      })
+        .then((response) => response.json())
+        .then((response) => console.log(response));
+    });
+  }, []);
 
   return (
     <>

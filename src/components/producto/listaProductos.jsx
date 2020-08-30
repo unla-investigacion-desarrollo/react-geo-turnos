@@ -48,11 +48,9 @@ const ListaProductos = () => {
     ],
   });
 
-  //   useEffect(() => {
-  //     fetch("url")
-  //       .then((response) => response.json())
-  //       .then((json) => setState({json: json }));
-  //   }, []);
+  useEffect(() => {
+    console.log("useeffcet funcionando en prrd");
+  }, []);
 
   const buscarProducto = (id) => {
     //busco el producto por ahi
