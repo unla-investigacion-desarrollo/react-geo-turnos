@@ -6,13 +6,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import Contenido from "./components/contenido/contenido";
 import Hidden from "@material-ui/core/Hidden";
 import { BrowserRouter as Router } from "react-router-dom";
+import LogIn from "./components/login/login";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
   },
 }));
-
+//<LogIn />
 function App() {
   const classes = useStyles();
   return (
