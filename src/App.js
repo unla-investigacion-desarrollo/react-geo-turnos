@@ -5,7 +5,7 @@ import MenuDrawer from "./components/navbar/menuDrawer";
 import { makeStyles } from "@material-ui/core/styles";
 import Contenido from "./components/contenido/contenido";
 import Hidden from "@material-ui/core/Hidden";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import LogIn from "./components/login/login";
 
 const useStyles = makeStyles((theme) => ({
@@ -13,23 +13,29 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
 }));
-//<LogIn />
 function App() {
   const classes = useStyles();
   return (
     <Router>
-      <div className={classes.root}>
-        <Navbar />
-        <Hidden xsDown>
-          {/* Para PC */}
-          <MenuDrawer variante="permanent" />
-        </Hidden>
-        <Hidden smUp>
-          {/* Para mobile */}
-          <MenuDrawer variante="temporary" />
-        </Hidden>
-        <Contenido />
-      </div>
+      <Switch>
+        <Route exact path="/login">
+          <LogIn />
+        </Route>
+        <Route path="/">
+          <div className={classes.root}>
+            <Navbar />
+            <Hidden xsDown>
+              {/* Para PC */}
+              <MenuDrawer variante="permanent" />
+            </Hidden>
+            <Hidden smUp>
+              {/* Para mobile */}
+              <MenuDrawer variante="temporary" />
+            </Hidden>
+            <Contenido />
+          </div>
+        </Route>
+      </Switch>
     </Router>
   );
 }

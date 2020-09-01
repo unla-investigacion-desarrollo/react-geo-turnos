@@ -5,10 +5,9 @@ import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
+import { apiCalls } from "../../api/apiCalls";
 
 const useStyles = makeStyles((theme) => ({
   botonEspacio: {
@@ -53,10 +52,11 @@ const validar = (values) => {
 };
 
 const enviar = (values, { setSubmitting }) => {
-  setTimeout(() => {
-    alert(JSON.stringify(values, null, 2));
-    setSubmitting(false);
-  }, 400);
+  let datos = { email: values.usuario, clave: values.password };
+  apiCalls.postLogin(datos).then((response) => {
+    localStorage.setItem("token", response.data.token);
+    window.location.assign("/");
+  });
 };
 
 let valoresIniciales = {};
@@ -94,83 +94,70 @@ const LogIn = (props) => {
               isValid,
             }) => (
               <Card className={classes.card}>
-                <CardActionArea>
-                  <CardMedia
-                    className={classes.media}
-                    image="https://www.lampadia.com/assets/uploads_images/images/a1-web%28166%29.jpg"
-                    title="Reactivar Logo pendiente"
-                  />
-                  <CardContent>
-                    <Typography variant="h5" color="initial">
-                      Iniciar Sesion
-                    </Typography>
-                    <form onSubmit={handleSubmit} className={classes.espacios}>
-                      <div>
-                        <TextField
-                          error={
-                            errors.usuario && touched.usuario ? true : false
-                          }
-                          id="usuario"
-                          label="Usuario"
-                          name="usuario"
-                          onBlur={handleBlur}
-                          value={values.usuario}
-                          onChange={handleChange}
-                          helperText={
-                            errors.usuario && touched.usuario && errors.usuario
-                          }
-                        />
-                      </div>
+                <CardMedia
+                  className={classes.media}
+                  image="https://www.lampadia.com/assets/uploads_images/images/a1-web%28166%29.jpg"
+                  title="Reactivar Logo pendiente"
+                />
+                <CardContent>
+                  <Typography variant="h5" color="initial">
+                    Iniciar Sesion
+                  </Typography>
+                  <form onSubmit={handleSubmit} className={classes.espacios}>
+                    <div>
+                      <TextField
+                        error={errors.usuario && touched.usuario ? true : false}
+                        id="usuario"
+                        label="Usuario"
+                        name="usuario"
+                        onBlur={handleBlur}
+                        value={values.usuario}
+                        onChange={handleChange}
+                        helperText={
+                          errors.usuario && touched.usuario && errors.usuario
+                        }
+                      />
+                    </div>
 
-                      <div>
-                        <TextField
-                          error={
-                            errors.password && touched.password ? true : false
-                          }
-                          id="password"
-                          label="Constraseña"
-                          name="password"
-                          type="password"
-                          onBlur={handleBlur}
-                          value={values.password}
-                          onChange={handleChange}
-                          helperText={
-                            errors.password &&
-                            touched.password &&
-                            errors.password
-                          }
-                        />
-                      </div>
+                    <div>
+                      <TextField
+                        error={
+                          errors.password && touched.password ? true : false
+                        }
+                        id="password"
+                        label="Constraseña"
+                        name="password"
+                        type="password"
+                        onBlur={handleBlur}
+                        value={values.password}
+                        onChange={handleChange}
+                        helperText={
+                          errors.password && touched.password && errors.password
+                        }
+                      />
+                    </div>
 
-                      <Grid
-                        container
-                        direction="row"
-                        justify="center"
-                        alignItems="center"
-                        className={classes.botonEspacio}
+                    <Grid
+                      container
+                      direction="row"
+                      justify="center"
+                      alignItems="center"
+                      className={classes.botonEspacio}
+                    >
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        className={claseBotonEnviar}
+                        type="submit"
                       >
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          className={claseBotonEnviar}
-                          onClick={() => {
-                            validateForm();
-                            let nuevoTouched = {};
-                            Object.entries(values).map((value) => {
-                              nuevoTouched[value[0]] = true;
-                            });
-                            setTouched(nuevoTouched, false);
-                          }}
-                        >
-                          Enviar
-                        </Button>
-                      </Grid>
-                      {JSON.stringify(values)}
-                      <br></br>
-                      {JSON.stringify(errors)}
-                    </form>
-                  </CardContent>
-                </CardActionArea>
+                        Enviar
+                      </Button>
+                    </Grid>
+                    {JSON.stringify(values)}
+                    <br></br>
+                    {JSON.stringify(errors)}
+                  </form>
+                </CardContent>
               </Card>
             )}
           </Formik>

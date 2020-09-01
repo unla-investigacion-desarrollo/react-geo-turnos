@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import React, { useState } from "react";
 export const menuSlice = createSlice({
   name: "menu",
   initialState: {

@@ -1,7 +1,7 @@
 import React from "react";
 import FormProducto from "../producto/formProductoFormik";
 import { makeStyles } from "@material-ui/core/styles";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useRouteMatch } from "react-router-dom";
 import ListaProductos from "../producto/listaProductos";
 import ListaMarcas from "../marca/listaMarcas";
 import ListaCategorias from "../categoria/listaCategorias";
@@ -11,8 +11,6 @@ import Rubro from "../rubro/rubro";
 import ListaRubros from "../rubro/listaRubros";
 import TipoEmprendimiento from "../tipoEmprendimiento/tipoEmprendimiento";
 import ListaTipoEmprendimientos from "../tipoEmprendimiento/listaTipoEmprendimientos";
-import ListaSolicitudes from "../solicitud/listaSolicitudes";
-import ListaAceptados from "../solicitud/listaAceptados";
 import VistaTurnos from "../solicitud/vistaTurnos";
 
 const useStyles = makeStyles((theme) => ({
@@ -26,62 +24,60 @@ const useStyles = makeStyles((theme) => ({
 
 const Contenido = () => {
   const classes = useStyles();
+  let { path } = useRouteMatch();
   return (
     <main className={classes.content}>
       <div className={classes.toolbar}></div>
       <Switch>
-        <Route path="/" exact>
+        <Route path={path} exact>
           Raiz
         </Route>
-        <Route path="/productos/nuevo">
+        <Route path={`${path}productos/nuevo`}>
           <FormProducto />
         </Route>
-        <Route path="/productos/:id">
+        <Route path={`${path}productos/:id`}>
           <FormProducto variante="modificar" />
         </Route>
-        <Route path="/productos">
+        <Route path={`${path}productos`}>
           <ListaProductos />
         </Route>
-        <Route path="/marcas/nuevo">
+        <Route path={`${path}marcas/nuevo`}>
           <Marca />
         </Route>
-        <Route path="/marcas/:id">
+        <Route path={`${path}marcas/:id`}>
           <Marca variante="modificar" />
         </Route>
-        <Route path="/marcas">
+        <Route path={`${path}marcas`}>
           <ListaMarcas />
         </Route>
-        <Route path="/categorias/nuevo">
+        <Route path={`${path}categorias/nuevo`}>
           <Categoria />
         </Route>
-        <Route path="/categorias/:id">
+        <Route path={`${path}categorias/:id`}>
           <Categoria variante="modificar" />
         </Route>
-        <Route path="/categorias">
+        <Route path={`${path}categorias`}>
           <ListaCategorias />
         </Route>
-
-        <Route path="/rubros/nuevo">
+        <Route path={`${path}rubros/nuevo`}>
           <Rubro />
         </Route>
-        <Route path="/rubros/:id">
+        <Route path={`${path}rubros/:id`}>
           <Rubro variante="modificar" />
         </Route>
-        <Route path="/rubros">
+        <Route path={`${path}rubros`}>
           <ListaRubros />
         </Route>
-
-        <Route path="/tipoEmprendimientos/nuevo">
+        <Route path={`${path}tipoEmprendimientos/nuevo`}>
           <TipoEmprendimiento />
         </Route>
-        <Route path="/tipoEmprendimientos/:id">
+        <Route path={`${path}tipoEmprendimientos/:id`}>
           <TipoEmprendimiento variante="modificar" />
         </Route>
-        <Route path="/tipoEmprendimientos">
+        <Route path={`${path}tipoEmprendimientos`}>
           <ListaTipoEmprendimientos />
         </Route>
-
-        <Route path="/turnos">
+        <Route path={`${path}turnos`}>
           <VistaTurnos />
         </Route>
       </Switch>

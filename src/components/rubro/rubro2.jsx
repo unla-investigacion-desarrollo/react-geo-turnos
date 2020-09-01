@@ -1,7 +1,7 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
-import { Formik } from "formik";
-import { useState } from "react";
+import { Formik, useFormikContext } from "formik";
+import { useState, useEffect } from "react";
 import {
   Button,
   Typography,
@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link, useParams } from "react-router-dom";
+import { apiCalls } from "../../api/apiCalls";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,17 +37,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const traerCategoria = (id) => {
-  //traer de la base de datos los datos
-  return {
-    idCategoria: id,
-    categoria: "",
-  };
-};
-
-const Categoria = (props) => {
+const Rubro = (props) => {
   const classes = useStyles();
   const { id } = useParams();
+  const [state, setState] = useState({ rubro: "chau" });
 
   let titulo = "";
   let valoresIniciales = {};
@@ -54,16 +48,16 @@ const Categoria = (props) => {
   let claseBotonModificar;
 
   if (props.variante === "modificar") {
-    titulo = "Modificar Categoria:";
-    valoresIniciales = traerCategoria(id);
+    titulo = "Modificar Rubro:";
+    valoresIniciales = state;
     claseBotonCrear = classes.botonOculto;
     claseBotonModificar = classes.botonForm;
   } else {
-    titulo = "Nueva Categoria:";
+    titulo = "Nuevo Rubro:";
     claseBotonCrear = classes.botonForm;
     claseBotonModificar = classes.botonOculto;
     valoresIniciales = {
-      categoria: "",
+      rubro: "",
     };
   }
 
@@ -80,8 +74,8 @@ const Categoria = (props) => {
 
   const validar = (values) => {
     const errors = {};
-    if (!values.categoria) {
-      errors.categoria = "Requirido";
+    if (!values.rubro) {
+      errors.rubro = "Requirido";
     }
     return errors;
   };
@@ -93,16 +87,26 @@ const Categoria = (props) => {
     }, 400);
   };
 
+  useEffect(() => {
+    // apiCalls.getRubroId(id).then((reponse) => {
+    //   const dataRubro = reponse.data;
+    //   console.log(dataRubro);
+    //   setState({ idRubro: dataRubro.idRubro, rubro: dataRubro.nombre });
+    // });
+    setState({ rubro: "hola" });
+  }, []);
+
   return (
     <div>
       <Typography variant="h4" color="initial">
         {titulo}
       </Typography>
       <Formik
-        initialValues={valoresIniciales}
+        initialValues={state}
+        values={{ rubro: "hola" }}
         validate={validar}
         onSubmit={enviar}
-        initialErrors={{ categoria: "error" }}
+        initialErrors={{ rubro: "error" }}
       >
         {({
           values,
@@ -113,23 +117,20 @@ const Categoria = (props) => {
           handleSubmit,
           isSubmitting,
           validateForm,
-          isValidating,
           setTouched,
           isValid,
         }) => (
           <form onSubmit={handleSubmit} className={classes.root}>
             <div>
               <TextField
-                error={errors.categoria && touched.categoria ? true : false}
-                id="categoria"
-                label="Categoria"
-                name="categoria"
+                error={errors.rubro && touched.rubro ? true : false}
+                id="rubro"
+                label="Rubro"
+                name="rubro"
                 onBlur={handleBlur}
-                value={values.categoria}
+                value={values.rubro}
                 onChange={handleChange}
-                helperText={
-                  errors.categoria && touched.categoria && errors.categoria
-                }
+                helperText={errors.rubro && touched.rubro && errors.rubro}
               />
             </div>
 
@@ -139,7 +140,7 @@ const Categoria = (props) => {
                 variant="contained"
                 color="primary"
                 component={Link}
-                to="/categorias"
+                to="/rubros"
               >
                 Atras
               </Button>
@@ -185,7 +186,7 @@ const Categoria = (props) => {
                 aria-describedby="alert-dialog-description"
               >
                 <DialogTitle id="alert-dialog-title">
-                  {"Estas seguro de agregar la nueva categoria?"}
+                  {"Estas seguro de agregar el nuevo rubro?"}
                 </DialogTitle>
                 <DialogContent>
                   <DialogContentText id="alert-dialog-description">
@@ -214,7 +215,7 @@ const Categoria = (props) => {
                 aria-describedby="alert-dialog-description-mod"
               >
                 <DialogTitle id="alert-dialog-title-mod">
-                  {"Estas seguro de modificar la categoria?"}
+                  {"Estas seguro de modificar el rubro?"}
                 </DialogTitle>
                 <DialogContent>
                   <DialogContentText id="alert-dialog-description-mod">
@@ -250,4 +251,4 @@ const Categoria = (props) => {
   );
 };
 
-export default Categoria;
+export default Rubro;

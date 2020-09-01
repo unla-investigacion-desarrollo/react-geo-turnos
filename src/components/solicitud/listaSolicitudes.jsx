@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
 
 const ListaSolicitudes = () => {
   const classes = useStyles();
-  console.log(window.screen.availHeight);
 
   return (
     <>
@@ -37,7 +36,7 @@ const ListaSolicitudes = () => {
               const labelId = `checkbox-list-label-${value}`;
 
               return (
-                <>
+                <React.Fragment key={value}>
                   <ListItem key={value} role={undefined} dense button>
                     <ListItemIcon>
                       <Person />
@@ -64,7 +63,7 @@ const ListaSolicitudes = () => {
                     </ListItemSecondaryAction>
                   </ListItem>
                   <Divider />
-                </>
+                </React.Fragment>
               );
             }
           )}

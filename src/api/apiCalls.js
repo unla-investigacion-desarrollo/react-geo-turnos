@@ -12,8 +12,22 @@ function postAltaUsuario(parameters) {
   return api.post("/fisica", parameters);
 }
 
+function getRubro() {
+  return api.get("/rubro", null);
+}
+function getRubroId(parameters) {
+  return api.get(`/rubro/${parameters}`);
+}
+
+function putRubro(parameters) {
+  return api.put(`/rubro/${parameters.idRubro}`, parameters);
+}
+
 export const apiCalls = {
   postArticulo,
   postAltaUsuario,
   postLogin,
+  getRubro,
+  getRubroId,
+  putRubro,
 };

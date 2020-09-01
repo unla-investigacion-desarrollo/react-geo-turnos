@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux"; //metodo que sirva para usar los reducers
-import { cambiarVistaConDatos } from "../navbar/menuSlice"; //reducer para cambiar el estado
 import {
   Table,
   TableBody,
@@ -11,7 +9,6 @@ import {
   Paper,
   Button,
   Typography,
-  Divider,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
@@ -24,8 +21,7 @@ const useStyles = makeStyles({
 
 const ListaProductos = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const [state, setState] = useState({
+  const [state] = useState({
     productos: [
       {
         id: "1",
@@ -54,12 +50,12 @@ const ListaProductos = () => {
 
   const buscarProducto = (id) => {
     //busco el producto por ahi
-    let producto = {
-      id: "1",
-      nombre: "producto1",
-      codigo: 351513,
-      precio: 136263,
-    };
+    // let producto = {
+    //   id: "1",
+    //   nombre: "producto1",
+    //   codigo: 351513,
+    //   precio: 136263,
+    // };
   };
 
   return (

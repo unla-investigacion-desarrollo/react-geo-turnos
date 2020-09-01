@@ -1,7 +1,6 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
-import FormControl from "@material-ui/core/FormControl";
-import { Formik, Field } from "formik";
+import { Formik } from "formik";
 import { useState } from "react";
 import {
   Button,
@@ -150,6 +149,7 @@ const Marca = (props) => {
                   let nuevoTouched = {};
                   Object.entries(values).map((value) => {
                     nuevoTouched[value[0]] = true;
+                    return null;
                   });
                   setTouched(nuevoTouched, false);
                   if (isValid) openDialogCrear();
@@ -166,6 +166,7 @@ const Marca = (props) => {
                   let nuevoTouched = {};
                   Object.entries(values).map((value) => {
                     nuevoTouched[value[0]] = true;
+                    return null;
                   });
                   setTouched(nuevoTouched, false);
                   if (isValid) setStateOpenDialogMod(true);

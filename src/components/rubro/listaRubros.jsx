@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux"; //metodo que sirva para usar los reducers
-import { cambiarVistaConDatos } from "../navbar/menuSlice"; //reducer para cambiar el estado
 import {
   Table,
   TableBody,
@@ -11,11 +9,9 @@ import {
   Paper,
   Button,
   Typography,
-  Divider,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
-import login from "../login/datos";
 import { apiCalls } from "../../api/apiCalls";
 
 const useStyles = makeStyles({
@@ -26,49 +22,13 @@ const useStyles = makeStyles({
 
 const ListaRubros = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const [state, setState] = useState({
-    rubros: [
-      {
-        id: "1",
-        rubro: "textil",
-      },
-      {
-        id: "2",
-        rubro: "agricola",
-      },
-      {
-        id: "3",
-        rubro: "ganadero",
-      },
-    ],
+    rubros: [],
   });
 
-  const buscarRubro = (nombreRubro) => {
-    let categoriaRubro = {
-      id: "1",
-      rubro: "textil",
-    };
-    dispatch(cambiarVistaConDatos(11, categoriaRubro));
-  };
-
   useEffect(() => {
-    const json = login;
-    console.log("entro al effect");
-
-    //me logeo
-    apiCalls.postLogin(login).then((response) => {
-      const token = response.data.token;
-      console.log(token);
-      fetch("http://localhost:8080/reactivar/api/rubro", {
-        method: "GET",
-        "Content-Type": "application/json",
-        headers: {
-          token_auth: token,
-        },
-      })
-        .then((response) => response.json())
-        .then((response) => console.log(response));
+    apiCalls.getRubro().then((response) => {
+      setState({ rubros: response.data });
     });
   }, []);
 
@@ -96,16 +56,15 @@ const ListaRubros = () => {
           </TableHead>
           <TableBody>
             {state.rubros.map((rub) => (
-              <TableRow key={rub.id}>
-                <TableCell>{rub.id}</TableCell>
-                <TableCell>{rub.rubro}</TableCell>
+              <TableRow key={rub.idRubro}>
+                <TableCell>{rub.idRubro}</TableCell>
+                <TableCell>{rub.nombre}</TableCell>
                 <TableCell>
                   <Button
                     color="primary"
                     variant="contained"
-                    onClick={() => buscarRubro(rub.rubro)}
                     component={Link}
-                    to={"/rubros/" + rub.id}
+                    to={"/rubros/" + rub.idRubro}
                   >
                     Ver
                   </Button>
