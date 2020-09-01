@@ -54,6 +54,7 @@ const validar = (values) => {
 const enviar = (values, { setSubmitting }) => {
   let datos = { email: values.usuario, clave: values.password };
   apiCalls.postLogin(datos).then((response) => {
+    console.log(response);
     localStorage.setItem("token", response.data.token);
     window.location.assign("/");
   });
@@ -62,8 +63,8 @@ const enviar = (values, { setSubmitting }) => {
 let valoresIniciales = {};
 
 valoresIniciales = {
-  usuario: "",
-  password: "",
+  usuario: "admin@unla",
+  password: "admin",
 };
 
 const LogIn = (props) => {

@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
+import { apiCalls } from "../../api/apiCalls";
 
 const useStyles = makeStyles({
   table: {
@@ -21,31 +22,10 @@ const useStyles = makeStyles({
 
 const ListaProductos = () => {
   const classes = useStyles();
-  const [state] = useState({
-    productos: [
-      {
-        id: "1",
-        nombre: "producto1",
-        codigo: "codigoprod1",
-        precio: "precio del 1",
-      },
-      {
-        id: "2",
-        nombre: "producto2",
-        codigo: "codigoprod2",
-        precio: "precio del 2",
-      },
-      {
-        id: "3",
-        nombre: "producto3",
-        codigo: "codigoprod3",
-        precio: "precio del 3",
-      },
-    ],
-  });
+  const [stateProd, setStateProd] = useState([]);
 
   useEffect(() => {
-    console.log("useeffcet funcionando en prrd");
+    apiCalls.getArticuloReferencia().then((datos) => setStateProd(datos.data));
   }, []);
 
   const buscarProducto = (id) => {
@@ -83,19 +63,19 @@ const ListaProductos = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {state.productos.map((prod) => (
-              <TableRow key={prod.id}>
-                <TableCell>{prod.id}</TableCell>
+            {stateProd.map((prod) => (
+              <TableRow key={prod.idArticuloReferencia}>
+                <TableCell>{prod.idArticuloReferencia}</TableCell>
                 <TableCell>{prod.nombre}</TableCell>
-                <TableCell>{prod.codigo}</TableCell>
-                <TableCell>{prod.precio}</TableCell>
+                <TableCell>{prod.codBarra}</TableCell>
+                <TableCell>{prod.precioRefencia}</TableCell>
                 <TableCell>
                   <Button
                     color="primary"
                     variant="contained"
                     onClick={() => buscarProducto(prod.id)}
                     component={Link}
-                    to={"/productos/" + prod.id}
+                    to={"/productos/" + prod.idArticuloReferencia}
                   >
                     Ver
                   </Button>

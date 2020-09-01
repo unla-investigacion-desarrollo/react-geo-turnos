@@ -109,6 +109,7 @@ const Rubro = (props) => {
         setValues({ idRubro: dataRubro.idRubro, rubro: dataRubro.nombre });
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
