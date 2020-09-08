@@ -8,6 +8,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Person from "@material-ui/icons/Person";
 import Check from "@material-ui/icons/Check";
 import Close from "@material-ui/icons/Close";
+import Comments from "@material-ui/icons/Comment";
 import { Typography, Divider, IconButton } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 
@@ -59,6 +60,13 @@ const ListaSolicitudes = () => {
                         variant="contained"
                       >
                         <Check />
+                      </IconButton>
+                      <IconButton
+                        size="small"
+                        color="primary"
+                        variant="contained"
+                      >
+                        <Comments />
                       </IconButton>
                     </ListItemSecondaryAction>
                   </ListItem>
