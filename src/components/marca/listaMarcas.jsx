@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux"; //metodo que sirva para usar los reducers
-import { cambiarVistaConDatos } from "../navbar/menuSlice"; //reducer para cambiar el estado
+import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -14,6 +12,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
+import { apiCalls } from "../../api/apiCalls";
 
 const useStyles = makeStyles({
   table: {
@@ -23,31 +22,15 @@ const useStyles = makeStyles({
 
 const ListaMarcas = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const [state] = useState({
-    marcas: [
-      {
-        id: "1",
-        marca: "johnson & johnson",
-      },
-      {
-        id: "2",
-        marca: "higeniol",
-      },
-      {
-        id: "3",
-        marca: "ayudin",
-      },
-    ],
+    marcas: [],
   });
 
-  const buscarMarca = (nombreMarca) => {
-    let categoriaMarca = {
-      id: "1",
-      marca: "johnson & johnson",
-    };
-    dispatch(cambiarVistaConDatos(11, categoriaMarca));
-  };
+  useEffect(() => {
+    apiCalls.getMarca().then((response) => {
+      setState({ marcas: response.data });
+    });
+  }, []);
 
   return (
     <>
@@ -80,7 +63,6 @@ const ListaMarcas = () => {
                   <Button
                     color="primary"
                     variant="contained"
-                    onClick={() => buscarMarca(marc.marca)}
                     component={Link}
                     to={"/marcas/" + marc.id}
                   >
