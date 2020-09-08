@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 const enviar = (values, { setSubmitting }) => {
   const datosCategoria = {
     idCategoria: values.idCategoria,
-    categoria: values.categoria,
+    nombre: values.categoria,
   };
   apiCalls
     .putCategoria(datosCategoria)
@@ -111,7 +111,7 @@ const Categoria = (props) => {
         const datosCategoria = response.data;
         setValues({
           idCategoria: datosCategoria.idCategoria,
-          categoria: datosCategoria.categoria,
+          categoria: datosCategoria.nombre,
         });
       });
     }
@@ -146,7 +146,7 @@ const Categoria = (props) => {
             variant="contained"
             color="primary"
             component={Link}
-            to="/categoria"
+            to="/categorias"
           >
             Atras
           </Button>

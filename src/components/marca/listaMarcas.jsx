@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 
 const ListaMarcas = () => {
   const classes = useStyles();
-  const [state] = useState({
+  const [state, setState] = useState({
     marcas: [],
   });
 
@@ -56,15 +56,15 @@ const ListaMarcas = () => {
           </TableHead>
           <TableBody>
             {state.marcas.map((marc) => (
-              <TableRow key={marc.id}>
-                <TableCell>{marc.id}</TableCell>
-                <TableCell>{marc.marca}</TableCell>
+              <TableRow key={marc.idMarca}>
+                <TableCell>{marc.idMarca}</TableCell>
+                <TableCell>{marc.nombre}</TableCell>
                 <TableCell>
                   <Button
                     color="primary"
                     variant="contained"
                     component={Link}
-                    to={"/marcas/" + marc.id}
+                    to={"/marcas/" + marc.idMarca}
                   >
                     Ver
                   </Button>

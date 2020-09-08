@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 
 const ListaTipoEmprendimientos = () => {
   const classes = useStyles();
-  const [state] = useState({
+  const [state, setState] = useState({
     tipoEmprendimientos: [],
   });
 
@@ -56,15 +56,15 @@ const ListaTipoEmprendimientos = () => {
           </TableHead>
           <TableBody>
             {state.tipoEmprendimientos.map((tipoEmp) => (
-              <TableRow key={tipoEmp.id}>
-                <TableCell>{tipoEmp.id}</TableCell>
-                <TableCell>{tipoEmp.tipoEmprendimiento}</TableCell>
+              <TableRow key={tipoEmp.idTipoEmprendimiento}>
+                <TableCell>{tipoEmp.idTipoEmprendimiento}</TableCell>
+                <TableCell>{tipoEmp.nombre}</TableCell>
                 <TableCell>
                   <Button
                     color="primary"
                     variant="contained"
                     component={Link}
-                    to={"/tipoEmprendimientos/" + tipoEmp.id}
+                    to={"/tipoEmprendimientos/" + tipoEmp.idTipoEmprendimiento}
                   >
                     Ver
                   </Button>

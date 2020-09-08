@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 const enviar = (values, { setSubmitting }) => {
   const datosTipoEmp = {
     idTipoEmprendimiento: values.idTipoEmprendimiento,
-    tipoEmprendimiento: values.tipoEmprendimiento,
+    nombre: values.tipoEmprendimiento,
   };
   apiCalls
     .putRubro(datosTipoEmp)
@@ -111,7 +111,7 @@ const TipoEmprendimiento = (props) => {
         const datosTipoEmp = response.data;
         setValues({
           idTipoEmprendimiento: datosTipoEmp.idTipoEmprendimiento,
-          tipoEmprendimiento: datosTipoEmp.tipoEmprendimiento,
+          tipoEmprendimiento: datosTipoEmp.nombre,
         });
       });
     }

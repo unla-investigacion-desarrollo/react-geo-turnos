@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 const enviar = (values, { setSubmitting }) => {
   const datosMarca = {
     idMarca: values.idMarca,
-    marca: values.marca,
+    nombre: values.marca,
   };
   apiCalls.putMarca(datosMarca).then((response) => console.log(response.data));
 };
@@ -105,11 +105,12 @@ const Marca = (props) => {
 
   useEffect(() => {
     if (props.variante === "modificar") {
-      apiCalls.getMarca(id).then((response) => {
+      apiCalls.getMarcaId(id).then((response) => {
         const datosMarca = response.data;
+        console.log(datosMarca);
         setValues({
           idMarca: datosMarca.idMarca,
-          marca: datosMarca.marca,
+          marca: datosMarca.nombre,
         });
       });
     }

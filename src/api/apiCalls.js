@@ -1,7 +1,8 @@
 import api from "./api";
+import apiLogIn from "./apiLogIn";
 
 function postLogin(parameters) {
-  return api.post("/login", parameters);
+  return apiLogIn.post("/login", parameters);
 }
 
 function postArticulo(parameters) {
