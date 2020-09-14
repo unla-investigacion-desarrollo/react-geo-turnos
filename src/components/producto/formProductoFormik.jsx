@@ -137,11 +137,11 @@ const FormProducto = (props) => {
   let claseBotonModificar;
 
   if (props.variante === "modificar") {
-    titulo = "Modificar Producto:";
+    titulo = "Modificar Articulos:";
     claseBotonCrear = classes.botonOculto;
     claseBotonModificar = classes.botonForm;
   } else {
-    titulo = "Nuevo Producto:";
+    titulo = "Nuevo Articulo:";
     claseBotonCrear = classes.botonForm;
     claseBotonModificar = classes.botonOculto;
   }
@@ -415,7 +415,7 @@ const FormProducto = (props) => {
             aria-describedby="alert-dialog-description"
           >
             <DialogTitle id="alert-dialog-title">
-              {"Estas seguro de agregar el nuevo producto?"}
+              {"Estas seguro de agregar el nuevo articulo?"}
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
@@ -444,7 +444,7 @@ const FormProducto = (props) => {
             aria-describedby="alert-dialog-description-mod"
           >
             <DialogTitle id="alert-dialog-title-mod">
-              {"Estas seguro de modificar el producto?"}
+              {"Estas seguro de modificar el articulo?"}
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description-mod">

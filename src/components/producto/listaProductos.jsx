@@ -41,7 +41,7 @@ const ListaProductos = () => {
   return (
     <>
       <Typography variant="h3" color="initial">
-        Lista Productos:
+        Lista Articulos:
       </Typography>
       <Button
         color="primary"
@@ -49,7 +49,7 @@ const ListaProductos = () => {
         component={Link}
         to="/productos/nuevo"
       >
-        Agregar Producto
+        Agregar Articulo
       </Button>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">

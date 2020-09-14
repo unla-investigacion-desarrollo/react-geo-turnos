@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik } from "formik";
-import { Button, Typography } from "@material-ui/core";
+import { Button, Divider, Typography } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -8,6 +8,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import { apiCalls } from "../../api/apiCalls";
+import Link from "@material-ui/core/Link";
 
 const useStyles = makeStyles((theme) => ({
   botonEspacio: {
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     display: "flex",
-    height: 500,
+    height: 750,
     backgroundColor: "teal",
   },
   card: {
@@ -70,7 +71,6 @@ valoresIniciales = {
 
 const LogIn = (props) => {
   const classes = useStyles();
-
   let claseBotonEnviar;
   return (
     <div className={classes.root}>
@@ -152,9 +152,14 @@ const LogIn = (props) => {
                         className={claseBotonEnviar}
                         type="submit"
                       >
-                        Enviar
+                        Iniciar Sesión
                       </Button>
                     </Grid>
+                    <Divider />
+                    <Link href="/registro">
+                      ¿No tiene usuario? Cree una cuenta nueva
+                    </Link>
+                    <Divider />
                     {JSON.stringify(values)}
                     <br></br>
                     {JSON.stringify(errors)}

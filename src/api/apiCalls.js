@@ -85,6 +85,10 @@ function putTipoEmprendimiento(parameters) {
   );
 }
 
+function postRegistro(parameters) {
+  return api.post("/registro", parameters);
+}
+
 export const apiCalls = {
   postArticulo,
   postAltaUsuario,
@@ -106,4 +110,5 @@ export const apiCalls = {
   getTipoEmprendimiento,
   getTipoEmprendimientoId,
   putTipoEmprendimiento,
+  postRegistro,
 };

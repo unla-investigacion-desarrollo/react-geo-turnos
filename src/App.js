@@ -7,6 +7,7 @@ import Contenido from "./components/contenido/contenido";
 import Hidden from "@material-ui/core/Hidden";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import LogIn from "./components/login/login";
+import Registro from "./components/registro/registro";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +21,9 @@ function App() {
       <Switch>
         <Route exact path="/login">
           <LogIn />
+        </Route>
+        <Route exact path="/registro">
+          <Registro />
         </Route>
         <Route path="/">
           <div className={classes.root}>
