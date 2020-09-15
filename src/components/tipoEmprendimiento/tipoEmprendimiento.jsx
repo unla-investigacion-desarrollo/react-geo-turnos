@@ -37,16 +37,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const enviar = (values, { setSubmitting }) => {
-  const datosTipoEmp = {
-    idTipoEmprendimiento: values.idTipoEmprendimiento,
-    nombre: values.tipoEmprendimiento,
-  };
-  apiCalls
-    .putRubro(datosTipoEmp)
-    .then((response) => console.log(response.data));
-};
-
 const validar = (values) => {
   const errors = {};
   if (!values.tipoEmprendimiento) {
@@ -56,6 +46,23 @@ const validar = (values) => {
 };
 
 const TipoEmprendimiento = (props) => {
+  const enviar = (values, { setSubmitting }) => {
+    const datosTipoEmp = {
+      idTipoEmprendimiento: values.idTipoEmprendimiento,
+      tipoEmprendimiento: values.tipoEmprendimiento,
+    };
+
+    if (props.variante === "modificar") {
+      apiCalls
+        .putTipoEmprendimiento(datosTipoEmp)
+        .then((response) => console.log(response.data));
+    } else {
+      apiCalls
+        .postTipoEmprendimiento(datosTipoEmp)
+        .then((response) => console.log(response.data));
+    }
+  };
+
   const formik = useFormik({
     initialValues: { tipoEmprendimiento: "" },
     onSubmit: enviar,

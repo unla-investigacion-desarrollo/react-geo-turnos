@@ -24,12 +24,20 @@ function putRubro(parameters) {
   return api.put(`/rubro/${parameters.idRubro}`, parameters);
 }
 
+function postRubro(parameters) {
+  return api.post(`/rubro`, parameters);
+}
+
 function getMarca() {
   return api.get("/marca", null);
 }
 
 function getMarcaId(parameters) {
   return api.get(`/marca/${parameters}`);
+}
+
+function postMarca(parameters) {
+  return api.post(`/marca`, parameters);
 }
 
 function putMarca(parameters) {
@@ -46,6 +54,10 @@ function getCategoriaId(parameters) {
 
 function putCategoria(parameters) {
   return api.put(`/categoria/${parameters.idCategoria}`, parameters);
+}
+
+function postCategoria(parameters) {
+  return api.post(`/categoria`, parameters);
 }
 
 function getUnidadMedida() {
@@ -85,6 +97,10 @@ function putTipoEmprendimiento(parameters) {
   );
 }
 
+function postTipoEmprendimiento(parameters) {
+  return api.post(`/tipoEmprendimiento`, parameters);
+}
+
 function postRegistro(parameters) {
   return api.post("/registro", parameters);
 }
@@ -96,12 +112,15 @@ export const apiCalls = {
   getRubro,
   getRubroId,
   putRubro,
+  postRubro,
   getMarca,
   getMarcaId,
   putMarca,
+  postMarca,
   getCategoria,
   getCategoriaId,
   putCategoria,
+  postCategoria,
   getUnidadMedida,
   postArticuloReferencia,
   getArticuloReferencia,
@@ -110,5 +129,6 @@ export const apiCalls = {
   getTipoEmprendimiento,
   getTipoEmprendimientoId,
   putTipoEmprendimiento,
+  postTipoEmprendimiento,
   postRegistro,
 };

@@ -37,11 +37,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const enviar = (values, { setSubmitting }) => {
-  const dataRubro = { idRubro: values.idRubro, nombre: values.rubro };
-  apiCalls.putRubro(dataRubro).then((response) => console.log(response.data));
-};
-
 const validar = (values) => {
   const errors = {};
   if (!values.rubro) {
@@ -51,6 +46,25 @@ const validar = (values) => {
 };
 
 const Rubro = (props) => {
+  const [stateOpenDialogCrear, setStateOpenDialogCrear] = useState(false);
+  const [stateOpenDialogMod, setStateOpenDialogMod] = useState(false);
+
+  const enviar = (values, { setSubmitting }) => {
+    const dataRubro = { idRubro: values.idRubro, rubro: values.rubro };
+
+    if (props.variante === "modificar") {
+      apiCalls.putRubro(dataRubro).then((response) => {
+        setSubmitting(false);
+        setStateOpenDialogMod(false);
+      });
+    } else {
+      apiCalls.postRubro(dataRubro).then((datos) => {
+        setSubmitting(false);
+        setStateOpenDialogCrear(false);
+      });
+    }
+  };
+
   const formik = useFormik({
     initialValues: { rubro: "" },
     onSubmit: enviar,
@@ -88,9 +102,6 @@ const Rubro = (props) => {
     claseBotonCrear = classes.botonForm;
     claseBotonModificar = classes.botonOculto;
   }
-
-  const [stateOpenDialogCrear, setStateOpenDialogCrear] = useState(false);
-  const [stateOpenDialogMod, setStateOpenDialogMod] = useState(false);
 
   const openDialogCrear = () => {
     setStateOpenDialogCrear(true);

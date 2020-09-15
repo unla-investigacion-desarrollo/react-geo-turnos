@@ -37,16 +37,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const enviar = (values, { setSubmitting }) => {
-  const datosCategoria = {
-    idCategoria: values.idCategoria,
-    nombre: values.categoria,
-  };
-  apiCalls
-    .putCategoria(datosCategoria)
-    .then((response) => console.log(response.data));
-};
-
 const validar = (values) => {
   const errors = {};
   if (!values.categoria) {
@@ -56,6 +46,23 @@ const validar = (values) => {
 };
 
 const Categoria = (props) => {
+  const enviar = (values, { setSubmitting }) => {
+    const datosCategoria = {
+      idCategoria: values.idCategoria,
+      nombre: values.categoria,
+    };
+
+    if (props.variante === "modificar") {
+      apiCalls
+        .putCategoria(datosCategoria)
+        .then((response) => console.log(response.data));
+    } else {
+      apiCalls
+        .postCategoria(datosCategoria)
+        .then((datos) => setSubmitting(false));
+    }
+  };
+
   const formik = useFormik({
     initialValues: { categoria: "" },
     onSubmit: enviar,

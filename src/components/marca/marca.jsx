@@ -37,14 +37,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const enviar = (values, { setSubmitting }) => {
-  const datosMarca = {
-    idMarca: values.idMarca,
-    nombre: values.marca,
-  };
-  apiCalls.putMarca(datosMarca).then((response) => console.log(response.data));
-};
-
 const validar = (values) => {
   const errors = {};
   if (!values.marca) {
@@ -54,6 +46,20 @@ const validar = (values) => {
 };
 
 const Marca = (props) => {
+  const enviar = (values, { setSubmitting }) => {
+    const datosMarca = {
+      idMarca: values.idMarca,
+      nombreMarca: values.marca,
+    };
+    if (props.variante === "modificar") {
+      apiCalls
+        .putMarca(datosMarca)
+        .then((response) => console.log(response.data));
+    } else {
+      apiCalls.postMarca(datosMarca).then((datos) => setSubmitting(false));
+    }
+  };
+
   const formik = useFormik({
     initialValues: { marca: "" },
     onSubmit: enviar,
