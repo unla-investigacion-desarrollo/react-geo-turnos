@@ -105,6 +105,10 @@ function postRegistro(parameters) {
   return api.post("/registro", parameters);
 }
 
+function getTurno() {
+  return api.get("/turno", null);
+}
+
 export const apiCalls = {
   postArticulo,
   postAltaUsuario,
@@ -131,4 +135,5 @@ export const apiCalls = {
   putTipoEmprendimiento,
   postTipoEmprendimiento,
   postRegistro,
+  getTurno,
 };

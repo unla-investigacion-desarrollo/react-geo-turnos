@@ -11,6 +11,8 @@ import Close from "@material-ui/icons/Close";
 import Comments from "@material-ui/icons/Comment";
 import { Typography, Divider, IconButton } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
+import { useSelector } from "react-redux";
+import { selectTurnosAceptados } from "./turnoSlice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ListaSolicitudes = () => {
   const classes = useStyles();
-
+  const turnosAceptados = useSelector(selectTurnosAceptados);
   return (
     <>
       <Typography variant="h5" color="initial">
@@ -32,49 +34,44 @@ const ListaSolicitudes = () => {
       </Typography>
       <Card>
         <List className={classes.root}>
-          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].map(
-            (value) => {
-              const labelId = `checkbox-list-label-${value}`;
+          {turnosAceptados.map((turno) => {
+            const labelId = `checkbox-list-label-${turno}`;
 
-              return (
-                <React.Fragment key={value}>
-                  <ListItem key={value} role={undefined} dense button>
-                    <ListItemIcon>
-                      <Person />
-                    </ListItemIcon>
-                    <ListItemText
-                      id={labelId}
-                      primary={`Nombre y apellido persona ${value + 1}`}
-                    />
-                    <ListItemSecondaryAction>
-                      <IconButton
-                        size="small"
-                        color="secondary"
-                        variant="contained"
-                      >
-                        <Close />
-                      </IconButton>
-                      <IconButton
-                        size="small"
-                        color="primary"
-                        variant="contained"
-                      >
-                        <Check />
-                      </IconButton>
-                      <IconButton
-                        size="small"
-                        color="primary"
-                        variant="contained"
-                      >
-                        <Comments />
-                      </IconButton>
-                    </ListItemSecondaryAction>
-                  </ListItem>
-                  <Divider />
-                </React.Fragment>
-              );
-            }
-          )}
+            return (
+              <React.Fragment key={turno.idTurno}>
+                <ListItem key={turno.idTurno} role={undefined} dense button>
+                  <ListItemIcon>
+                    <Person />
+                  </ListItemIcon>
+                  <ListItemText id={labelId} primary={turno.persona.nombre} />
+                  <ListItemSecondaryAction>
+                    <IconButton
+                      size="small"
+                      color="secondary"
+                      variant="contained"
+                    >
+                      <Close />
+                    </IconButton>
+                    <IconButton
+                      size="small"
+                      color="primary"
+                      variant="contained"
+                    >
+                      <Check />
+                    </IconButton>
+                    <IconButton
+                      size="small"
+                      color="primary"
+                      variant="contained"
+                    >
+                      <Comments />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>
+                <Divider />
+              </React.Fragment>
+            );
+          })}
         </List>
       </Card>
     </>
