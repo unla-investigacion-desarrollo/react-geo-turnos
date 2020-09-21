@@ -102,7 +102,7 @@ function postTipoEmprendimiento(parameters) {
 }
 
 function postRegistro(parameters) {
-  return api.post("/registro", parameters);
+  return apiLogIn.post("/fisica", parameters);
 }
 
 function getTurno() {

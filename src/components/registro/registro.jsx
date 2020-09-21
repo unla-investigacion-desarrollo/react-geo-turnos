@@ -79,12 +79,31 @@ const enviar = (values, { setSubmitting }) => {
     apellido: values.apellido,
     cuil: values.cuil,
     celular: values.celular,
-    email: values.email,
-    direccion: values.direccion,
-    password: values.password,
-    repetirPassword: values.repetirPassword,
+    idPerfil: 2, //hardcodeado 1 admin 2 usuario
+    loginVo: {
+      clave: values.password,
+      email: values.email,
+    },
+    //direccion: values.direccion,
+    // repetirPassword: values.repetirPassword,
+    ubicacionVo: {
+      //hardcodeado
+      calle: "string3",
+      departamento: "string4",
+      idLocalidad: 1,
+      idProvincia: 1,
+      latitud: "2",
+      longitud: "string2",
+      numero: 0,
+      piso: 0,
+      usuarioModi: "string",
+    },
+    usuarioModi: "string",
   };
-  apiCalls.postRegistro(registro).then((response) => setSubmitting(false));
+  apiCalls.postRegistro(registro).then((response) => {
+    setSubmitting(false);
+    console.log(registro);
+  });
 };
 
 let valoresIniciales = {
