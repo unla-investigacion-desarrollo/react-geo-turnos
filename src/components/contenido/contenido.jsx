@@ -9,9 +9,11 @@ import Categoria from "../categoria/categoria";
 import Marca from "../marca/marca";
 import Rubro from "../rubro/rubro";
 import ListaRubros from "../rubro/listaRubros";
+import ListaPerfiles from "../perfil/listaPerfiles";
 import TipoEmprendimiento from "../tipoEmprendimiento/tipoEmprendimiento";
 import ListaTipoEmprendimientos from "../tipoEmprendimiento/listaTipoEmprendimientos";
 import VistaTurnos from "../solicitud/vistaTurnos";
+import Perfil from "../perfil/perfil";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
@@ -79,6 +81,15 @@ const Contenido = () => {
         </Route>
         <Route path={`${path}turnos`}>
           <VistaTurnos />
+        </Route>
+        <Route path={`${path}perfiles/nuevo`}>
+          <Perfil />
+        </Route>
+        <Route path={`${path}perfiles/:id`}>
+          <Perfil variante="modificar" />
+        </Route>
+        <Route path={`${path}perfiles`}>
+          <ListaPerfiles />
         </Route>
       </Switch>
     </main>

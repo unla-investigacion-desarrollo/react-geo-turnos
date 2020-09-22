@@ -37,6 +37,7 @@ const ListaMenu = () => {
   return (
     <div className={classes.lista}>
       <List component="nav">
+        <Item to="/perfiles" icon={<ViewList />} text="Perfiles" />
         <Item to="/productos" icon={<ViewList />} text="Articulos" />
         <Item to="/marcas" icon={<ViewList />} text="Marcas" />
         <Item to="/categorias" icon={<ViewList />} text="Categorias" />
@@ -49,11 +50,6 @@ const ListaMenu = () => {
         <Item to="/turnos" icon={<ViewList />} text="Turnos" />
       </List>
       <Divider />
-      <List component="nav">
-        <ListItem button>
-          <ListItemText primary="Trash" />
-        </ListItem>
-      </List>
     </div>
   );
 };

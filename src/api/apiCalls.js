@@ -109,6 +109,23 @@ function getTurno() {
   return api.get("/turno", null);
 }
 
+function getPerfil() {
+  return api.get("/perfil", null);
+}
+function postPerfil(parameters) {
+  return api.post("/perfil", parameters);
+}
+function putPerfil(parameters) {
+  return api.put(`/perfil/${parameters.idPerfil}`, parameters);
+}
+function getPerfilId(parameters) {
+  return api.get(`/perfil/${parameters}`);
+}
+
+function getFuncion() {
+  return api.get("/funcion", null);
+}
+
 export const apiCalls = {
   postArticulo,
   postAltaUsuario,
@@ -136,4 +153,9 @@ export const apiCalls = {
   postTipoEmprendimiento,
   postRegistro,
   getTurno,
+  getPerfil,
+  postPerfil,
+  putPerfil,
+  getPerfilId,
+  getFuncion,
 };
