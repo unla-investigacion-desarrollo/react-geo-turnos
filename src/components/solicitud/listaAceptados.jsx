@@ -9,7 +9,8 @@ import Person from "@material-ui/icons/Person";
 import Input from "@material-ui/icons/Input";
 import { Typography, Button, Divider } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
-
+import { selectTurnosAceptados } from "./turnoSlice";
+import { useSelector } from "react-redux";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ListaAceptados = () => {
   const classes = useStyles();
-
+  const turnosAceptados = useSelector(selectTurnosAceptados);
   return (
     <>
       <Typography variant="h5" color="initial">
@@ -30,18 +31,24 @@ const ListaAceptados = () => {
       </Typography>
       <Card>
         <List className={classes.root}>
-          {[0, 1, 2, 3].map((value) => {
-            const labelId = `checkbox-list-label-${value}`;
+          {turnosAceptados.map((turno) => {
+            const labelId = `checkbox-list-label-${turno}`;
 
             return (
-              <React.Fragment key={value}>
-                <ListItem key={value} role={undefined} dense button>
+              <React.Fragment key={turno.idTurno}>
+                <ListItem key={turno.idTurno} role={undefined} dense button>
                   <ListItemIcon>
                     <Person />
                   </ListItemIcon>
                   <ListItemText
                     id={labelId}
-                    primary={`Nombre y apellido persona ${value + 1}`}
+                    primary={
+                      turno.fechaHora +
+                      " - " +
+                      turno.persona.nombre +
+                      " " +
+                      turno.persona.apellido
+                    }
                   />
                   <ListItemSecondaryAction>
                     <Button

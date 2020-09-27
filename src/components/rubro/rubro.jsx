@@ -12,7 +12,7 @@ import {
   DialogActions,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, Redirect } from "react-router-dom";
 import { apiCalls } from "../../api/apiCalls";
 
 const useStyles = makeStyles((theme) => ({
@@ -48,8 +48,9 @@ const validar = (values) => {
 const Rubro = (props) => {
   const [stateOpenDialogCrear, setStateOpenDialogCrear] = useState(false);
   const [stateOpenDialogMod, setStateOpenDialogMod] = useState(false);
+  const [stateFormExito, setStateFormExito] = useState(false);
 
-  const enviar = (values, { setSubmitting }) => {
+  const enviar = (values, { setSubmitting, setFieldError }) => {
     const dataRubro = { idRubro: values.idRubro, rubro: values.rubro };
 
     if (props.variante === "modificar") {
@@ -58,10 +59,23 @@ const Rubro = (props) => {
         setStateOpenDialogMod(false);
       });
     } else {
-      apiCalls.postRubro(dataRubro).then((datos) => {
-        setSubmitting(false);
-        setStateOpenDialogCrear(false);
-      });
+      apiCalls
+        .postRubro(dataRubro)
+        .then((datos) => {
+          setSubmitting(false);
+          setStateOpenDialogCrear(false);
+          setStateFormExito(true);
+        })
+        .catch((error) => {
+          console.log(error);
+          setSubmitting(false);
+          setStateOpenDialogCrear(false);
+          if (
+            error.response.data.code ===
+            "error.reactivar.db.registro_ya_existente"
+          )
+            setFieldError("rubro", "El rubro ya existe");
+        });
     }
   };
 
@@ -125,6 +139,11 @@ const Rubro = (props) => {
 
   return (
     <div>
+      {
+        stateFormExito ? (
+          <Redirect to="/rubros" />
+        ) : null /* Redireccionar si se agrega con exito */
+      }
       <Typography variant="h4" color="initial">
         {titulo}
       </Typography>

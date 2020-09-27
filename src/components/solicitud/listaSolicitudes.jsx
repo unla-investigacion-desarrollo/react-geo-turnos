@@ -12,7 +12,7 @@ import Comments from "@material-ui/icons/Comment";
 import { Typography, Divider, IconButton } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import { useSelector } from "react-redux";
-import { selectTurnosAceptados } from "./turnoSlice";
+import { selectTurnosPendientes } from "./turnoSlice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ListaSolicitudes = () => {
   const classes = useStyles();
-  const turnosAceptados = useSelector(selectTurnosAceptados);
+  const turnosPendientes = useSelector(selectTurnosPendientes);
   return (
     <>
       <Typography variant="h5" color="initial">
@@ -34,7 +34,7 @@ const ListaSolicitudes = () => {
       </Typography>
       <Card>
         <List className={classes.root}>
-          {turnosAceptados.map((turno) => {
+          {turnosPendientes.map((turno) => {
             const labelId = `checkbox-list-label-${turno}`;
 
             return (
@@ -43,7 +43,16 @@ const ListaSolicitudes = () => {
                   <ListItemIcon>
                     <Person />
                   </ListItemIcon>
-                  <ListItemText id={labelId} primary={turno.persona.nombre} />
+                  <ListItemText
+                    id={labelId}
+                    primary={
+                      turno.fechaHora +
+                      " - " +
+                      turno.persona.nombre +
+                      " " +
+                      turno.persona.apellido
+                    }
+                  />
                   <ListItemSecondaryAction>
                     <IconButton
                       size="small"
