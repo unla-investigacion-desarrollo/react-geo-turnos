@@ -12,7 +12,7 @@ import {
   DialogActions,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, Redirect } from "react-router-dom";
 import { apiCalls } from "../../api/apiCalls";
 
 const useStyles = makeStyles((theme) => ({
@@ -46,17 +46,38 @@ const validar = (values) => {
 };
 
 const Marca = (props) => {
-  const enviar = (values, { setSubmitting }) => {
+  const [stateOpenDialogCrear, setStateOpenDialogCrear] = useState(false);
+  const [stateOpenDialogMod, setStateOpenDialogMod] = useState(false);
+  const [stateFormExito, setStateFormExito] = useState(false);
+
+  const enviar = (values, { setSubmitting, setFieldError }) => {
     const datosMarca = {
       idMarca: values.idMarca,
       nombreMarca: values.marca,
     };
     if (props.variante === "modificar") {
-      apiCalls
-        .putMarca(datosMarca)
-        .then((response) => console.log(response.data));
+      apiCalls.putMarca(datosMarca).then((response) => {
+        setSubmitting(false);
+        setStateOpenDialogMod(false);
+      });
     } else {
-      apiCalls.postMarca(datosMarca).then((datos) => setSubmitting(false));
+      apiCalls
+        .postMarca(datosMarca)
+        .then((datos) => {
+          setSubmitting(false);
+          setStateOpenDialogCrear(false);
+          setStateFormExito(true);
+        })
+        .catch((error) => {
+          console.log(error);
+          setSubmitting(false);
+          setStateOpenDialogCrear(false);
+          if (
+            error.response.data.code ===
+            "error.reactivar.db.registro_ya_existente"
+          )
+            setFieldError("marca", "Esa marca ya existe");
+        });
     }
   };
 
@@ -98,9 +119,6 @@ const Marca = (props) => {
     claseBotonModificar = classes.botonOculto;
   }
 
-  const [stateOpenDialogCrear, setStateOpenDialogCrear] = useState(false);
-  const [stateOpenDialogMod, setStateOpenDialogMod] = useState(false);
-
   const openDialogCrear = () => {
     setStateOpenDialogCrear(true);
   };
@@ -125,6 +143,11 @@ const Marca = (props) => {
 
   return (
     <div>
+      {
+        stateFormExito ? (
+          <Redirect to="/marcas" />
+        ) : null /* Redireccionar si se agrega con exito */
+      }
       <Typography variant="h4" color="initial">
         {titulo}
       </Typography>

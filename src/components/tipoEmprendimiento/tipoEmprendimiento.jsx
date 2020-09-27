@@ -12,7 +12,7 @@ import {
   DialogActions,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, Redirect } from "react-router-dom";
 import { apiCalls } from "../../api/apiCalls";
 
 const useStyles = makeStyles((theme) => ({
@@ -46,20 +46,42 @@ const validar = (values) => {
 };
 
 const TipoEmprendimiento = (props) => {
-  const enviar = (values, { setSubmitting }) => {
+  const [stateOpenDialogCrear, setStateOpenDialogCrear] = useState(false);
+  const [stateOpenDialogMod, setStateOpenDialogMod] = useState(false);
+  const [stateFormExito, setStateFormExito] = useState(false);
+
+  const enviar = (values, { setSubmitting, setFieldError }) => {
     const datosTipoEmp = {
       idTipoEmprendimiento: values.idTipoEmprendimiento,
       tipoEmprendimiento: values.tipoEmprendimiento,
     };
 
     if (props.variante === "modificar") {
-      apiCalls
-        .putTipoEmprendimiento(datosTipoEmp)
-        .then((response) => console.log(response.data));
+      apiCalls.putTipoEmprendimiento(datosTipoEmp).then((response) => {
+        setSubmitting(false);
+        setStateOpenDialogMod(false);
+      });
     } else {
       apiCalls
         .postTipoEmprendimiento(datosTipoEmp)
-        .then((response) => console.log(response.data));
+        .then((response) => {
+          setSubmitting(false);
+          setStateOpenDialogCrear(false);
+          setStateFormExito(true);
+        })
+        .catch((error) => {
+          console.log(error);
+          setSubmitting(false);
+          setStateOpenDialogCrear(false);
+          if (
+            error.response.data.code ===
+            "error.reactivar.db.registro_ya_existente"
+          )
+            setFieldError(
+              "tipoEmprendimiento",
+              "El tipo de emprendimiento ya existe"
+            );
+        });
     }
   };
 
@@ -101,9 +123,6 @@ const TipoEmprendimiento = (props) => {
     claseBotonModificar = classes.botonOculto;
   }
 
-  const [stateOpenDialogCrear, setStateOpenDialogCrear] = useState(false);
-  const [stateOpenDialogMod, setStateOpenDialogMod] = useState(false);
-
   const openDialogCrear = () => {
     setStateOpenDialogCrear(true);
   };
@@ -127,6 +146,11 @@ const TipoEmprendimiento = (props) => {
 
   return (
     <div>
+      {
+        stateFormExito ? (
+          <Redirect to="/tipoEmprendimientos" />
+        ) : null /* Redireccionar si se agrega con exito */
+      }
       <Typography variant="h4" color="initial">
         {titulo}
       </Typography>
