@@ -126,6 +126,14 @@ function getFuncion() {
   return api.get("/funcion", null);
 }
 
+function getProvincia() {
+  return api.get("/provincia", null);
+}
+
+function getLocalidades(parameters) {
+  return api.get(`/provincia/${parameters}/localidades`);
+}
+
 export const apiCalls = {
   postArticulo,
   postAltaUsuario,
@@ -158,4 +166,6 @@ export const apiCalls = {
   putPerfil,
   getPerfilId,
   getFuncion,
+  getProvincia,
+  getLocalidades,
 };

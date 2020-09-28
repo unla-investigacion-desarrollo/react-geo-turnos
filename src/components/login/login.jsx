@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     display: "flex",
-    height: 750,
+    height: "100vh",
     backgroundColor: "teal",
   },
   card: {
