@@ -12,8 +12,8 @@ const Mapa = (props) => {
   };
 
   const [marker, setMarker] = useState({
-    lat: 59.955413,
-    lng: 30.337844,
+    lat: props.latitud,
+    lng: props.longitud,
   });
 
   //_onClick = ({ x, y, lat, lng, event }) => console.log(x, y, lat, lng, event);
@@ -29,13 +29,16 @@ const Mapa = (props) => {
     <div style={{ height: "100%", width: "100%" }}>
       <GoogleMap
         onClick={_onClick}
-        bootstrapURLKeys={{ key: "AIzaSyC5HxR2IAiiLhXIuCQxctsKq7AVp1CaGmI" }}
+        //AIzaSyC5HxR2IAiiLhXIuCQxctsKq7AVp1CaGmI
+        bootstrapURLKeys={{ key: "" }}
         center={defaultProps.center}
         zoom={defaultProps.zoom}
         resetBoundsOnResize={true}
         options={{ fullscreenControl: false }}
       >
-        <Marcador lat={marker.lat} lng={marker.lng} text="My Marker" />
+        {marker.lat !== "" ? (
+          <Marcador lat={marker.lat} lng={marker.lng} text="My Marker" />
+        ) : null}
       </GoogleMap>
     </div>
   );

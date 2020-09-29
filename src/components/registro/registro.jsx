@@ -26,6 +26,9 @@ const Registro = () => {
   const verFormDatosEmp = () => {
     setVerForm(2);
   };
+  const verFormDatosPersonales = () => {
+    setVerForm(1);
+  };
   return (
     <div className={classes.root}>
       <Grid container justify="center" alignItems="center">
@@ -37,7 +40,9 @@ const Registro = () => {
               {verForm === 1 ? (
                 <RegistroDatosPersonales propClickSiguiente={verFormDatosEmp} />
               ) : (
-                <RegistroDatosEmprendimiento />
+                <RegistroDatosEmprendimiento
+                  propClickAtras={verFormDatosPersonales}
+                />
               )}
             </CardContent>
           </Card>

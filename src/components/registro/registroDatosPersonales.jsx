@@ -3,7 +3,11 @@ import { Formik } from "formik";
 import TextField from "@material-ui/core/TextField";
 import { Button, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { apiCalls } from "../../api/apiCalls";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  cargarSetDeDatosPersonales,
+  selectDatosPersonales,
+} from "./registroSlice";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
 
@@ -71,58 +75,40 @@ const validar = (values) => {
   return errors;
 };
 
-let valoresIniciales = {
-  nombre: "",
-  apellido: "",
-  cuil: "",
-  celular: "",
-  email: "",
-  direccion: "",
-  password: "",
-  repetirPassword: "",
-};
-
 const RegistroDatosPersonales = (props) => {
   const classes = useStyles();
-  let claseBotonEnviar;
+
+  const dispatch = useDispatch();
+  const datosPersonales = useSelector(selectDatosPersonales);
+
+  const valoresIniciales = () => {
+    console.log(datosPersonales);
+    if (Object.keys(datosPersonales).length === 0) {
+      //me fijo la cant de campos
+      return {
+        nombre: "",
+        apellido: "",
+        cuil: "",
+        celular: "",
+        email: "",
+        direccion: "",
+        password: "",
+        repetirPassword: "",
+      };
+    } else {
+      // si esta lleno retorno el set de datos
+      return datosPersonales;
+    }
+  };
 
   const enviar = (values, { setSubmitting }) => {
+    dispatch(cargarSetDeDatosPersonales(values));
     props.propClickSiguiente();
-    const registro = {
-      nombre: values.nombre,
-      apellido: values.apellido,
-      cuil: values.cuil,
-      celular: values.celular,
-      idPerfil: 2, //hardcodeado 1 admin 2 usuario
-      loginVo: {
-        clave: values.password,
-        email: values.email,
-      },
-      //direccion: values.direccion,
-      // repetirPassword: values.repetirPassword,
-      ubicacionVo: {
-        //hardcodeado
-        calle: "string3",
-        departamento: "string4",
-        idLocalidad: 1,
-        idProvincia: 1,
-        latitud: "2",
-        longitud: "string2",
-        numero: 0,
-        piso: 0,
-        usuarioModi: "string",
-      },
-      usuarioModi: "string",
-    };
-    apiCalls.postRegistro(registro).then((response) => {
-      setSubmitting(false);
-      console.log(registro);
-    });
   };
 
   return (
     <Formik
-      initialValues={valoresIniciales}
+      initialValues={valoresIniciales()}
       validate={validar}
       onSubmit={enviar}
       initialErrors={{ usuario: "error" }}
@@ -265,12 +251,7 @@ const RegistroDatosPersonales = (props) => {
               alignItems="center"
               className={classes.botonEspacio}
             >
-              <Button
-                variant="contained"
-                color="primary"
-                className={claseBotonEnviar}
-                type="submit"
-              >
+              <Button variant="contained" color="primary" type="submit">
                 Siguiente
               </Button>
             </Grid>

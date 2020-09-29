@@ -15,6 +15,11 @@ import { apiCalls } from "../../api/apiCalls";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
 import Mapa from "../mapa/mapa";
+import {
+  cargarSetDeDatosEmprendimiento,
+  selectDatosEmprendimiento,
+} from "./registroSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   botonEspacio: {
@@ -49,6 +54,10 @@ const useStyles = makeStyles((theme) => ({
   botonOculto: {
     display: "none",
   },
+  botonEnviar: {
+    marginRight: theme.spacing(2),
+    marginLeft: theme.spacing(2),
+  },
   mapa: {
     height: 300,
   },
@@ -62,90 +71,66 @@ const validar = (values) => {
   if (!values.cuit) {
     errors.cuit = "Requirido";
   }
-  if (!values.rubro === "-1") {
+  if (values.rubro === "-1") {
     errors.rubro = "Requirido";
   }
-  if (!values.tipoEmp) {
+  if (values.tipoEmp === "-1") {
     errors.tipoEmp = "Requirido";
   }
   if (!values.calle) {
     errors.calle = "Requirido";
   }
-  if (!values.provincia === "-1") {
+  if (values.provincia === "-1") {
     errors.provincia = "Requirido";
   }
-  if (!values.localidad === "-1") {
+  if (values.localidad === "-1") {
     errors.localidad = "Requirido";
   }
   if (!values.numero) {
     errors.numero = "Requerido";
   }
   if (!values.lat && !values.lng) {
-    errors.lat = "Ubicación del mapa requerida";
-    errors.lng = "Ubicación del mapa requerida";
+    errors.mapaUbic = "Ubicacion coordenadas mapa Requerido";
   }
   return errors;
 };
 
-let valoresIniciales = {
-  nombre: "",
-  cuit: "",
-  rubro: "-1",
-  tipoEmp: "-1",
-  calle: "",
-  departamento: "",
-  provincia: "-1",
-  localidad: "-1",
-  numero: "",
-  piso: "",
-  lat: "",
-  lng: "",
-};
-
 const RegistroDatosEmprendimiento = (props) => {
   const classes = useStyles();
-  let claseBotonEnviar;
   const [stateRubro, setStateRubro] = useState([]); //rubros
   const [stateTipoEmp, setStateTipoEmp] = useState([]); //tipo emprendimientos
   const [stateProv, setStateProv] = useState([]); //provinciaas
   const [stateLoc, setStateLoc] = useState([]); //localidades
+  const [primeraRenderizacion, setStatePrimRen] = useState(true);
+
+  const dispatch = useDispatch();
+  const datosEmprendimiento = useSelector(selectDatosEmprendimiento);
 
   const enviar = (values, { setSubmitting }) => {
     props.propClickSiguiente();
-    const registro = {
-      nombre: values.nombre,
-      apellido: values.apellido,
-      cuil: values.cuil,
-      celular: values.celular,
-      idPerfil: 2, //hardcodeado 1 admin 2 usuario
-      loginVo: {
-        clave: values.password,
-        email: values.email,
-      },
-      //direccion: values.direccion,
-      // repetirPassword: values.repetirPassword,
-      ubicacionVo: {
-        //hardcodeado
-        calle: "string3",
-        departamento: "string4",
-        idLocalidad: 1,
-        idProvincia: 1,
-        latitud: "2",
-        longitud: "string2",
-        numero: 0,
-        piso: 0,
-        usuarioModi: "string",
-      },
-      usuarioModi: "string",
-    };
-    apiCalls.postRegistro(registro).then((response) => {
-      setSubmitting(false);
-      console.log(registro);
-    });
+  };
+
+  const valoresIniciales = () => {
+    if (Object.keys(datosEmprendimiento).length === 0) {
+      return {
+        nombre: "",
+        cuit: "",
+        rubro: "-1",
+        tipoEmp: "-1",
+        calle: "",
+        departamento: "",
+        provincia: "-1",
+        localidad: "-1",
+        numero: "",
+        piso: "",
+        lat: "",
+        lng: "",
+      };
+    } else return datosEmprendimiento;
   };
 
   const formik = useFormik({
-    initialValues: valoresIniciales,
+    initialValues: valoresIniciales(),
     onSubmit: enviar,
     validate: validar,
     initialErrors: { nombre: "error" },
@@ -171,12 +156,15 @@ const RegistroDatosEmprendimiento = (props) => {
   }, []);
 
   useEffect(() => {
-    values.localidad = "-1";
+    if (!primeraRenderizacion) {
+      values.localidad = "-1";
+    }
     if (values.provincia !== "-1") {
       apiCalls
         .getLocalidades(values.provincia)
         .then((datos) => setStateLoc(datos.data));
     }
+    setStatePrimRen(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values.provincia]); //Ejecutar segun el cambio de provincia
 
@@ -397,18 +385,31 @@ const RegistroDatosEmprendimiento = (props) => {
                   </FormHelperText>
                 </FormControl>
               </div>
+              <br></br>
+              <br></br>
             </Grid>
+
             <Grid item xs={6} className={classes.mapa}>
-              Seleccione ubicacion:
+              <TextField
+                error={errors.mapaUbic ? true : false}
+                id="mapaUbic"
+                label="Seleccione ubicacion:"
+                name="mapaUbic"
+                disabled
+                helperText={errors.mapaUbic && errors.mapaUbic}
+              />
               <Mapa
                 seleccionaPosicion={(lat, lng) => {
                   console.log("funciona", lat);
                   setFieldValue("lat", lat);
                   setFieldValue("lng", lng);
                 }}
+                latitud={values.lat}
+                longitud={values.lng}
               />
             </Grid>
           </Grid>
+
           <Grid
             container
             direction="row"
@@ -419,10 +420,21 @@ const RegistroDatosEmprendimiento = (props) => {
             <Button
               variant="contained"
               color="primary"
-              className={claseBotonEnviar}
+              className={classes.botonEnviar}
+              onClick={() => {
+                dispatch(cargarSetDeDatosEmprendimiento(values));
+                props.propClickAtras();
+              }}
+            >
+              Atras
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.botonEnviar}
               type="submit"
             >
-              Enviar
+              Siguiente
             </Button>
           </Grid>
           <Grid
