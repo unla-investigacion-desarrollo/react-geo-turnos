@@ -17,7 +17,7 @@ import {
   DialogActions,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, Redirect } from "react-router-dom";
 import { apiCalls } from "../../api/apiCalls";
 
 const useStyles = makeStyles((theme) => ({
@@ -56,8 +56,14 @@ const validar = (values) => {
   if (!values.precioReferencia) {
     errors.precioReferencia = "Requerido";
   }
+  if (values.precioReferencia < 0) {
+    errors.precioReferencia = "Error precio referencia invalido";
+  }
   if (!values.peso) {
     errors.peso = "Requerido";
+  }
+  if (values.peso < 0) {
+    errors.peso = "Error peso invalido";
   }
   if (values.categoria === "-1") {
     errors.categoria = "Requerido";
@@ -91,13 +97,17 @@ const FormProducto = (props) => {
     };
     console.log(articulo.precioRefencia);
     if (props.variante === "modificar") {
-      apiCalls
-        .putArticuloReferencia(articulo)
-        .then((datos) => setSubmitting(false));
+      apiCalls.putArticuloReferencia(articulo).then((datos) => {
+        setSubmitting(false);
+        setStateOpenDialogMod(false);
+        setStateFormExito(true);
+      });
     } else {
-      apiCalls
-        .postArticuloReferencia(articulo)
-        .then((datos) => setSubmitting(false));
+      apiCalls.postArticuloReferencia(articulo).then((datos) => {
+        setSubmitting(false);
+        setStateOpenDialogCrear(false);
+        setStateFormExito(true);
+      });
     }
   };
 
@@ -149,6 +159,7 @@ const FormProducto = (props) => {
   const [stateCat, setStateCat] = useState([]); //categorias
   const [stateMar, setStateMar] = useState([]); //marcas
   const [stateMed, setStateMed] = useState([]); //medidas
+  const [stateFormExito, setStateFormExito] = useState(false);
 
   const [stateOpenDialogCrear, setStateOpenDialogCrear] = useState(false);
   const [stateOpenDialogMod, setStateOpenDialogMod] = useState(false);
@@ -190,6 +201,11 @@ const FormProducto = (props) => {
   }, []);
   return (
     <div>
+      {
+        stateFormExito ? (
+          <Redirect to="/productos" />
+        ) : null /* Redireccionar si se agrega con exito */
+      }
       <Typography variant="h4" color="initial">
         {titulo}
       </Typography>
