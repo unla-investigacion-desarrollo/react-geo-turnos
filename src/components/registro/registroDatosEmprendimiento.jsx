@@ -59,29 +59,30 @@ const validar = (values) => {
   if (!values.nombre) {
     errors.nombre = "Requirido";
   }
-  if (!values.apellido) {
-    errors.apellido = "Requirido";
+  if (!values.cuit) {
+    errors.cuit = "Requirido";
   }
-  if (!values.cuil) {
-    errors.cuil = "Requirido";
+  if (!values.rubro === "-1") {
+    errors.rubro = "Requirido";
   }
-  if (!values.celular) {
-    errors.celular = "Requirido";
+  if (!values.tipoEmp) {
+    errors.tipoEmp = "Requirido";
   }
-  if (!values.email) {
-    errors.email = "Requirido";
+  if (!values.calle) {
+    errors.calle = "Requirido";
   }
-  if (!values.direccion) {
-    errors.direccion = "Requerido";
+  if (!values.provincia === "-1") {
+    errors.provincia = "Requirido";
   }
-  if (!values.password) {
-    errors.password = "Requirido";
+  if (!values.localidad === "-1") {
+    errors.localidad = "Requirido";
   }
-  if (!values.repetirPassword) {
-    errors.repetirPassword = "Requirido";
+  if (!values.numero) {
+    errors.numero = "Requerido";
   }
-  if (values.password !== values.repetirPassword) {
-    errors.repetirPassword = "Contraseña no coincide";
+  if (!values.lat && !values.lng) {
+    errors.lat = "Ubicación del mapa requerida";
+    errors.lng = "Ubicación del mapa requerida";
   }
   return errors;
 };
@@ -96,6 +97,7 @@ let valoresIniciales = {
   provincia: "-1",
   localidad: "-1",
   numero: "",
+  piso: "",
   lat: "",
   lng: "",
 };
@@ -296,7 +298,7 @@ const RegistroDatosEmprendimiento = (props) => {
                     errors.departamento && touched.departamento ? true : false
                   }
                   id="departamento"
-                  label="Departamento"
+                  label="Departamento (Opcional)"
                   name="departamento"
                   onBlur={handleBlur}
                   value={values.departamento}
@@ -322,7 +324,7 @@ const RegistroDatosEmprendimiento = (props) => {
                 <TextField
                   error={errors.piso && touched.piso ? true : false}
                   id="piso"
-                  label="Numero"
+                  label="Piso (Opcional)"
                   name="piso"
                   onBlur={handleBlur}
                   value={values.piso}
@@ -420,7 +422,7 @@ const RegistroDatosEmprendimiento = (props) => {
               className={claseBotonEnviar}
               type="submit"
             >
-              Siguiente
+              Enviar
             </Button>
           </Grid>
           <Grid
