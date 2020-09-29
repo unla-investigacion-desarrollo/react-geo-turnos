@@ -206,8 +206,7 @@ const FormProducto = (props) => {
             onChange={handleChange}
             helperText={errors.nombre && touched.nombre && errors.nombre}
           />
-        </div>
-        <div>
+
           <TextField
             error={errors.descripcion && touched.descripcion ? true : false}
             id="descripcion"
@@ -232,8 +231,7 @@ const FormProducto = (props) => {
             onChange={handleChange}
             helperText={errors.codBarra && touched.codBarra && errors.codBarra}
           />
-        </div>
-        <div>
+
           <TextField
             error={
               errors.precioReferencia && touched.precioReferencia ? true : false
@@ -264,8 +262,7 @@ const FormProducto = (props) => {
             onChange={handleChange}
             helperText={errors.peso && touched.peso && errors.peso}
           />
-        </div>
-        <div>
+
           <FormControl
             error={errors.categoria && touched.categoria ? true : false}
             className={classes.formControl}
@@ -327,8 +324,7 @@ const FormProducto = (props) => {
               {errors.marca && touched.marca && errors.marca}
             </FormHelperText>
           </FormControl>
-        </div>
-        <div>
+
           <FormControl
             error={errors.unidadMedida && touched.unidadMedida ? true : false}
             className={classes.formControl}
