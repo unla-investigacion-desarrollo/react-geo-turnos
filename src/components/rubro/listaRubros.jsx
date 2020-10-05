@@ -1,36 +1,48 @@
 import React, { useState, useEffect } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Button,
-  Typography,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { TableContainer, Paper, Button, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { apiCalls } from "../../api/apiCalls";
-
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-});
+import { DataGrid } from "@material-ui/data-grid";
 
 const ListaRubros = () => {
-  const classes = useStyles();
   const [state, setState] = useState({
     rubros: [],
   });
 
   useEffect(() => {
     apiCalls.getRubro().then((response) => {
-      setState({ rubros: response.data });
+      let rubrosLista = [];
+      response.data.map((rubro) =>
+        rubrosLista.push({
+          id: rubro.idRubro,
+          nombre: rubro.nombre,
+        })
+      );
+      setState({ rubros: rubrosLista });
     });
   }, []);
+
+  const columns = [
+    { field: "id", headerName: "#", width: 70 },
+    { field: "nombre", headerName: "Nombre Rubro", width: 300 },
+    {
+      field: "accion",
+      headerName: "Accion",
+      width: 150,
+      renderCell: (params) => {
+        return (
+          <Button
+            color="primary"
+            variant="contained"
+            component={Link}
+            to={"/rubros/" + params.getValue("id")}
+          >
+            Ver
+          </Button>
+        );
+      },
+    },
+  ];
 
   return (
     <>
@@ -45,34 +57,13 @@ const ListaRubros = () => {
       >
         Agregar Rubro
       </Button>
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>#</TableCell>
-              <TableCell>Nombre Rubro</TableCell>
-              <TableCell>Accion</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {state.rubros.map((rub) => (
-              <TableRow key={rub.idRubro}>
-                <TableCell>{rub.idRubro}</TableCell>
-                <TableCell>{rub.nombre}</TableCell>
-                <TableCell>
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    component={Link}
-                    to={"/rubros/" + rub.idRubro}
-                  >
-                    Ver
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+      <TableContainer
+        component={Paper}
+        style={{ height: "70vh", minWidth: 600, width: "99%" }}
+      >
+        <div style={{ height: "70vh", width: "100%" }}>
+          <DataGrid rows={state.rubros} columns={columns} pageSize={10} />
+        </div>
       </TableContainer>
     </>
   );

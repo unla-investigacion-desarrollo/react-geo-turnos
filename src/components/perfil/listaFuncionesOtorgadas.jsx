@@ -8,6 +8,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { RemoveCircle, Settings } from "@material-ui/icons";
 import { Typography, Button, Divider } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
+import { useSelector, useDispatch } from "react-redux";
+import { selectFuncionOtorgados, removerFuncion } from "./funcionSlice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,6 +23,8 @@ const useStyles = makeStyles((theme) => ({
 
 const ListaFuncionesOtorgadas = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const funcionesOtorgadas = useSelector(selectFuncionOtorgados);
   return (
     <>
       <Typography variant="h5" color="initial">
@@ -28,22 +32,25 @@ const ListaFuncionesOtorgadas = () => {
       </Typography>
       <Card>
         <List className={classes.root}>
-          {["Editar Marca", "Borrar Articulo"].map((funcion) => {
+          {funcionesOtorgadas.map((funcion) => {
             const labelId = `checkbox-list-label-${funcion}`;
 
             return (
-              <React.Fragment key={funcion}>
-                <ListItem key={funcion} role={undefined} dense button>
+              <React.Fragment key={funcion.idFuncion}>
+                <ListItem key={funcion.idFuncion} role={undefined} dense button>
                   <ListItemIcon>
                     <Settings />
                   </ListItemIcon>
-                  <ListItemText id={labelId} primary={funcion} />
+                  <ListItemText id={labelId} primary={funcion.descripcion} />
                   <ListItemSecondaryAction>
                     <Button
                       size="small"
                       color="primary"
                       variant="contained"
                       endIcon={<RemoveCircle />}
+                      onClick={() =>
+                        dispatch(removerFuncion(funcion.idFuncion))
+                      }
                     >
                       Remover
                     </Button>

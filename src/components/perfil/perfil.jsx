@@ -12,9 +12,11 @@ import {
   DialogActions,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, Redirect } from "react-router-dom";
 import { apiCalls } from "../../api/apiCalls";
 import VistaFunciones from "./vistaFunciones";
+import { useSelector } from "react-redux";
+import { selectFuncionOtorgados } from "./funcionSlice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,6 +54,8 @@ const validar = (values) => {
 const Perfil = (props) => {
   const [stateOpenDialogCrear, setStateOpenDialogCrear] = useState(false);
   const [stateOpenDialogMod, setStateOpenDialogMod] = useState(false);
+  const [stateFormExito, setStateFormExito] = useState(false);
+  const funcionesOtorgadas = useSelector(selectFuncionOtorgados);
 
   const enviar = (values, { setSubmitting }) => {
     const dataPerfil = { idPerfil: values.idPerfil, nombre: values.perfil };
@@ -63,6 +67,15 @@ const Perfil = (props) => {
       });
     } else {
       apiCalls.postPerfil(dataPerfil).then((datos) => {
+        funcionesOtorgadas.map((funcion) => {
+          apiCalls.postFuncionPerfil({
+            edicion: true,
+            idFuncion: funcion.idFuncion,
+            idPerfil: datos.data.idPerfil,
+          });
+          return null;
+        });
+        setStateFormExito(true);
         setSubmitting(false);
         setStateOpenDialogCrear(false);
       });
@@ -129,6 +142,11 @@ const Perfil = (props) => {
 
   return (
     <div>
+      {
+        stateFormExito ? (
+          <Redirect to="/perfiles" />
+        ) : null /* Redireccionar si se agrega con exito */
+      }
       <Typography variant="h4" color="initial">
         {titulo}
       </Typography>

@@ -8,8 +8,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { AddCircle, Settings } from "@material-ui/icons";
 import { Typography, Button, Divider } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
-import { useSelector } from "react-redux";
-import { selectFuncionDisponibles } from "./funcionSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { selectFuncionDisponibles, otorgarFuncion } from "./funcionSlice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 const ListaFuncionesDisp = () => {
   const classes = useStyles();
   const funcionesDisponibles = useSelector(selectFuncionDisponibles);
+  const dispatch = useDispatch();
   return (
     <>
       <Typography variant="h5" color="initial">
@@ -47,6 +48,9 @@ const ListaFuncionesDisp = () => {
                       color="primary"
                       variant="contained"
                       endIcon={<AddCircle />}
+                      onClick={() =>
+                        dispatch(otorgarFuncion(funcion.idFuncion))
+                      }
                     >
                       Añadir
                     </Button>

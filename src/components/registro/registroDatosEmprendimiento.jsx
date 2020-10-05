@@ -20,6 +20,7 @@ import {
   selectDatosEmprendimiento,
 } from "./registroSlice";
 import { useDispatch, useSelector } from "react-redux";
+//import Autocomplete from "@material-ui/lab/Autocomplete";
 
 const useStyles = makeStyles((theme) => ({
   botonEspacio: {
@@ -387,6 +388,22 @@ const RegistroDatosEmprendimiento = (props) => {
               </div>
               <br></br>
               <br></br>
+              {/* <Autocomplete
+                id="provincia"
+                options={stateProv}
+                name="provincia"
+                value={values.provincia}
+                onChange={(event, newValue) => {
+                  setFieldValue("provincia", newValue);
+                }}
+                getOptionLabel={(option) => option.nombre}
+                style={{ width: 300 }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Provincia" />
+                )}
+              /> 
+              Ejemplo de provincia autocomplete
+              */}
             </Grid>
 
             <Grid item xs={6} className={classes.mapa}>
