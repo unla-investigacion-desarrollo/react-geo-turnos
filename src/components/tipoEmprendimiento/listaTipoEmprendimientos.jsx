@@ -1,40 +1,56 @@
 import React, { useState, useEffect } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Button,
-  Typography,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { TableContainer, Paper, Button, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { apiCalls } from "../../api/apiCalls";
-
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-});
+import { DataGrid } from "@material-ui/data-grid";
 
 const ListaTipoEmprendimientos = () => {
-  const classes = useStyles();
   const [state, setState] = useState({
     tipoEmprendimientos: [],
   });
 
   useEffect(() => {
     apiCalls.getTipoEmprendimiento().then((response) => {
-      setState({ tipoEmprendimientos: response.data });
+      let listaTipoEmprendimiento = [];
+      response.data.map((tipoEmprendimiento) =>
+        listaTipoEmprendimiento.push({
+          id: tipoEmprendimiento.idTipoEmprendimiento,
+          nombre: tipoEmprendimiento.nombre,
+        })
+      );
+      setState({ tipoEmprendimientos: listaTipoEmprendimiento });
     });
   }, []);
 
+  const columns = [
+    { field: "id", headerName: "#", width: 70 },
+    {
+      field: "nombre",
+      headerName: "Nombre Tipo de Emprendimiento",
+      width: 300,
+    },
+    {
+      field: "accion",
+      headerName: "Accion",
+      width: 150,
+      renderCell: (params) => {
+        return (
+          <Button
+            color="primary"
+            variant="contained"
+            component={Link}
+            to={"/tipoEmprendimientos/" + params.getValue("id")}
+          >
+            Ver
+          </Button>
+        );
+      },
+    },
+  ];
+
   return (
     <>
-      <Typography variant="h3" color="initial">
+      <Typography variant="h5" color="initial">
         Lista Tipo de emprendimientos:
       </Typography>
       <Button
@@ -45,34 +61,17 @@ const ListaTipoEmprendimientos = () => {
       >
         Agregar Emprendimiento
       </Button>
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>#</TableCell>
-              <TableCell>Nombre Tipo de Emprendimiento</TableCell>
-              <TableCell>Accion</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {state.tipoEmprendimientos.map((tipoEmp) => (
-              <TableRow key={tipoEmp.idTipoEmprendimiento}>
-                <TableCell>{tipoEmp.idTipoEmprendimiento}</TableCell>
-                <TableCell>{tipoEmp.nombre}</TableCell>
-                <TableCell>
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    component={Link}
-                    to={"/tipoEmprendimientos/" + tipoEmp.idTipoEmprendimiento}
-                  >
-                    Ver
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+      <TableContainer
+        component={Paper}
+        style={{ height: "70vh", minWidth: 600, width: "99%" }}
+      >
+        <div style={{ height: "70vh", width: "100%" }}>
+          <DataGrid
+            rows={state.tipoEmprendimientos}
+            columns={columns}
+            pageSize={10}
+          />
+        </div>
       </TableContainer>
     </>
   );

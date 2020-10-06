@@ -34,7 +34,7 @@ const ListaCategorias = () => {
 
   return (
     <>
-      <Typography variant="h3" color="initial">
+      <Typography variant="h5" color="initial">
         Lista Categorias:
       </Typography>
       <Button

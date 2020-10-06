@@ -46,7 +46,7 @@ const ListaRubros = () => {
 
   return (
     <>
-      <Typography variant="h3" color="initial">
+      <Typography variant="h5" color="initial">
         Lista Rubros:
       </Typography>
       <Button

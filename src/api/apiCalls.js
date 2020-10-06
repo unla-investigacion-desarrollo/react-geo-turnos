@@ -28,6 +28,10 @@ function postRubro(parameters) {
   return api.post(`/rubro`, parameters);
 }
 
+function deleteRubro(parameters) {
+  return api.delete(`/rubro/${parameters}`);
+}
+
 function getMarca() {
   return api.get("/marca", null);
 }
@@ -44,6 +48,10 @@ function putMarca(parameters) {
   return api.put(`/marca/${parameters.idMarca}`, parameters);
 }
 
+function deleteMarca(parameters) {
+  return api.delete(`/marca/${parameters}`);
+}
+
 function getCategoria() {
   return api.get("/categoria", null);
 }
@@ -58,6 +66,10 @@ function putCategoria(parameters) {
 
 function postCategoria(parameters) {
   return api.post(`/categoria`, parameters);
+}
+
+function deleteCategoria(parameters) {
+  return api.delete(`/categoria/${parameters}`);
 }
 
 function getUnidadMedida() {
@@ -83,6 +95,10 @@ function putArticuloReferencia(parameters) {
   );
 }
 
+function deleteArticuloReferencia(parameters) {
+  return api.delete(`/articuloReferencia/${parameters}`);
+}
+
 function getTipoEmprendimiento() {
   return api.get("/tipoEmprendimiento", null);
 }
@@ -99,6 +115,10 @@ function putTipoEmprendimiento(parameters) {
 
 function postTipoEmprendimiento(parameters) {
   return api.post(`/tipoEmprendimiento`, parameters);
+}
+
+function deleteTipoEmprendimiento(parameters) {
+  return api.delete(`/tipoEmprendimiento/${parameters}`);
 }
 
 function postRegistro(parameters) {
@@ -138,10 +158,6 @@ function getLocalidades(parameters) {
   return api.get(`/provincia/${parameters}/localidades`);
 }
 
-function deleteRubro(parameters) {
-  return api.delete(`/rubro/${parameters}`);
-}
-
 export const apiCalls = {
   postArticulo,
   postAltaUsuario,
@@ -150,23 +166,28 @@ export const apiCalls = {
   getRubroId,
   putRubro,
   postRubro,
+  deleteRubro,
   getMarca,
   getMarcaId,
   putMarca,
   postMarca,
+  deleteMarca,
   getCategoria,
   getCategoriaId,
   putCategoria,
   postCategoria,
+  deleteCategoria,
   getUnidadMedida,
   postArticuloReferencia,
   getArticuloReferencia,
   getArticuloReferenciaId,
   putArticuloReferencia,
+  deleteArticuloReferencia,
   getTipoEmprendimiento,
   getTipoEmprendimientoId,
   putTipoEmprendimiento,
   postTipoEmprendimiento,
+  deleteTipoEmprendimiento,
   postRegistro,
   getTurno,
   getPerfil,
@@ -177,5 +198,4 @@ export const apiCalls = {
   getProvincia,
   getLocalidades,
   postFuncionPerfil,
-  deleteRubro,
 };

@@ -49,6 +49,11 @@ const Categoria = (props) => {
   const [stateOpenDialogCrear, setStateOpenDialogCrear] = useState(false);
   const [stateOpenDialogMod, setStateOpenDialogMod] = useState(false);
   const [stateFormExito, setStateFormExito] = useState(false);
+  const [stateOpenDialogBorrar, setStateOpenDialogBorrar] = useState(false);
+  const [
+    stateOpenDialogErrorNoBorrar,
+    setStateOpenDialogErrorNoBorrar,
+  ] = useState(false);
 
   const enviar = (values, { setSubmitting, setFieldError }) => {
     const datosCategoria = {
@@ -80,6 +85,22 @@ const Categoria = (props) => {
             setFieldError("categoria", "Esa categoria ya existe");
         });
     }
+  };
+
+  const eliminar = (values) => {
+    apiCalls
+      .deleteCategoria(values.idCategoria)
+      .then((datos) => {
+        setStateOpenDialogBorrar(false);
+        setStateFormExito(true);
+      })
+      .catch((error) => {
+        console.log(error);
+        console.log(error.response.data);
+        if (error.response.data.error === "Internal Server Error") {
+          setStateOpenDialogErrorNoBorrar(true);
+        }
+      });
   };
 
   const formik = useFormik({
@@ -213,6 +234,15 @@ const Categoria = (props) => {
             Modificar
           </Button>
 
+          <Button
+            variant="contained"
+            color="secondary"
+            className={claseBotonModificar}
+            onClick={() => setStateOpenDialogBorrar(true)}
+          >
+            Eliminar
+          </Button>
+
           <Dialog
             open={stateOpenDialogCrear}
             onClose={closeDialogCrear}
@@ -270,6 +300,56 @@ const Categoria = (props) => {
                 disabled={isSubmitting}
                 onClick={handleSubmit}
               >
+                Aceptar
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Dialog
+            open={stateOpenDialogBorrar}
+            onClose={() => setStateOpenDialogBorrar(false)}
+            aria-labelledby="alert-dialog-title-borrar"
+            aria-describedby="alert-dialog-description-borrar"
+          >
+            <DialogTitle id="alert-dialog-title-borrar">
+              {"Estas seguro de eliminar la Categoria?"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description-borrar">
+                texto de ayuda al eliminar
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={() => setStateOpenDialogBorrar(false)}
+                color="primary"
+              >
+                Cancelar
+              </Button>
+              <Button
+                color="secondary"
+                autoFocus
+                variant="contained"
+                disabled={isSubmitting}
+                onClick={() => eliminar(values)}
+              >
+                Eliminar
+              </Button>
+            </DialogActions>
+          </Dialog>
+
+          <Dialog
+            open={stateOpenDialogErrorNoBorrar}
+            onClose={() => setStateOpenDialogErrorNoBorrar(false)}
+            aria-labelledby="alert-dialog-title-error-borrar"
+            aria-describedby="alert-dialog-description-error-borrar"
+          >
+            <DialogTitle id="alert-dialog-title-error-borrar">
+              {
+                "Error, esa Categoria existe en un Articulo de referencia, borre primero el/los articulos"
+              }
+            </DialogTitle>
+            <DialogActions>
+              <Button onClick={() => setStateFormExito(true)} color="primary">
                 Aceptar
               </Button>
             </DialogActions>

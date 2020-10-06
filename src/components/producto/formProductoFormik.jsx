@@ -111,6 +111,15 @@ const FormProducto = (props) => {
     }
   };
 
+  const eliminar = (values) => {
+    apiCalls
+      .deleteArticuloReferencia(values.idArticuloReferencia)
+      .then((datos) => {
+        setStateOpenDialogBorrar(false);
+        setStateFormExito(true);
+      });
+  };
+
   const formik = useFormik({
     initialValues: {
       idArticuloReferencia: 0,
@@ -163,6 +172,7 @@ const FormProducto = (props) => {
 
   const [stateOpenDialogCrear, setStateOpenDialogCrear] = useState(false);
   const [stateOpenDialogMod, setStateOpenDialogMod] = useState(false);
+  const [stateOpenDialogBorrar, setStateOpenDialogBorrar] = useState(false);
 
   const openDialogCrear = () => {
     setStateOpenDialogCrear(true);
@@ -420,6 +430,15 @@ const FormProducto = (props) => {
             Modificar
           </Button>
 
+          <Button
+            variant="contained"
+            color="secondary"
+            className={claseBotonModificar}
+            onClick={() => setStateOpenDialogBorrar(true)}
+          >
+            Eliminar
+          </Button>
+
           <Dialog
             open={stateOpenDialogCrear}
             onClose={closeDialogCrear}
@@ -478,6 +497,39 @@ const FormProducto = (props) => {
                 onClick={handleSubmit}
               >
                 Aceptar
+              </Button>
+            </DialogActions>
+          </Dialog>
+
+          <Dialog
+            open={stateOpenDialogBorrar}
+            onClose={() => setStateOpenDialogBorrar(false)}
+            aria-labelledby="alert-dialog-title-borrar"
+            aria-describedby="alert-dialog-description-borrar"
+          >
+            <DialogTitle id="alert-dialog-title-borrar">
+              {"Estas seguro de eliminar el Articulo de referencia?"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description-borrar">
+                texto de ayuda al eliminar
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={() => setStateOpenDialogBorrar(false)}
+                color="primary"
+              >
+                Cancelar
+              </Button>
+              <Button
+                color="secondary"
+                autoFocus
+                variant="contained"
+                disabled={isSubmitting}
+                onClick={() => eliminar(values)}
+              >
+                Eliminar
               </Button>
             </DialogActions>
           </Dialog>
