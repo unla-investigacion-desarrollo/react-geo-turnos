@@ -3,8 +3,9 @@ export const sesionSlice = createSlice({
   name: "sesion",
   initialState: {
     nombre: "Carlos",
-    apellido: "Null",
+    apellido: "Perez",
     nombreEmprendimiento: "Mi Panaderia",
+    tipoUsuario: "",
   },
   reducers: {
     cargarDatosSesion: (state, action) => {

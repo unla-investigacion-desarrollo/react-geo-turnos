@@ -25,12 +25,11 @@ const Mapa = (props) => {
   }
 
   return (
-    // Important! Always set the container height explicitly
     <div style={{ height: "100%", width: "100%" }}>
       <GoogleMap
         onClick={_onClick}
         //AIzaSyC5HxR2IAiiLhXIuCQxctsKq7AVp1CaGmI
-        bootstrapURLKeys={{ key: "" }}
+        bootstrapURLKeys={{ key: "AIzaSyC5HxR2IAiiLhXIuCQxctsKq7AVp1CaGmI" }}
         center={defaultProps.center}
         zoom={defaultProps.zoom}
         resetBoundsOnResize={true}

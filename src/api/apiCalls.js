@@ -158,6 +158,10 @@ function getLocalidades(parameters) {
   return api.get(`/provincia/${parameters}/localidades`);
 }
 
+function putTurno(parameters) {
+  return api.put(`/turno/${parameters.idTurno}`, parameters);
+}
+
 export const apiCalls = {
   postArticulo,
   postAltaUsuario,
@@ -198,4 +202,5 @@ export const apiCalls = {
   getProvincia,
   getLocalidades,
   postFuncionPerfil,
+  putTurno,
 };

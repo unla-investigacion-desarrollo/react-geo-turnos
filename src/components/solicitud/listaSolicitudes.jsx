@@ -11,8 +11,13 @@ import Close from "@material-ui/icons/Close";
 import Comments from "@material-ui/icons/Comment";
 import { Typography, Divider, IconButton } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
-import { useSelector } from "react-redux";
-import { selectTurnosPendientes } from "./turnoSlice";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  selectTurnosPendientes,
+  aceptarTurno,
+  rechazarTurno,
+} from "./turnoSlice";
+import { apiCalls } from "../../api/apiCalls";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,6 +32,40 @@ const useStyles = makeStyles((theme) => ({
 const ListaSolicitudes = () => {
   const classes = useStyles();
   const turnosPendientes = useSelector(selectTurnosPendientes);
+  const dispatch = useDispatch();
+
+  const formatearTurno = (idTurno, idEstado) => {
+    let turno = turnosPendientes.find((turno) => turno.idTurno === idTurno);
+    return {
+      idTurno: turno.idTurno,
+      idEmprendimiento: turno.emprendimiento.idEmprendimiento,
+      idEstadoTurno: idEstado,
+      idPersona: turno.persona.idPersona,
+      observaciones: turno.observaciones,
+      usuarioModi: turno.usuarioModi,
+    };
+  };
+
+  const chequearTurnoAceptar = (idTurno) => {
+    let turnoFormateado = formatearTurno(idTurno, 1);
+    apiCalls
+      .putTurno(turnoFormateado)
+      .then((response) => {
+        dispatch(aceptarTurno(idTurno));
+      })
+      .catch((error) => dispatch(aceptarTurno(idTurno)));
+  };
+
+  const chequearTurnoRechazar = (idTurno) => {
+    let turnoFormateado = formatearTurno(idTurno, 3);
+    apiCalls
+      .putTurno(turnoFormateado)
+      .then((response) => {
+        dispatch(rechazarTurno(idTurno));
+      })
+      .catch((error) => dispatch(rechazarTurno(idTurno)));
+  };
+
   return (
     <>
       <Typography variant="h5" color="initial">
@@ -58,6 +97,7 @@ const ListaSolicitudes = () => {
                       size="small"
                       color="secondary"
                       variant="contained"
+                      onClick={() => chequearTurnoRechazar(turno.idTurno)}
                     >
                       <Close />
                     </IconButton>
@@ -65,6 +105,7 @@ const ListaSolicitudes = () => {
                       size="small"
                       color="primary"
                       variant="contained"
+                      onClick={() => chequearTurnoAceptar(turno.idTurno)}
                     >
                       <Check />
                     </IconButton>

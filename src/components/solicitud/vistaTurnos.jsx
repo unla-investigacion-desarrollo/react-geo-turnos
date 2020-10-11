@@ -3,12 +3,13 @@ import Grid from "@material-ui/core/Grid";
 import ListaSolicitudes from "./listaSolicitudes";
 import ListaAceptados from "./listaAceptados";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { cargarTurnos } from "./turnoSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { cargarTurnos, selectTurnosRechazados } from "./turnoSlice";
 import { apiCalls } from "../../api/apiCalls";
 
 const VistaTurnos = () => {
   const dispatch = useDispatch();
+  const turnosRechazados = useSelector(selectTurnosRechazados);
   useEffect(() => {
     apiCalls.getTurno().then((response) => {
       dispatch(cargarTurnos(response.data));
@@ -23,6 +24,7 @@ const VistaTurnos = () => {
       <Grid item xs={6}>
         <ListaAceptados />
       </Grid>
+      {JSON.stringify(turnosRechazados)}
     </Grid>
   );
 };
