@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -18,6 +18,7 @@ import {
   rechazarTurno,
 } from "./turnoSlice";
 import { apiCalls } from "../../api/apiCalls";
+import DialogRechazar from "./dialogRechazar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,6 +34,8 @@ const ListaSolicitudes = () => {
   const classes = useStyles();
   const turnosPendientes = useSelector(selectTurnosPendientes);
   const dispatch = useDispatch();
+  const [stateOpenDialogRechazar, setStateOpenDialogRechazar] = useState(false);
+  const [stateTurnoParaDialog,setStateTurnoParaDialog] = useState(null);
 
   const formatearTurno = (idTurno, idEstado) => {
     let turno = turnosPendientes.find((turno) => turno.idTurno === idTurno);
@@ -66,6 +69,12 @@ const ListaSolicitudes = () => {
       .catch((error) => dispatch(rechazarTurno(idTurno)));
   };
 
+  
+  const mostrarDialog = (turno) => {
+    setStateOpenDialogRechazar(true);
+    setStateTurnoParaDialog(turno);
+  }
+
   return (
     <>
       <Typography variant="h5" color="initial">
@@ -97,7 +106,7 @@ const ListaSolicitudes = () => {
                       size="small"
                       color="secondary"
                       variant="contained"
-                      onClick={() => chequearTurnoRechazar(turno.idTurno)}
+                      onClick={() => mostrarDialog(turno)}
                     >
                       <Close />
                     </IconButton>
@@ -118,11 +127,14 @@ const ListaSolicitudes = () => {
                     </IconButton>
                   </ListItemSecondaryAction>
                 </ListItem>
+
                 <Divider />
               </React.Fragment>
             );
           })}
         </List>
+        <DialogRechazar turno={stateTurnoParaDialog} cambiarVisible={setStateOpenDialogRechazar} 
+          esVisible={stateOpenDialogRechazar} rechazar= {chequearTurnoRechazar}/>
       </Card>
     </>
   );

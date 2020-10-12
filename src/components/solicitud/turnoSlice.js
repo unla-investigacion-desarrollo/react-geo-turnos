@@ -40,10 +40,13 @@ export const turnoSlice = createSlice({
         action.payload
       );
     },
+    deshacerAceptado: (state, action) => {
+      moverTurno(state.turnosAceptados, state.turnosPendientes, action.payload);
+    }
   },
 });
 
-export const { cargarTurnos, aceptarTurno, rechazarTurno } = turnoSlice.actions;
+export const { cargarTurnos, aceptarTurno, rechazarTurno, deshacerAceptado } = turnoSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

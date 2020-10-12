@@ -142,6 +142,10 @@ function getPerfilId(parameters) {
   return api.get(`/perfil/${parameters}`);
 }
 
+function getFuncionesPerfil(parameters){
+  return api.get(`/perfil/${parameters}/funciones`);
+}
+
 function postFuncionPerfil(parameters) {
   return api.post("/funcionPerfil", parameters);
 }
@@ -203,4 +207,5 @@ export const apiCalls = {
   getLocalidades,
   postFuncionPerfil,
   putTurno,
+  getFuncionesPerfil
 };

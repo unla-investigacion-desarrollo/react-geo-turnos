@@ -37,14 +37,7 @@ const ListaPerfiles = () => {
       <Typography variant="h3" color="initial">
         Lista Perfiles:
       </Typography>
-      <Button
-        color="primary"
-        variant="contained"
-        component={Link}
-        to="/perfiles/nuevo"
-      >
-        Agregar Perfil
-      </Button>
+      
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>

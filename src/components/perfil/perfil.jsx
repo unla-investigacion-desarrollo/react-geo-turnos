@@ -56,6 +56,7 @@ const Perfil = (props) => {
   const [stateOpenDialogMod, setStateOpenDialogMod] = useState(false);
   const [stateFormExito, setStateFormExito] = useState(false);
   const funcionesOtorgadas = useSelector(selectFuncionOtorgados);
+  const [stateIdPerfil, setStateIdPerfil] = useState(null);
 
   const enviar = (values, { setSubmitting }) => {
     const dataPerfil = { idPerfil: values.idPerfil, nombre: values.perfil };
@@ -83,7 +84,7 @@ const Perfil = (props) => {
   };
 
   const formik = useFormik({
-    initialValues: { perfil: "" },
+    initialValues: {idPerfil: null, perfil: "" },
     onSubmit: enviar,
     validate: validar,
     initialErrors: { perfil: "error" },
@@ -129,12 +130,11 @@ const Perfil = (props) => {
   };
 
   useEffect(() => {
-    console.log("useeffect");
     if (props.variante === "modificar") {
       apiCalls.getPerfilId(id).then((reponse) => {
         const dataPerfil = reponse.data;
-        console.log(dataPerfil);
         setValues({ idPerfil: dataPerfil.idPerfil, perfil: dataPerfil.nombre });
+        setStateIdPerfil(dataPerfil.idPerfil);
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -165,7 +165,7 @@ const Perfil = (props) => {
           />
         </div>
         <div className={classes.funciones}>
-          <VistaFunciones />
+          <VistaFunciones idPerfil={stateIdPerfil}/>
         </div>
         <div>
           <Button

@@ -11,6 +11,16 @@ export const funcionSlice = createSlice({
       state.funcionOtorgados = [];
     },
 
+    cargarFuncionesOtorgadas: (state, action) => {
+      state.funcionOtorgados = action.payload;
+      let encontrado = null;
+      state.funcionOtorgados.forEach((funcion) => {
+        encontrado = null;
+        encontrado = state.funcionDisponibles.find((funcionD)=>funcion.idFuncion === funcionD.idFuncion);
+        if(encontrado){state.funcionDisponibles.splice(state.funcionDisponibles.indexOf(encontrado), 1)}
+      });
+    },
+
     otorgarFuncion: (state, action) => {
       let idFuncion = action.payload;
       let funcionEncontrada = state.funcionDisponibles.find(
@@ -41,6 +51,7 @@ export const {
   cargarFuncionesDisp,
   otorgarFuncion,
   removerFuncion,
+  cargarFuncionesOtorgadas
 } = funcionSlice.actions;
 
 // The function below is called a selector and allows us to select a value from

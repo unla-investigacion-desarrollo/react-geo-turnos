@@ -7,10 +7,13 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import Person from "@material-ui/icons/Person";
 import Input from "@material-ui/icons/Input";
-import { Typography, Button, Divider } from "@material-ui/core";
+import { Typography, Button, Divider, IconButton } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
-import { selectTurnosAceptados } from "./turnoSlice";
-import { useSelector } from "react-redux";
+import { selectTurnosAceptados, deshacerAceptado } from "./turnoSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { ArrowBack } from "@material-ui/icons";
+
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -23,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ListaAceptados = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const turnosAceptados = useSelector(selectTurnosAceptados);
   return (
     <>
@@ -51,6 +55,14 @@ const ListaAceptados = () => {
                     }
                   />
                   <ListItemSecondaryAction>
+                  <IconButton
+                      size="small"
+                      color="secondary"
+                      variant="contained"
+                      onClick={() => dispatch(deshacerAceptado(turno.idTurno))}
+                    >
+                      <ArrowBack />
+                    </IconButton>
                     <Button
                       size="small"
                       color="primary"

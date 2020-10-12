@@ -124,6 +124,7 @@ const RegistroDatosEmprendimiento = (props) => {
         localidad: "-1",
         numero: "",
         piso: "",
+        mapaUbic: "",
         lat: "",
         lng: "",
       };
@@ -268,59 +269,6 @@ const RegistroDatosEmprendimiento = (props) => {
                   </FormHelperText>
                 </FormControl>
               </div>
-
-              <div>
-                <TextField
-                  error={errors.calle && touched.calle ? true : false}
-                  id="calle"
-                  label="Calle"
-                  name="calle"
-                  type="text"
-                  onBlur={handleBlur}
-                  value={values.calle}
-                  onChange={handleChange}
-                  helperText={errors.calle && touched.calle && errors.calle}
-                />
-
-                <TextField
-                  error={
-                    errors.departamento && touched.departamento ? true : false
-                  }
-                  id="departamento"
-                  label="Departamento (Opcional)"
-                  name="departamento"
-                  onBlur={handleBlur}
-                  value={values.departamento}
-                  onChange={handleChange}
-                  helperText={
-                    errors.departamento &&
-                    touched.departamento &&
-                    errors.departamento
-                  }
-                />
-              </div>
-              <div>
-                <TextField
-                  error={errors.numero && touched.numero ? true : false}
-                  id="numero"
-                  label="Numero"
-                  name="numero"
-                  onBlur={handleBlur}
-                  value={values.numero}
-                  onChange={handleChange}
-                  helperText={errors.numero && touched.numero && errors.numero}
-                />
-                <TextField
-                  error={errors.piso && touched.piso ? true : false}
-                  id="piso"
-                  label="Piso (Opcional)"
-                  name="piso"
-                  onBlur={handleBlur}
-                  value={values.piso}
-                  onChange={handleChange}
-                  helperText={errors.piso && touched.piso && errors.piso}
-                />
-              </div>
               <div>
                 <FormControl
                   error={errors.provincia && touched.provincia ? true : false}
@@ -386,6 +334,61 @@ const RegistroDatosEmprendimiento = (props) => {
                   </FormHelperText>
                 </FormControl>
               </div>
+              <div>
+                <TextField
+                  error={errors.calle && touched.calle ? true : false}
+                  id="calle"
+                  label="Calle"
+                  name="calle"
+                  type="text"
+                  onBlur={handleBlur}
+                  value={values.calle}
+                  onChange={handleChange}
+                  helperText={errors.calle && touched.calle && errors.calle}
+                />
+                <TextField
+                  error={errors.numero && touched.numero ? true : false}
+                  id="numero"
+                  label="Numero"
+                  name="numero"
+                  onBlur={handleBlur}
+                  value={values.numero}
+                  onChange={handleChange}
+                  helperText={errors.numero && touched.numero && errors.numero}
+                />
+                
+              </div>
+              <div>
+             
+                
+                <TextField
+                  error={errors.piso && touched.piso ? true : false}
+                  id="piso"
+                  label="Piso (Opcional)"
+                  name="piso"
+                  onBlur={handleBlur}
+                  value={values.piso}
+                  onChange={handleChange}
+                  helperText={errors.piso && touched.piso && errors.piso}
+                />
+                 <TextField
+                  error={
+                    errors.departamento && touched.departamento ? true : false
+                  }
+                  id="departamento"
+                  label="Departamento (Opcional)"
+                  name="departamento"
+                  onBlur={handleBlur}
+                  value={values.departamento}
+                  onChange={handleChange}
+                  helperText={
+                    errors.departamento &&
+                    touched.departamento &&
+                    errors.departamento
+                  }
+                />
+              </div>
+              
               <br></br>
               <br></br>
               {/* <Autocomplete
@@ -408,12 +411,12 @@ const RegistroDatosEmprendimiento = (props) => {
 
             <Grid item xs={6} className={classes.mapa}>
               <TextField
-                error={errors.mapaUbic ? true : false}
+                error={errors.mapaUbic && touched.mapaUbic? true : false}
                 id="mapaUbic"
                 label="Seleccione ubicacion:"
                 name="mapaUbic"
                 disabled
-                helperText={errors.mapaUbic && errors.mapaUbic}
+                helperText={errors.mapaUbic && touched.mapaUbic && errors.mapaUbic}
               />
               <Mapa
                 seleccionaPosicion={(lat, lng) => {
