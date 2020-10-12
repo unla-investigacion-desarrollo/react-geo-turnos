@@ -100,7 +100,7 @@ const RegistroDatosEmprendimiento = (props) => {
   const classes = useStyles();
   const [stateRubro, setStateRubro] = useState([]); //rubros
   const [stateTipoEmp, setStateTipoEmp] = useState([]); //tipo emprendimientos
-  const [stateProv, setStateProv] = useState([]); //provinciaas
+  const [stateProv, setStateProv] = useState([]); //provincias
   const [stateLoc, setStateLoc] = useState([]); //localidades
   const [primeraRenderizacion, setStatePrimRen] = useState(true);
 
