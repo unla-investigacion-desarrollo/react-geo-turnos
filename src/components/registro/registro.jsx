@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     height: "100vh",
-    backgroundColor: "teal",
+    background: "linear-gradient(top,white  , #0BA3C8 )",
   },
   card: { width: 1300 },
   card2: { width: 650 },

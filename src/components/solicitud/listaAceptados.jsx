@@ -60,6 +60,7 @@ const ListaAceptados = () => {
                       color="secondary"
                       variant="contained"
                       onClick={() => dispatch(deshacerAceptado(turno.idTurno))}
+                      title="Cancelar Aceptacion"
                     >
                       <ArrowBack />
                     </IconButton>
@@ -68,6 +69,7 @@ const ListaAceptados = () => {
                       color="primary"
                       variant="contained"
                       endIcon={<Input />}
+                      title="Atender Persona"
                     >
                       Atender
                     </Button>

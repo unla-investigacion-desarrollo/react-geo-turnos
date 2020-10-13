@@ -20,6 +20,7 @@ import {
   selectDatosEmprendimiento,
 } from "./registroSlice";
 import { useDispatch, useSelector } from "react-redux";
+import logo from "../../imagenes/logo2.jpeg";
 //import Autocomplete from "@material-ui/lab/Autocomplete";
 
 const useStyles = makeStyles((theme) => ({
@@ -61,6 +62,12 @@ const useStyles = makeStyles((theme) => ({
   },
   mapa: {
     height: 300,
+  },
+  logo: {
+    position: "relative",
+    width: 50,
+    top: 10,
+    marginRight: theme.spacing(2),
   },
 }));
 
@@ -175,7 +182,7 @@ const RegistroDatosEmprendimiento = (props) => {
       <Grid container>
         <Grid item xs={12}>
           <Typography variant="h5" color="initial">
-            Registro - Datos Emprendimiento
+          <img src={logo} alt="" className={classes.logo} />Registro - Datos Emprendimiento
           </Typography>
         </Grid>
         <form onSubmit={handleSubmit} className={classes.espacios}>
@@ -466,9 +473,6 @@ const RegistroDatosEmprendimiento = (props) => {
           >
             <Link href="/login">Cancelar</Link>
           </Grid>
-          {JSON.stringify(values)}
-          <br></br>
-          {JSON.stringify(errors)}
         </form>
       </Grid>
     </div>

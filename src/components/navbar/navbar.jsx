@@ -15,6 +15,7 @@ import { switchMostrarMenu } from "../navbar/menuSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectSesion } from "../../datosSesion/sesionSlice";
 import { Redirect } from "react-router-dom";
+import logo from "../../imagenes/logo3.jpeg";
 
 const drawerWidth = 240;
 
@@ -25,6 +26,8 @@ const useStyles = makeStyles((theme) => ({
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
     },
+    backgroundColor: "#0BA3C8",
+    height: 60,
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -35,6 +38,11 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  logo: {
+    position: "relative",
+    height: 50,
+    marginRight: theme.spacing(1),
+  }
 }));
 
 const NavBar = () => {
@@ -73,8 +81,9 @@ const NavBar = () => {
             <MenuIcon />
           </IconButton>
         </Hidden>
+        <img src={logo} alt="" className={classes.logo} />
         <Typography variant="h6" className={classes.title}>
-          ReactivAR - {datosDeSesion.nombreEmprendimiento}
+           - {datosDeSesion.nombreEmprendimiento}
         </Typography>
         <AccountCircle />
         <Button

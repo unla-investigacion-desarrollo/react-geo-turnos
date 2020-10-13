@@ -19,6 +19,7 @@ import {
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
 import { apiCalls } from "../../api/apiCalls";
+import logo from "../../imagenes/logo2.jpeg";
 
 const useStyles = makeStyles((theme) => ({
   botonEspacio: {
@@ -56,6 +57,12 @@ const useStyles = makeStyles((theme) => ({
   botonEnviar: {
     marginRight: theme.spacing(2),
     marginLeft: theme.spacing(2),
+  },
+  logo: {
+    position: "relative",
+    width: 50,
+    top: 10,
+    marginRight: theme.spacing(2),
   },
   
 }));
@@ -199,8 +206,9 @@ const RegistroDatosPersonales = (props) => {
 
   return (
         <>
+          
           <Typography variant="h5" color="initial">
-            Registro - Datos Personales
+          <img src={logo} alt="" className={classes.logo} />Registro - Datos Personales
           </Typography>
           <form onSubmit={handleSubmit} className={classes.espacios}>
             <div>
@@ -507,9 +515,6 @@ const RegistroDatosPersonales = (props) => {
             >
               <Link href="/login">Cancelar</Link>
             </Grid>
-            {JSON.stringify(values)}
-            <br></br>
-            {JSON.stringify(errors)}
           </form>
         </>
   );

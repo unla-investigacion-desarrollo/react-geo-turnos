@@ -9,6 +9,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import { apiCalls } from "../../api/apiCalls";
 import Link from "@material-ui/core/Link";
+import logo from "../../imagenes/logo.jpeg";
 
 const useStyles = makeStyles((theme) => ({
   botonEspacio: {
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     height: "100vh",
-    backgroundColor: "teal",
+    background: "linear-gradient(top,white  , #0BA3C8 )",
   },
   card: {
     width: 345,
@@ -98,8 +99,7 @@ const LogIn = (props) => {
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.media}
-                  image="https://www.lampadia.com/assets/uploads_images/images/a1-web%28166%29.jpg"
-                  title="Reactivar Logo pendiente"
+                  image={logo}
                 />
                 <CardContent>
                   <Typography variant="h5" color="initial">
@@ -160,9 +160,7 @@ const LogIn = (props) => {
                       ¿No tiene usuario? Cree una cuenta nueva
                     </Link>
                     <Divider />
-                    {JSON.stringify(values)}
-                    <br></br>
-                    {JSON.stringify(errors)}
+                   
                   </form>
                 </CardContent>
               </Card>

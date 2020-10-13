@@ -62,7 +62,7 @@ const Perfil = (props) => {
     const dataPerfil = { idPerfil: values.idPerfil, nombre: values.perfil };
 
     if (props.variante === "modificar") {
-      apiCalls.putPerfil(dataPerfil).then((response) => {
+      apiCalls.putPerfil(dataPerfil).then((datos) => {
         setSubmitting(false);
         setStateOpenDialogMod(false);
       });

@@ -107,6 +107,7 @@ const ListaSolicitudes = () => {
                       color="secondary"
                       variant="contained"
                       onClick={() => mostrarDialog(turno)}
+                      title="Rechazar Turno"
                     >
                       <Close />
                     </IconButton>
@@ -115,6 +116,7 @@ const ListaSolicitudes = () => {
                       color="primary"
                       variant="contained"
                       onClick={() => chequearTurnoAceptar(turno.idTurno)}
+                      title="Aceptar Turno"
                     >
                       <Check />
                     </IconButton>
@@ -122,6 +124,7 @@ const ListaSolicitudes = () => {
                       size="small"
                       color="primary"
                       variant="contained"
+                      title="Observaciones"
                     >
                       <Comments />
                     </IconButton>
