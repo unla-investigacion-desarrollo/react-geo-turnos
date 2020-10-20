@@ -14,7 +14,7 @@ import Hidden from "@material-ui/core/Hidden";
 import { switchMostrarMenu } from "../navbar/menuSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectSesion } from "../../datosSesion/sesionSlice";
-import { Redirect } from "react-router-dom";
+import { Redirect,Link } from "react-router-dom";
 import logo from "../../imagenes/logo3.png";
 
 const drawerWidth = 240;
@@ -102,7 +102,11 @@ const NavBar = () => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem onClick={handleClose}>Mi Cuenta</MenuItem>
+          <MenuItem 
+          onClick={handleClose}
+          component={Link}
+          to="/modificarRegistroDatosPersonales"
+          >Datos Personales</MenuItem>
           <MenuItem onClick={funcionCerrarSesion}>Cerrar Sesion</MenuItem>
         </Menu>
       </Toolbar>

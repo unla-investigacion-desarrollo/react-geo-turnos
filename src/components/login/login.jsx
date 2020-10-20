@@ -8,8 +8,9 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import { apiCalls } from "../../api/apiCalls";
-import Link from "@material-ui/core/Link";
 import logo from "../../imagenes/logo.jpeg";
+import { Link as LinkRouter } from "react-router-dom";
+
 
 const useStyles = makeStyles((theme) => ({
   botonEspacio: {
@@ -156,9 +157,14 @@ const LogIn = (props) => {
                       </Button>
                     </Grid>
                     <Divider />
-                    <Link href="/registro">
+                    <LinkRouter to="/registro">
                       ¿No tiene usuario? Cree una cuenta nueva
-                    </Link>
+                    </LinkRouter>
+                    <Divider />
+                    <Divider />
+                    <LinkRouter to="/restablecerPassword">
+                      ¿Olvido su contraseña? Restablecer
+                    </LinkRouter>
                     <Divider />
                    
                   </form>

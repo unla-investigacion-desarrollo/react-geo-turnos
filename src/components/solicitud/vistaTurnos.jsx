@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { cargarTurnos, selectTurnosRechazados } from "./turnoSlice";
 import { apiCalls } from "../../api/apiCalls";
+import {Button} from "@material-ui/core";
 
 const VistaTurnos = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,11 @@ const VistaTurnos = () => {
   }, []);
   return (
     <Grid container spacing={3}>
+      <Grid item xs={12} >
+          <Button variant="contained" color="secondary">
+            Calendario
+          </Button>
+      </Grid>
       <Grid item xs={6}>
         <ListaSolicitudes />
       </Grid>

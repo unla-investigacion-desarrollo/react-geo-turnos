@@ -8,6 +8,9 @@ import Hidden from "@material-ui/core/Hidden";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import LogIn from "./components/login/login";
 import Registro from "./components/registro/registro";
+import RestablecerPass from "./components/login/restablecerPassword";
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,6 +28,10 @@ function App() {
         <Route exact path="/registro">
           <Registro />
         </Route>
+        <Route exact path="/restablecerPassword">
+          <RestablecerPass/>
+        </Route> 
+
         <Route path="/">
           <div className={classes.root}>
             <Navbar />

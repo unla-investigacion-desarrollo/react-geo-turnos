@@ -14,6 +14,8 @@ import TipoEmprendimiento from "../tipoEmprendimiento/tipoEmprendimiento";
 import ListaTipoEmprendimientos from "../tipoEmprendimiento/listaTipoEmprendimientos";
 import VistaTurnos from "../solicitud/vistaTurnos";
 import Perfil from "../perfil/perfil";
+import ModificarDatosPersonales from "../registro/modificarRegistroDatosPersonales";
+
 
 const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
@@ -91,6 +93,10 @@ const Contenido = () => {
         <Route path={`${path}perfiles`}>
           <ListaPerfiles />
         </Route>
+        <Route  path={`${path}modificarRegistroDatosPersonales`}>
+          <ModificarDatosPersonales/>
+        </Route> 
+
       </Switch>
     </main>
   );

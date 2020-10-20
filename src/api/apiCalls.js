@@ -13,6 +13,7 @@ function postAltaUsuario(parameters) {
   return api.post("/fisica", parameters);
 }
 
+
 function getRubro() {
   return api.get("/rubro", null);
 }
@@ -158,12 +159,24 @@ function getProvincia() {
   return api.get("/provincia", null);
 }
 
+function getProvinciaId(parameters){
+  return api.get(`/provincia/${parameters}`);
+}
+
 function getLocalidades(parameters) {
   return api.get(`/provincia/${parameters}/localidades`);
 }
 
 function putTurno(parameters) {
   return api.put(`/turno/${parameters.idTurno}`, parameters);
+}
+
+function postRestablecerPassword(parameters) {
+  return api.post("/persona/resetpassword/", parameters);
+}
+
+function getPersonaFisica(parameters) {
+  return api.get(`/fisica/${parameters}`);
 }
 
 export const apiCalls = {
@@ -204,8 +217,11 @@ export const apiCalls = {
   getPerfilId,
   getFuncion,
   getProvincia,
+  getProvinciaId,
   getLocalidades,
   postFuncionPerfil,
   putTurno,
-  getFuncionesPerfil
+  getFuncionesPerfil,
+  postRestablecerPassword,
+  getPersonaFisica,
 };
