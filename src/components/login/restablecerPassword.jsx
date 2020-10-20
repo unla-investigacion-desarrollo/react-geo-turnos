@@ -110,7 +110,7 @@ const RestablecerPass = () => {
         <Grid container direction="row" justify="center" alignItems="center">
                 <Card className={classes.card}>
                 <CardMedia
-                  className={classes.logo}
+                  className={classes.media}
                   image={logo}
                 />
                   <CardContent>
