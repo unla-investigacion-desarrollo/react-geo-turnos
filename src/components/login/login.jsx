@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import { Formik } from "formik";
 import { Button, Divider, Typography } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
@@ -9,10 +9,13 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import { apiCalls } from "../../api/apiCalls";
 import logo from "../../imagenes/logo.jpeg";
-import { Link as LinkRouter } from "react-router-dom";
+import { Link as LinkRouter, Redirect } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {cargarDatosSesion as reducerCargarDatos} from "../../datosSesion/sesionSlice";
 
 
 const useStyles = makeStyles((theme) => ({
+
   botonEspacio: {
     margin: theme.spacing(1),
   },
@@ -55,27 +58,56 @@ const validar = (values) => {
   return errors;
 };
 
-const enviar = (values, { setSubmitting }) => {
-  let datos = { email: values.usuario, clave: values.password };
-  apiCalls.postLogin(datos).then((response) => {
-    console.log(response);
-    localStorage.setItem("token", response.data.token);
-    window.location.assign("/");
-  });
-};
+
 
 let valoresIniciales = {};
 
 valoresIniciales = {
-  usuario: "admin@unla",
+  usuario: "enzord07@gmail.com",
   password: "admin",
 };
 
 const LogIn = (props) => {
+  const [stateFormExito, setStateFormExito] = useState(false);
   const classes = useStyles();
   let claseBotonEnviar;
+  const dispatch = useDispatch();
+
+  const cargarDatosSesion = (datos) => {
+    let emprendimiento;
+    let persona;
+    let perfil;
+    apiCalls.getPersona(datos.data.idPersona).then(response => {
+        persona = response.data;
+        apiCalls.getPerfilId(datos.data.idPerfil).then(response =>{
+            perfil = response.data;
+            dispatch(reducerCargarDatos({
+                idPersona: persona.idPersona,
+                nombre: persona.nombre,
+                apellido: persona.apellido,
+                nombreEmprendimiento: "Mi Panaderia",
+                tipoUsuario: perfil.nombre,
+            }));
+        });
+    });
+}
+
+  const enviar = (values, { setSubmitting }) => {
+    let datos = { email: values.usuario, clave: values.password };
+    apiCalls.postLogin(datos).then((response) => {
+      localStorage.setItem("token", response.data.token);
+      cargarDatosSesion(response);
+      setStateFormExito(true);
+    });
+  };
+
   return (
     <div className={classes.root}>
+      {
+        stateFormExito ? (
+          <Redirect to="/turnos" />
+        ) : null /* Redireccionar si se agrega con exito */
+      }
       <Grid container direction="row" justify="center" alignItems="center">
         <div>
           <Formik

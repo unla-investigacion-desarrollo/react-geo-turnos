@@ -11,14 +11,10 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  cargarSetDeDatosPersonales,
-  selectDatosPersonales,
-} from "./registroSlice";
 import Grid from "@material-ui/core/Grid";
 import { apiCalls } from "../../api/apiCalls";
-import logo from "../../imagenes/logo.jpeg";
 import { Link as LinkRouter,useParams, Redirect } from "react-router-dom";
+import {selectSesion} from "../../datosSesion/sesionSlice";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -125,41 +121,32 @@ const useStyles = makeStyles((theme) => ({
 
 
   const ModificarDatosPersonales = (props) => {
+    const idPersona = useSelector(selectSesion).idPersona;
+
     const classes = useStyles();
   
-    const dispatch = useDispatch();
-    const datosPersonales = useSelector(selectDatosPersonales);
-  
     const [stateFormExito, setStateFormExito] = useState(false);
-    const  id ="6";
   
     const valoresIniciales = () => {
-      console.log(datosPersonales);
-      if (Object.keys(datosPersonales).length === 0) {
-        //me fijo la cant de campos
-        return {
-          nombre: "",
-          apellido: "",
-          dni:"",
-          calle: "",
-          piso:"",
-          nroTramite:"",
-          numero:"",
-          provincia: "-1",
-          localidad: "-1",
-          sexo:"-1",
-          cuil: "",
-          celular: "",
-          email: "",
-          usuarioModi: "string",
-          direccion: "",
-          password: "",
-          repetirPassword: "",
-        };
-      } else {
-        // si esta lleno retorno el set de datos
-        return datosPersonales;
-      }
+      return {
+        nombre: "",
+        apellido: "",
+        dni:"",
+        calle: "",
+        piso:"",
+        nroTramite:"",
+        numero:"",
+        provincia: "-1",
+        localidad: "-1",
+        sexo:"-1",
+        cuil: "",
+        celular: "",
+        email: "",
+        usuarioModi: "string",
+        direccion: "",
+        password: "",
+        repetirPassword: "",
+      };
     };
   
     const enviar = (values, { setSubmitting }) => {
@@ -186,7 +173,7 @@ const useStyles = makeStyles((theme) => ({
  
 
     useEffect(() => {
-          apiCalls.getPersonaFisica(id).then((response) => {
+          apiCalls.getPersonaFisica(idPersona).then((response) => {
             const dataPersona = response.data;
             console.log(dataPersona);
             const varSexo= dataPersona.sexo;

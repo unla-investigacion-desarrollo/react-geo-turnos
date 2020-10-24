@@ -30,7 +30,7 @@ const VistaTurnos = () => {
       <Grid item xs={6}>
         <ListaAceptados />
       </Grid>
-      {JSON.stringify(turnosRechazados)}
+      
     </Grid>
   );
 };

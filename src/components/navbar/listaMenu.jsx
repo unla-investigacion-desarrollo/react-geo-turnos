@@ -6,6 +6,8 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import ViewList from "@material-ui/icons/ViewList";
+import {  useSelector } from "react-redux";
+import { selectSesion } from "../../datosSesion/sesionSlice";
 
 import { NavLink, useLocation } from "react-router-dom";
 
@@ -14,11 +16,15 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     backgroundColor: theme.palette.background.paper,
   },
+  itemNoVisible:{
+    display: "none",
+  }
 }));
 
 const ListaMenu = () => {
   const classes = useStyles();
   const location = useLocation();
+  const datosDeSesion = useSelector(selectSesion);
 
   const Item = (props) => {
     return (
@@ -36,8 +42,8 @@ const ListaMenu = () => {
 
   return (
     <div className={classes.lista}>
-      <List component="nav">
-        <Item to="/perfiles" icon={<ViewList />} text="Perfiles" />
+      <List className={datosDeSesion.tipoUsuario!=="administrador"?classes.itemNoVisible:null} component="nav">
+        <Item  to="/perfiles" icon={<ViewList />} text="Perfiles" />
         <Item to="/productos" icon={<ViewList />} text="Articulos" />
         <Item to="/marcas" icon={<ViewList />} text="Marcas" />
         <Item to="/categorias" icon={<ViewList />} text="Categorias" />
@@ -47,6 +53,9 @@ const ListaMenu = () => {
           icon={<ViewList />}
           text="TipoEmprendimientos"
         />
+        <Item to="/turnos" icon={<ViewList />} text="Turnos" />
+      </List>
+      <List className={datosDeSesion.tipoUsuario!=="emprendedor"?classes.itemNoVisible:null} component="nav">
         <Item to="/turnos" icon={<ViewList />} text="Turnos" />
       </List>
       <Divider />

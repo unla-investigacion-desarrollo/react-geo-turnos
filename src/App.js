@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./App.css";
 import Navbar from "./components/navbar/navbar";
 import MenuDrawer from "./components/navbar/menuDrawer";
@@ -9,6 +9,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import LogIn from "./components/login/login";
 import Registro from "./components/registro/registro";
 import RestablecerPass from "./components/login/restablecerPassword";
+import { useDispatch } from "react-redux";
+import {cargarDatosSesion} from "./datosSesion/sesionSlice";
 
 
 
@@ -19,6 +21,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 function App() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const datosSesion = localStorage.getItem("stateSesion");
+    console.log(datosSesion);
+    if(datosSesion){
+      dispatch(cargarDatosSesion(JSON.parse(datosSesion)));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Router>
       <Switch>

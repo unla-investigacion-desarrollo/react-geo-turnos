@@ -2,18 +2,30 @@ import { createSlice } from "@reduxjs/toolkit";
 export const sesionSlice = createSlice({
   name: "sesion",
   initialState: {
-    nombre: "Carlos",
-    apellido: "Perez",
-    nombreEmprendimiento: "Mi Panaderia",
+    idPersona: "",
+    nombre: "",
+    apellido: "",
+    nombreEmprendimiento: "",
     tipoUsuario: "",
   },
   reducers: {
     cargarDatosSesion: (state, action) => {
-      state = action.payload;
+      const dato = action.payload;
+      state.idPersona = dato.idPersona;
+      state.nombre = dato.nombre;
+      state.apellido = dato.apellido;
+      state.nombreEmprendimiento = dato.nombreEmprendimiento;
+      state.tipoUsuario = dato.tipoUsuario;
+      localStorage.setItem("stateSesion", JSON.stringify(state));
     },
 
     borrarDatosSesion: (state, action) => {
-      state = { nombre: "", apellido: "", nombreEmprendimiento: "" };
+      state.idPersona= "";
+      state.nombre= "";
+      state.apellido= "";
+      state.nombreEmprendimiento= "";
+      state.tipoUsuario= "";
+      localStorage.clear();
     },
   },
 });

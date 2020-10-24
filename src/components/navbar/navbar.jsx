@@ -13,7 +13,7 @@ import {
 import Hidden from "@material-ui/core/Hidden";
 import { switchMostrarMenu } from "../navbar/menuSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { selectSesion } from "../../datosSesion/sesionSlice";
+import { selectSesion, borrarDatosSesion } from "../../datosSesion/sesionSlice";
 import { Redirect,Link } from "react-router-dom";
 import logo from "../../imagenes/logo3.png";
 
@@ -62,6 +62,7 @@ const NavBar = () => {
 
   const funcionCerrarSesion = () => {
     //se haria un api call para cerrar sesion
+    dispatch(borrarDatosSesion());
     setCerrarSesion(true);
     setAnchorEl(null);
   };

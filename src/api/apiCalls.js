@@ -179,6 +179,14 @@ function getPersonaFisica(parameters) {
   return api.get(`/fisica/${parameters}`);
 }
 
+function getPersona(parameters) {
+  return api.get(`/persona/${parameters}`);
+}
+
+function getEmprendimientoId(parameters){
+  return api.get(`/emprendimiento/${parameters}`);
+}
+
 export const apiCalls = {
   postArticulo,
   postAltaUsuario,
@@ -224,4 +232,6 @@ export const apiCalls = {
   getFuncionesPerfil,
   postRestablecerPassword,
   getPersonaFisica,
+  getEmprendimientoId,
+  getPersona,
 };
