@@ -187,6 +187,14 @@ function getEmprendimientoId(parameters){
   return api.get(`/emprendimiento/${parameters}`);
 }
 
+function getPassword(parameters){
+  return api.get(`/persona/changePassword?token=${parameters}`);
+}
+
+function savePassword(parameters){
+  return api.post(`/persona/savePassword/${parameters}`)
+}
+
 export const apiCalls = {
   postArticulo,
   postAltaUsuario,
@@ -234,4 +242,6 @@ export const apiCalls = {
   getPersonaFisica,
   getEmprendimientoId,
   getPersona,
+  getPassword,
+  savePassword,
 };

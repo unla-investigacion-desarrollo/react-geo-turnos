@@ -15,6 +15,8 @@ import ListaTipoEmprendimientos from "../tipoEmprendimiento/listaTipoEmprendimie
 import VistaTurnos from "../solicitud/vistaTurnos";
 import Perfil from "../perfil/perfil";
 import ModificarDatosPersonales from "../registro/modificarRegistroDatosPersonales";
+import CambiarPassword from "../cambiarDatos/cambiarPassword";
+import ModificarDatosEmprendimiento from "../cambiarDatos/modificarDatosEmprendimiento";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -96,7 +98,12 @@ const Contenido = () => {
         <Route  path={`${path}modificarRegistroDatosPersonales`}>
           <ModificarDatosPersonales/>
         </Route> 
-
+        <Route  path={`${path}cambiarPassword`}>
+          <CambiarPassword/>
+        </Route> 
+        <Route  path={`${path}modificarRegistroEmprendimiento`}>
+          <ModificarDatosEmprendimiento/>
+        </Route>
       </Switch>
     </main>
   );

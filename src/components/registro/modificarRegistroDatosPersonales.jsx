@@ -13,7 +13,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import { apiCalls } from "../../api/apiCalls";
-import { Link as LinkRouter,useParams, Redirect } from "react-router-dom";
+import { Link as LinkRouter, Redirect } from "react-router-dom";
 import {selectSesion} from "../../datosSesion/sesionSlice";
 
 
@@ -53,6 +53,9 @@ const useStyles = makeStyles((theme) => ({
     },
     botonOculto: {
       display: "none",
+    },
+    botonPass: {
+      marginTop:  theme.spacing(3),
     },
     botonEnviar: {
       marginRight: theme.spacing(2),
@@ -146,6 +149,8 @@ const useStyles = makeStyles((theme) => ({
         direccion: "",
         password: "",
         repetirPassword: "",
+        departamento:"",
+        fillerPassword:""
       };
     };
   
@@ -173,7 +178,7 @@ const useStyles = makeStyles((theme) => ({
  
 
     useEffect(() => {
-          apiCalls.getPersonaFisica(idPersona).then((response) => {
+          apiCalls.getPersonaFisica(idPersona !=="" ? idPersona : null).then((response) => {
             const dataPersona = response.data;
             console.log(dataPersona);
             const varSexo= dataPersona.sexo;
@@ -203,11 +208,12 @@ const useStyles = makeStyles((theme) => ({
                 numero: dataPersona.ubicacion.numero,
                 piso: dataPersona.ubicacion.piso,
                 departamento: dataPersona.ubicacion.departamento,
+                fillerPassword: "contraseñaDeRelleno"
                 
             });
           });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, []);
+      }, [idPersona]);
   
   
   
@@ -441,6 +447,39 @@ const useStyles = makeStyles((theme) => ({
                 }
                 disabled
               />
+
+            </div>
+
+            <div>
+            <TextField
+                error={
+                  errors.fillerPassword && touched.fillerPassword ? true : false
+                }
+                id="fillerPassword"
+                label="Contraseña"
+                name="fillerPassword"
+                type="password"
+                onBlur={handleBlur}
+                value={values.fillerPassword}
+                onChange={handleChange}
+                helperText={
+                  errors.fillerPassword &&
+                  touched.fillerPassword &&
+                  errors.fillerPassword
+                }
+                disabled
+              />
+              <Button 
+                component={LinkRouter} 
+                className={classes.botonPass} 
+                variant="text" 
+                color="primary" 
+                to="/cambiarPassword" >
+                Cambiar Contraseña
+              </Button>
+        
+                    
+           
 
             </div>
            
