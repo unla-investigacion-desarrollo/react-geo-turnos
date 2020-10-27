@@ -10,7 +10,7 @@ import {Button} from "@material-ui/core";
 
 const VistaTurnos = () => {
   const dispatch = useDispatch();
-  const turnosRechazados = useSelector(selectTurnosRechazados);
+  //const turnosRechazados = useSelector(selectTurnosRechazados);
   useEffect(() => {
     apiCalls.getTurno().then((response) => {
       dispatch(cargarTurnos(response.data));

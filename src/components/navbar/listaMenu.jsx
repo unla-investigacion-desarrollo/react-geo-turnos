@@ -42,7 +42,7 @@ const ListaMenu = () => {
 
   return (
     <div className={classes.lista}>
-      <List className={datosDeSesion.tipoUsuario!=="administrador"?classes.itemNoVisible:null} component="nav">
+      <List className={datosDeSesion.tipoUsuario!=="Administrador"?classes.itemNoVisible:null} component="nav">
         <Item  to="/perfiles" icon={<ViewList />} text="Perfiles" />
         <Item to="/productos" icon={<ViewList />} text="Articulos" />
         <Item to="/marcas" icon={<ViewList />} text="Marcas" />
@@ -55,7 +55,7 @@ const ListaMenu = () => {
         />
         <Item to="/turnos" icon={<ViewList />} text="Turnos" />
       </List>
-      <List className={datosDeSesion.tipoUsuario!=="emprendedor"?classes.itemNoVisible:null} component="nav">
+      <List className={datosDeSesion.tipoUsuario!=="Vendedor"?classes.itemNoVisible:null} component="nav">
         <Item to="/turnos" icon={<ViewList />} text="Turnos" />
       </List>
       <Divider />

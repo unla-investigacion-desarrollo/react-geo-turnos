@@ -10,7 +10,7 @@ import {
   MenuItem,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import { apiCalls } from "../../api/apiCalls";
 import { Link as LinkRouter, Redirect } from "react-router-dom";

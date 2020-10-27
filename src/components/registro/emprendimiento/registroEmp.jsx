@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import RegistroDatosPersonales from "./registroDatosPersonales";
 import { Grid, Card, CardContent } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import RegistroDatosEmprendimiento from "./registroDatosEmprendimiento";
+import RegistroDatosTurnos from "./registroDatosTurnos";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -10,8 +10,8 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
     background: "linear-gradient(top,white  , #0BA3C8 )",
   },
-  card: { width: 1300 },
-  card2: { width: 650 },
+  card: { width: 1075 },
+  card2: { width: 1300 },
   botonForm: {
     marginRight: theme.spacing(3),
   },
@@ -20,29 +20,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Registro = () => {
+const RegistroEmp = () => {
   const [verForm, setVerForm] = useState(1);
   const classes = useStyles();
   const verFormDatosEmp = () => {
-    setVerForm(2);
-  };
-  const verFormDatosPersonales = () => {
     setVerForm(1);
   };
+  const verFormDatosTurnos = () => {
+    setVerForm(2);
+  }
   return (
     <div className={classes.root}>
       <Grid container justify="center" alignItems="center">
         <div>
           <Card>
             <CardContent
-              className={verForm === 1 ? classes.card2 : classes.card}
+              className={verForm === 1 ? classes.card2 :  classes.card}
             >
               {verForm === 1 ? (
-                <RegistroDatosPersonales propClickSiguiente={verFormDatosEmp} />
+                <RegistroDatosEmprendimiento propClickSiguiente={verFormDatosTurnos} />
               ) : (
-                <RegistroDatosEmprendimiento
-                  propClickAtras={verFormDatosPersonales}
-                />
+                <RegistroDatosTurnos propClickAtras={verFormDatosEmp}/>
               )}
             </CardContent>
           </Card>
@@ -52,4 +50,4 @@ const Registro = () => {
   );
 };
 
-export default Registro;
+export default RegistroEmp;

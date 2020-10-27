@@ -5,22 +5,16 @@ import Marcador from "./marcador";
 const Mapa = (props) => {
   let defaultProps = {
     center: {
-      lat: -34.60365609973083,
-      lng: -58.38162703347801,
+      lat: props.latitud!==""? props.latitud: -34.60365609973083,
+      lng: props.longitud!==""? props.longitud: -58.38162703347801,
     },
-    zoom: 11,
+    zoom: props.latitud!==""? 14:11,
   };
 
-  const [marker, setMarker] = useState({
-    lat: props.latitud,
-    lng: props.longitud,
-  });
 
   //_onClick = ({ x, y, lat, lng, event }) => console.log(x, y, lat, lng, event);
   // ES5 users
   function _onClick(obj) {
-    //console.log(obj.x, obj.y, obj.lat, obj.lng, obj.event);
-    setMarker({ lat: obj.lat, lng: obj.lng });
     props.seleccionaPosicion(obj.lat, obj.lng);
   }
 
@@ -35,8 +29,8 @@ const Mapa = (props) => {
         resetBoundsOnResize={true}
         options={{ fullscreenControl: false }}
       >
-        {marker.lat !== "" ? (
-          <Marcador lat={marker.lat} lng={marker.lng} text="My Marker" />
+        {props.latitud !== "" ? (
+          <Marcador lat={props.latitud} lng={props.longitud} text="My Marker" />
         ) : null}
       </GoogleMap>
     </div>

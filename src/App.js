@@ -7,7 +7,8 @@ import Contenido from "./components/contenido/contenido";
 import Hidden from "@material-ui/core/Hidden";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import LogIn from "./components/login/login";
-import Registro from "./components/registro/registro";
+import Registro from "./components/registro/persona/registro";
+import RegistroEmp from "./components/registro/emprendimiento/registroEmp";
 import RestablecerPass from "./components/login/restablecerPassword";
 import { useDispatch } from "react-redux";
 import {cargarDatosSesion} from "./datosSesion/sesionSlice";
@@ -43,6 +44,9 @@ function App() {
         </Route>
         <Route exact path="/restablecerPassword">
           <RestablecerPass/>
+        </Route>
+        <Route exact path="/registroEmprendimiento">
+          <RegistroEmp/>
         </Route> 
 
         <Route path="/">

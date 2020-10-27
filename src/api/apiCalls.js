@@ -195,6 +195,10 @@ function savePassword(parameters){
   return api.post(`/persona/savePassword/${parameters}`)
 }
 
+function postEmprendimiento(parameters) {
+  return api.post("/emprendimiento", parameters);
+}
+
 export const apiCalls = {
   postArticulo,
   postAltaUsuario,
@@ -244,4 +248,5 @@ export const apiCalls = {
   getPersona,
   getPassword,
   savePassword,
+  postEmprendimiento,
 };

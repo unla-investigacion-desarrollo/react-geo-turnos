@@ -15,11 +15,12 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   cargarSetDeDatosPersonales,
   selectDatosPersonales,
-} from "./registroSlice";
+} from "../registroSlice";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
-import { apiCalls } from "../../api/apiCalls";
-import logo from "../../imagenes/logo2.jpeg";
+import { apiCalls } from "../../../api/apiCalls";
+import logo from "../../../imagenes/logo2.jpeg";
+import {formatDatosPersonales} from "./formatDatosPersonales";
 
 const useStyles = makeStyles((theme) => ({
   botonEspacio: {
@@ -131,37 +132,37 @@ const RegistroDatosPersonales = (props) => {
   const [primeraRenderizacion, setStatePrimRen] = useState(true);
 
   const valoresIniciales = () => {
-    console.log(datosPersonales);
-    if (Object.keys(datosPersonales).length === 0) {
-      //me fijo la cant de campos
-      return {
-        nombre: "",
-        apellido: "",
-        dni:"",
-        calle: "",
-        piso:"",
-        nroTramite:"",
-        numero:"",
-        provincia: "-1",
-        localidad: "-1",
-        sexo:"-1",
-        cuil: "",
-        celular: "",
-        email: "",
-        usuarioModi: "string",
-        direccion: "",
-        password: "",
-        repetirPassword: "",
-      };
-    } else {
-      // si esta lleno retorno el set de datos
-      return datosPersonales;
-    }
+    return {
+      nombre: "",
+      apellido: "",
+      dni:"",
+      calle: "",
+      piso:"",
+      departamento: "",
+      nroTramite:"",
+      numero:"",
+      provincia: "-1",
+      localidad: "-1",
+      sexo:"-1",
+      cuil: "",
+      celular: "",
+      email: "",
+      usuarioModi: "string",
+      password: "",
+      repetirPassword: "",
+    };
   };
 
   const enviar = (values, { setSubmitting }) => {
+    
     dispatch(cargarSetDeDatosPersonales(values));
-    props.propClickSiguiente();
+    apiCalls.postAltaUsuario(formatDatosPersonales(values)).then((response)=>{
+      props.propClickSiguiente();
+      setSubmitting(false);
+    }).catch((error)=>{
+      setSubmitting(false);
+      console.log(error);
+    });
   };
 
   const formik = useFormik({
@@ -178,6 +179,7 @@ const RegistroDatosPersonales = (props) => {
     handleChange,
     handleBlur,
     handleSubmit,
+    isSubmitting,
   } = formik; //destructurar formik
 
 
@@ -502,7 +504,7 @@ const RegistroDatosPersonales = (props) => {
               alignItems="center"
               className={classes.botonEspacio}
             >
-              <Button variant="contained" color="primary" type="submit">
+              <Button variant="contained" color="primary" type="submit" disabled={isSubmitting}>
                 Siguiente
               </Button>
             </Grid>

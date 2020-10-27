@@ -12,7 +12,7 @@ import {
     FormHelperText,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link as LinkRouter, useParams, Redirect } from "react-router-dom";
+import { Link as LinkRouter, Redirect } from "react-router-dom";
 import { apiCalls } from "../../api/apiCalls";
 
 const useStyles = makeStyles((theme) => ({
@@ -146,10 +146,6 @@ const ModificarDatosEmprendimiento = () => {
         handleChange,
         handleBlur,
         handleSubmit,
-        isSubmitting,
-        validateForm,
-        setTouched,
-        isValid,
         setValues,
       } = formik; //destructurar formik
 

@@ -68,7 +68,9 @@ valoresIniciales = {
 };
 
 const LogIn = (props) => {
-  const [stateFormExito, setStateFormExito] = useState(false);
+  const [stateIrTurnos, setStateIrTurnos] = useState(false);
+  const [stateIrAdmin, setStateIrAdmin] = useState(false);
+  const [stateIrRegEmp, setStateIrRegEmp] = useState(false);
   const classes = useStyles();
   let claseBotonEnviar;
   const dispatch = useDispatch();
@@ -81,13 +83,28 @@ const LogIn = (props) => {
         persona = response.data;
         apiCalls.getPerfilId(datos.data.idPerfil).then(response =>{
             perfil = response.data;
-            dispatch(reducerCargarDatos({
-                idPersona: persona.idPersona,
-                nombre: persona.nombre,
-                apellido: persona.apellido,
-                nombreEmprendimiento: "Mi Panaderia",
-                tipoUsuario: perfil.nombre,
-            }));
+            if(datos.data.idEmprendimiento===0){
+              dispatch(reducerCargarDatos({
+                  idPersona: persona.idPersona,
+                  idEmprendimiento: 0,
+                  nombre: persona.nombre,
+                  apellido: persona.apellido,
+                  nombreEmprendimiento: "Sin Emprendimiento",
+                  tipoUsuario: perfil.nombre,
+              }));
+            } else {
+              apiCalls.getEmprendimientoId(datos.data.idEmprendimiento).then(response=>{
+                emprendimiento = response.data;
+                dispatch(reducerCargarDatos({
+                  idPersona: persona.idPersona,
+                  idEmprendimiento: emprendimiento.idEmprendimiento,
+                  nombre: persona.nombre,
+                  apellido: persona.apellido,
+                  nombreEmprendimiento: emprendimiento.nombre,
+                  tipoUsuario: perfil.nombre,
+                }));
+              });
+            }
         });
     });
 }
@@ -97,16 +114,20 @@ const LogIn = (props) => {
     apiCalls.postLogin(datos).then((response) => {
       localStorage.setItem("token", response.data.token);
       cargarDatosSesion(response);
-      setStateFormExito(true);
+      if(response.data.idPerfil === 1){
+        setStateIrAdmin(true);
+      }else if(response.data.idPerfil === 3 && response.data.idEmprendimiento !==0){
+        setStateIrTurnos(true);
+      }else{
+        setStateIrRegEmp(true);
+      }
     });
   };
 
   return (
     <div className={classes.root}>
-      {
-        stateFormExito ? (
-          <Redirect to="/turnos" />
-        ) : null /* Redireccionar si se agrega con exito */
+      { 
+        stateIrTurnos ? (<Redirect to="/turnos" />) : stateIrAdmin? (<Redirect to="/rubros" />): stateIrRegEmp? (<Redirect to="/RegistroEmprendimiento" />):null
       }
       <Grid container direction="row" justify="center" alignItems="center">
         <div>

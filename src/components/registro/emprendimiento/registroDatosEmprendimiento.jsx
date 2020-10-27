@@ -11,16 +11,17 @@ import {
   FormHelperText,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { apiCalls } from "../../api/apiCalls";
+import { apiCalls } from "../../../api/apiCalls";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
-import Mapa from "../mapa/mapa";
+import Mapa from "../../mapa/mapa";
 import {
   cargarSetDeDatosEmprendimiento,
   selectDatosEmprendimiento,
-} from "./registroSlice";
+} from ".././registroSlice";
 import { useDispatch, useSelector } from "react-redux";
-import logo from "../../imagenes/logo2.jpeg";
+import logo from "../../../imagenes/logo2.jpeg";
+import { searchPosition } from "../../mapa/buscarPosicion";
 //import Autocomplete from "@material-ui/lab/Autocomplete";
 
 const useStyles = makeStyles((theme) => ({
@@ -115,6 +116,7 @@ const RegistroDatosEmprendimiento = (props) => {
   const datosEmprendimiento = useSelector(selectDatosEmprendimiento);
 
   const enviar = (values, { setSubmitting }) => {
+    dispatch(cargarSetDeDatosEmprendimiento(values));
     props.propClickSiguiente();
   };
 
@@ -160,7 +162,8 @@ const RegistroDatosEmprendimiento = (props) => {
     apiCalls
       .getTipoEmprendimiento()
       .then((datos) => setStateTipoEmp(datos.data));
-    apiCalls.getProvincia().then((datos) => setStateProv(datos.data));
+    apiCalls.getProvincia().then((datos) => setStateProv(datos.data))
+    .catch((error)=>console.log(error));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -425,6 +428,21 @@ const RegistroDatosEmprendimiento = (props) => {
                 disabled
                 helperText={errors.mapaUbic && touched.mapaUbic && errors.mapaUbic}
               />
+              <Button
+                variant="contained"
+                color="primary"
+                disabled={values.localidad !== "-1" && values.calle !== "" && values.numero !== ""? false : true}
+                className={classes.botonEnviar}
+                onClick={() => {
+                  let loc = stateLoc.find(loc => loc.idLocalidad === values.localidad);
+                  searchPosition(values.calle + " " + values.numero + " " + loc.nombre)
+                  .then(response=>{
+                    console.log(response.latitude);
+                    setFieldValue("lat", response.latitude);
+                    setFieldValue("lng", response.longitude);
+                  });
+                }}
+              >Confirmar Ubicacion</Button>
               <Mapa
                 seleccionaPosicion={(lat, lng) => {
                   console.log("funciona", lat);
@@ -474,6 +492,7 @@ const RegistroDatosEmprendimiento = (props) => {
             <Link href="/login">Cancelar</Link>
           </Grid>
         </form>
+        {JSON.stringify(values)}
       </Grid>
     </div>
   );

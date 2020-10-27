@@ -3,6 +3,7 @@ export const sesionSlice = createSlice({
   name: "sesion",
   initialState: {
     idPersona: "",
+    idEmprendimiento: "",
     nombre: "",
     apellido: "",
     nombreEmprendimiento: "",
@@ -12,6 +13,7 @@ export const sesionSlice = createSlice({
     cargarDatosSesion: (state, action) => {
       const dato = action.payload;
       state.idPersona = dato.idPersona;
+      state.idEmprendimiento = dato.idEmprendimiento;
       state.nombre = dato.nombre;
       state.apellido = dato.apellido;
       state.nombreEmprendimiento = dato.nombreEmprendimiento;
@@ -22,6 +24,7 @@ export const sesionSlice = createSlice({
     borrarDatosSesion: (state, action) => {
       state.idPersona= "";
       state.nombre= "";
+      state.idEmprendimiento = "";
       state.apellido= "";
       state.nombreEmprendimiento= "";
       state.tipoUsuario= "";
