@@ -101,6 +101,12 @@ const validar = (values) => {
   if (!values.lat && !values.lng) {
     errors.mapaUbic = "Ubicacion coordenadas mapa Requerido";
   }
+  if(!values.capacidad){
+    errors.capacidad="Requerido";
+  }
+  if(!values.telefono){
+    errors.telefono="Requerido";
+  }
   return errors;
 };
 
@@ -129,6 +135,8 @@ const RegistroDatosEmprendimiento = (props) => {
         tipoEmp: "-1",
         calle: "",
         departamento: "",
+        telefono:"",
+        capacidad:"",
         provincia: "-1",
         localidad: "-1",
         numero: "",
@@ -398,6 +406,37 @@ const RegistroDatosEmprendimiento = (props) => {
                   }
                 />
               </div>
+
+              <div>
+             
+                
+             <TextField
+               error={errors.telefono && touched.telefono ? true : false}
+               id="telefono"
+               label="Telefono"
+               name="telefono"
+               onBlur={handleBlur}
+               value={values.telefono}
+               onChange={handleChange}
+               helperText={errors.telefono && touched.telefono && errors.telefono}
+             />
+              <TextField
+               error={
+                 errors.capacidad && touched.capacidad ? true : false
+               }
+               id="capacidad"
+               label="Capacidad del local"
+               name="capacidad"
+               onBlur={handleBlur}
+               value={values.capacidad}
+               onChange={handleChange}
+               helperText={
+                 errors.capacidad &&
+                 touched.capacidad &&
+                 errors.capacidad
+               }
+             />
+           </div>
               
               <br></br>
               <br></br>

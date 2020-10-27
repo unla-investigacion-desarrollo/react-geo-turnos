@@ -183,6 +183,7 @@ function getPersona(parameters) {
   return api.get(`/persona/${parameters}`);
 }
 
+
 function getEmprendimientoId(parameters){
   return api.get(`/emprendimiento/${parameters}`);
 }
@@ -197,6 +198,10 @@ function savePassword(parameters){
 
 function postEmprendimiento(parameters) {
   return api.post("/emprendimiento", parameters);
+}
+
+function putEmprendimiento(parameters){
+  return api.put(`/emprendimiento/${parameters.idEmprendimiento}`, parameters);
 }
 
 export const apiCalls = {
@@ -249,4 +254,5 @@ export const apiCalls = {
   getPassword,
   savePassword,
   postEmprendimiento,
+  putEmprendimiento,
 };

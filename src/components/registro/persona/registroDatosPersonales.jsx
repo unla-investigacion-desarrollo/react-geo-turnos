@@ -154,7 +154,15 @@ const RegistroDatosPersonales = (props) => {
   };
 
   const enviar = (values, { setSubmitting }) => {
-    
+    if(values.sexo==="1"){
+      values.sexo="femenino"
+    }
+    if(values.sexo==="2"){
+      values.sexo="masculino"
+    }
+    if(values.sexo==="3"){
+      values.sexo="no contestar"
+    }
     dispatch(cargarSetDeDatosPersonales(values));
     apiCalls.postAltaUsuario(formatDatosPersonales(values)).then((response)=>{
       props.propClickSiguiente();

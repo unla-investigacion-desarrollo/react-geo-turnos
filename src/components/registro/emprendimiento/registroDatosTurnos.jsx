@@ -98,14 +98,14 @@ const marks = [
 const formatDatosEmprendimiento = (datosEmp, turnos, idPersona) => {
   return {
     aceptaFoto: true,
-    capacidad: 3,
+    capacidad: datosEmp.capacidad,
     configuracionLocales: turnos,
     cuit: datosEmp.cuit,
     idPersona: idPersona,
     idRubro: datosEmp.rubro,
     idTipoEmprendimiento: datosEmp.tipoEmp,
     nombre: datosEmp.nombre,
-    telefono: 0,
+    telefono: datosEmp.telefono,
     ubicacionVo: {
       calle: datosEmp.calle,
       departamento: datosEmp.departamento,
@@ -114,6 +114,7 @@ const formatDatosEmprendimiento = (datosEmp, turnos, idPersona) => {
       latitud: datosEmp.lat,
       longitud: datosEmp.lng,
       numero: datosEmp.numero,
+
       piso: datosEmp.piso,
       usuarioModi: "web"
     },
@@ -169,7 +170,7 @@ const RegistroDatosTurnos = (props) => {
     apiCalls.postEmprendimiento(formatDatosEmprendimiento(datosEmp, listaTurnos, datosSesion.idPersona)).then((response)=>{
       console.log(response.data);
       setStateIrTurnos(true);
-    });
+    }).catch(error=> console.log(error.response.data));
   
   };
 

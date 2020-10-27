@@ -14,6 +14,12 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { Link as LinkRouter, Redirect } from "react-router-dom";
 import { apiCalls } from "../../api/apiCalls";
+import { useSelector } from "react-redux";
+import {selectSesion} from "../../datosSesion/sesionSlice";
+import Grid from "@material-ui/core/Grid";
+import Mapa from "../mapa/mapa";
+import { searchPosition } from "../mapa/buscarPosicion";
+
 
 const useStyles = makeStyles((theme) => ({
     botonEspacio: {
@@ -92,6 +98,12 @@ const validar = (values) => {
     if (!values.lat && !values.lng) {
       errors.mapaUbic = "Ubicacion coordenadas mapa Requerido";
     }
+    if(!values.capacidad){
+      errors.capacidad="Requerido";
+    }
+    if(!values.telefono){
+      errors.telefono="Requerido";
+    }
     return errors;
   };
 
@@ -104,7 +116,7 @@ const ModificarDatosEmprendimiento = () => {
     const [stateLoc, setStateLoc] = useState([]); //localidades
     const [primeraRenderizacion, setStatePrimRen] = useState(true);
 
-    const idEmprendimiento = "5" // useSelector(selectSesion).idEmprendimiento;
+    const idEmprendimiento = useSelector(selectSesion).idEmprendimiento;
 
     const valoresIniciales = () => {
         return {
@@ -113,6 +125,8 @@ const ModificarDatosEmprendimiento = () => {
           rubro: "-1",
           tipoEmp: "-1",
           calle: "",
+          telefono:"",
+          capacidad:"",
           departamento: "",
           provincia: "-1",
           localidad: "-1",
@@ -147,6 +161,7 @@ const ModificarDatosEmprendimiento = () => {
         handleBlur,
         handleSubmit,
         setValues,
+        setFieldValue,
       } = formik; //destructurar formik
 
 
@@ -160,9 +175,6 @@ const ModificarDatosEmprendimiento = () => {
       }, []);
     
       useEffect(() => {
-        if (!primeraRenderizacion) {
-          values.localidad = "-1";
-        }
         if (values.provincia !== "-1") {
           apiCalls
             .getLocalidades(values.provincia)
@@ -176,16 +188,19 @@ const ModificarDatosEmprendimiento = () => {
       useEffect(() => {
         apiCalls.getEmprendimientoId(idEmprendimiento !=="" ? idEmprendimiento : null).then((response) => {
           const dataEmprendimiento = response.data;
-          console.log(dataEmprendimiento);
           setValues({ 
               idEmprendimiento: dataEmprendimiento.idEmprendimiento,
               nombre: dataEmprendimiento.nombre,
               cuit: dataEmprendimiento.cuit,
-              rubro: dataEmprendimiento.rubro,
+              rubro: dataEmprendimiento.rubro.idRubro,
+              capacidad: dataEmprendimiento.capacidad,
+              lat: dataEmprendimiento.ubicacion.latitud,
+              lng: dataEmprendimiento.ubicacion.longitud,
+              telefono: dataEmprendimiento.telefono,
               cuil: dataEmprendimiento.cuil,
-              tipoEmp: dataEmprendimiento.tipoEmprendimiento,
-              provincia: dataEmprendimiento.ubicacion.localidad.provincia.nombre,
-              localidad: dataEmprendimiento.ubicacion.localidad.nombre,
+              tipoEmp: dataEmprendimiento.tipoEmprendimiento.idTipoEmprendimiento,
+              provincia: dataEmprendimiento.ubicacion.localidad.provincia.idProvincia,
+              localidad: dataEmprendimiento.ubicacion.localidad.idLocalidad,
               calle: dataEmprendimiento.ubicacion.calle,
               numero: dataEmprendimiento.ubicacion.numero,
               piso: dataEmprendimiento.ubicacion.piso,
@@ -195,18 +210,21 @@ const ModificarDatosEmprendimiento = () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [idEmprendimiento]);
 
-    return ( <div>
+    return ( <div className={classes.root}>
                 {
                     stateFormExito ? (
-                     <Redirect to="/rubros" />
+                     <Redirect to="/turnos" />
                         ) : null /* Redireccionar si se agrega con exito */
                  }
+        <Grid container>
         <Typography variant="h5" color="initial">
             Modificar Datos Emprendimiento
         </Typography>
 
         <form onSubmit={handleSubmit} className={classes.espacios}>
 
+        <Grid container>
+        <Grid item xs={8}>
         <div>
                 <TextField
                   error={errors.nombre && touched.nombre ? true : false}
@@ -385,8 +403,6 @@ const ModificarDatosEmprendimiento = () => {
                 
               </div>
               <div>
-             
-                
                 <TextField
                   error={errors.piso && touched.piso ? true : false}
                   id="piso"
@@ -414,6 +430,72 @@ const ModificarDatosEmprendimiento = () => {
                   }
                 />
               </div>
+              <div>
+             <TextField
+               error={errors.telefono && touched.telefono ? true : false}
+               id="telefono"
+               label="Telefono"
+               name="telefono"
+               onBlur={handleBlur}
+               value={values.telefono}
+               onChange={handleChange}
+               helperText={errors.telefono && touched.telefono && errors.telefono}
+             />
+              <TextField
+               error={
+                 errors.capacidad && touched.capacidad ? true : false
+               }
+               id="capacidad"
+               label="Capacidad del local"
+               name="capacidad"
+               onBlur={handleBlur}
+               value={values.capacidad}
+               onChange={handleChange}
+               helperText={
+                 errors.capacidad &&
+                 touched.capacidad &&
+                 errors.capacidad
+               }
+             />
+           </div>
+          </Grid>
+
+          <Grid item xs={4} className={classes.mapa}>
+              <TextField
+                error={errors.mapaUbic && touched.mapaUbic? true : false}
+                id="mapaUbic"
+                label="Seleccione ubicacion:"
+                name="mapaUbic"
+                disabled
+                helperText={errors.mapaUbic && touched.mapaUbic && errors.mapaUbic}
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                disabled={values.localidad !== "-1" && values.calle !== "" && values.numero !== ""? false : true}
+                className={classes.botonEnviar}
+                onClick={() => {
+                  let loc = stateLoc.find(loc => loc.idLocalidad === values.localidad);
+                  searchPosition(values.calle + " " + values.numero + " " + loc.nombre)
+                  .then(response=>{
+                    console.log(response.latitude);
+                    setFieldValue("lat", response.latitude);
+                    setFieldValue("lng", response.longitude);
+                  });
+                }}
+              >Confirmar Ubicacion</Button>
+              <Mapa
+                seleccionaPosicion={(lat, lng) => {
+                  console.log("funciona", lat);
+                  setFieldValue("lat", lat);
+                  setFieldValue("lng", lng);
+                }}
+                latitud={values.lat}
+                longitud={values.lng}
+              />
+            </Grid>
+
+          </Grid>
               <Button variant="contained" color="primary" type="submit" className={classes.botonEspacio}>
                 Modificar
               </Button>
@@ -423,6 +505,7 @@ const ModificarDatosEmprendimiento = () => {
 
 
         </form>
+        </Grid>
     </div> 
      );
 }

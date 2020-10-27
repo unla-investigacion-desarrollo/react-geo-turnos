@@ -109,7 +109,7 @@ const LogIn = (props) => {
     });
 }
 
-  const enviar = (values, { setSubmitting }) => {
+  const enviar = (values, { setSubmitting,setFieldError }) => {
     let datos = { email: values.usuario, clave: values.password };
     apiCalls.postLogin(datos).then((response) => {
       localStorage.setItem("token", response.data.token);
@@ -121,7 +121,11 @@ const LogIn = (props) => {
       }else{
         setStateIrRegEmp(true);
       }
-    });
+    }).catch((error)=>{
+      if(error.response.data.code === "error.reactivar.incorrect.user_password"){
+        setFieldError("password", "Usuario o contraseña invalido");
+      }
+    });;
   };
 
   return (
@@ -149,6 +153,7 @@ const LogIn = (props) => {
               isValidating,
               setTouched,
               isValid,
+              setFieldError,
             }) => (
               <Card className={classes.card}>
                 <CardMedia
