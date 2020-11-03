@@ -4,10 +4,9 @@ import TextField from "@material-ui/core/TextField";
 import {
   Button,
   Typography,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
+  Dialog,
+  DialogTitle,
+  DialogActions,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
@@ -70,6 +69,7 @@ const useStyles = makeStyles((theme) => ({
   }));
 
   const validar = (values) => {
+    
     const errors = {};
     if (!values.nombre) {
       errors.nombre = "Requirido";
@@ -110,16 +110,8 @@ const useStyles = makeStyles((theme) => ({
     if (!values.numero) {
       errors.numero = "Requerido";
     }
-    if (!values.password) {
-      errors.password = "Requirido";
-    }
-    if (!values.repetirPassword) {
-      errors.repetirPassword = "Requirido";
-    }
-    if (values.password !== values.repetirPassword) {
-      errors.repetirPassword = "Contraseña no coincide";
-    }
     return errors;
+    
   };
 
 
@@ -129,7 +121,7 @@ const useStyles = makeStyles((theme) => ({
     const classes = useStyles();
   
     const [stateFormExito, setStateFormExito] = useState(false);
-  
+    const [stateOpenDialogMod, setStateOpenDialogMod] = useState(false);
     const valoresIniciales = () => {
       return {
         nombre: "",
@@ -141,22 +133,34 @@ const useStyles = makeStyles((theme) => ({
         numero:"",
         provincia: "-1",
         localidad: "-1",
-        sexo:"-1",
+        sexo:"",
         cuil: "",
         celular: "",
         email: "",
         usuarioModi: "string",
         direccion: "",
         password: "",
-        repetirPassword: "",
         departamento:"",
         fillerPassword:""
       };
     };
   
+    
     const enviar = (values, { setSubmitting }) => {
-      setStateFormExito(true);
+        const dataPersona = { 
+        idPersona: values.idPersona, 
+        celular: values.celular, 
+        mail:values.email,
+        password: values.password,
+        sexo: values.sexo,
+      }
+      apiCalls.putPersonaFisica(dataPersona).then((datos) => {
+        setSubmitting(false);
+        setStateOpenDialogMod(false);
+        setStateFormExito(true);
+      })
     };
+  
   
     const formik = useFormik({
       initialValues: valoresIniciales(),
@@ -164,7 +168,8 @@ const useStyles = makeStyles((theme) => ({
       validate: validar,
       initialErrors: { nombre: "error" },
     });
-  
+
+    
     const {
       values,
       errors,
@@ -173,25 +178,14 @@ const useStyles = makeStyles((theme) => ({
       handleBlur,
       handleSubmit,
       setValues,
+      isSubmitting,
     } = formik; //destructurar formik
   
  
-
     useEffect(() => {
           apiCalls.getPersonaFisica(idPersona !=="" ? idPersona : null).then((response) => {
             const dataPersona = response.data;
             console.log(dataPersona);
-            const varSexo= dataPersona.sexo;
-            let sexoN;
-            if(varSexo==="femenino"){
-                sexoN= 1;
-            }
-            if(varSexo==="masculino"){
-                sexoN= 2;
-            }
-            if(varSexo==="no contestar"){
-                sexoN=3;
-            }
             setValues({ 
                 idPersona: dataPersona.idPersona,
                 nombre: dataPersona.nombre,
@@ -199,7 +193,8 @@ const useStyles = makeStyles((theme) => ({
                 dni: dataPersona.dni,
                 cuil: dataPersona.cuil,
                 nroTramite: dataPersona.numeroTramite,
-                sexo: sexoN,
+                password: dataPersona.password,
+                sexo: dataPersona.sexo,
                 email: dataPersona.login.email,
                 celular: dataPersona.celular,
                 provincia: dataPersona.ubicacion.localidad.provincia.nombre,
@@ -221,7 +216,7 @@ const useStyles = makeStyles((theme) => ({
         <div className={classes.root}>
             {
                 stateFormExito ? (
-                    <Redirect to="/login" />
+                    <Redirect to="/turnos" />
                 ) : null /* Redireccionar si se agrega con exito */
             }
         <Grid container direction="row" justify="center" alignItems="center">
@@ -301,27 +296,18 @@ const useStyles = makeStyles((theme) => ({
                 disabled
               />
 
-
-    <FormControl  error={errors.sexo && touched.sexo ? true : false}
-                className={classes.formControl}>
-        <InputLabel id="labelSexo">Sexo</InputLabel>
-        <Select
-                  id="sexo"
-                  name="sexo"
-                  labelId="labelSexo"
-                  value={values.sexo}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  disabled
-                >
-          <MenuItem value="-1" disabled>
-            <em>Seleccione una opcion</em>
-          </MenuItem>
-          <MenuItem value={1}>Femenino</MenuItem>
-          <MenuItem value={2}>Masculino</MenuItem>
-          <MenuItem value={3}>No Contestar</MenuItem>
-        </Select>
-      </FormControl>
+            <TextField
+                error={errors.sexo && touched.sexo ? true : false}
+                id="sexo"
+                label="Sexo"
+                name="sexo"
+                onBlur={handleBlur}
+                value={values.sexo}
+                onChange={handleChange}
+                helperText={errors.sexo && touched.sexo && errors.sexo}
+                disabled
+              />
+    
 
           </div>
 
@@ -491,16 +477,49 @@ const useStyles = makeStyles((theme) => ({
               alignItems="center"
               className={classes.botonEspacio}
             >
-              <Button variant="contained" color="primary" type="submit" className={classes.botonEspacio}>
-                Modificar
+              <Button onClick={()=> setStateOpenDialogMod(true)} variant="contained" color="primary" className={classes.botonEspacio}>
+                Modificar 
               </Button>
               <Button  component={LinkRouter} variant="contained" color="secondary" to="/turnos">Volver 
               </Button>
             </Grid>
+
+            <Dialog
+            open={stateOpenDialogMod}
+            onClose={() => setStateOpenDialogMod(false)}
+            aria-labelledby="alert-dialog-title-mod"
+            aria-describedby="alert-dialog-description-mod"
+          >
+            <DialogTitle id="alert-dialog-title-mod">
+              {"¿Estas seguro de modificar los datos personales?"}
+            </DialogTitle>
+            <DialogActions>
+              <Button
+                onClick={() => setStateOpenDialogMod(false)}
+                color="primary"
+              >
+                Cancelar
+              </Button>
+              <Button
+                color="primary"
+                autoFocus
+                variant="contained"
+                disabled={isSubmitting}
+                onClick={handleSubmit}
+              >
+                Aceptar
+              </Button>
+            </DialogActions>
+          </Dialog>
+
+
+
           </form>
            
         </Grid>
-
+        {JSON.stringify(values)}
+        <br></br>
+        {JSON.stringify(errors)}
         </div>
     );
   };

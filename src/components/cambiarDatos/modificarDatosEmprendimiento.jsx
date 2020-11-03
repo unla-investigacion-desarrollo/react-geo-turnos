@@ -10,6 +10,9 @@ import {
     Select,
     MenuItem,
     FormHelperText,
+    Dialog,
+    DialogTitle,
+    DialogActions,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link as LinkRouter, Redirect } from "react-router-dom";
@@ -114,9 +117,11 @@ const ModificarDatosEmprendimiento = () => {
     const [stateTipoEmp, setStateTipoEmp] = useState([]); //tipo emprendimientos
     const [stateProv, setStateProv] = useState([]); //provincias
     const [stateLoc, setStateLoc] = useState([]); //localidades
-    const [primeraRenderizacion, setStatePrimRen] = useState(true);
+    const [primeraRenderizacion,setStatePrimRen] = useState(true);
+    const [stateOpenDialogMod, setStateOpenDialogMod] = useState(false);
 
     const idEmprendimiento = useSelector(selectSesion).idEmprendimiento;
+    const idPersona = useSelector(selectSesion).idPersona;
 
     const valoresIniciales = () => {
         return {
@@ -138,8 +143,41 @@ const ModificarDatosEmprendimiento = () => {
         };
     };
 
+    const formatDatosEmprendimiento = (idEmprendimiento,datosEmp, turnos, idPersona) => {
+      return {
+        aceptaFoto: true,
+        capacidad: datosEmp.capacidad,
+        configuracionLocales: turnos,
+        cuit: datosEmp.cuit,
+        idPersona: idPersona,
+        idRubro: datosEmp.rubro,
+        idTipoEmprendimiento: datosEmp.tipoEmp,
+        nombre: datosEmp.nombre,
+        telefono: datosEmp.telefono,
+        idEmprendimiento: idEmprendimiento,
+        idEstadoEmprendimiento: datosEmp.idEstadoEmprendimiento,
+        ubicacionVo: {
+          calle: datosEmp.calle,
+          departamento: datosEmp.departamento,
+          idLocalidad: datosEmp.localidad,
+          idProvincia: datosEmp.provincia,
+          latitud: datosEmp.lat,
+          longitud: datosEmp.lng,
+          numero: datosEmp.numero,
+          piso: datosEmp.piso,
+          usuarioModi: "web"
+        },
+        usuarioModi: "web",  
+      };
+    }
+
     const enviar = (values, { setSubmitting }) => {
-        setStateFormExito(true);
+      apiCalls.putEmprendimiento(formatDatosEmprendimiento(idEmprendimiento,values,values.configLocal,idPersona)).
+      then(response =>{
+         console.log(response.data);
+         setStateFormExito(true);
+      });
+
       };
 
     const formik = useFormik({
@@ -162,6 +200,7 @@ const ModificarDatosEmprendimiento = () => {
         handleSubmit,
         setValues,
         setFieldValue,
+        isSubmitting,
       } = formik; //destructurar formik
 
 
@@ -188,6 +227,7 @@ const ModificarDatosEmprendimiento = () => {
       useEffect(() => {
         apiCalls.getEmprendimientoId(idEmprendimiento !=="" ? idEmprendimiento : null).then((response) => {
           const dataEmprendimiento = response.data;
+          console.log(dataEmprendimiento);
           setValues({ 
               idEmprendimiento: dataEmprendimiento.idEmprendimiento,
               nombre: dataEmprendimiento.nombre,
@@ -205,6 +245,8 @@ const ModificarDatosEmprendimiento = () => {
               numero: dataEmprendimiento.ubicacion.numero,
               piso: dataEmprendimiento.ubicacion.piso,
               departamento: dataEmprendimiento.ubicacion.departamento,
+              configLocal: dataEmprendimiento.configuracionesLocal,
+              idEstadoEmprendimiento: dataEmprendimiento.estadoEmprendimiento.idEstadoEmprendimiento,
           });
         });
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -246,6 +288,7 @@ const ModificarDatosEmprendimiento = () => {
                   value={values.cuit}
                   onChange={handleChange}
                   helperText={errors.cuit && touched.cuit && errors.cuit}
+                  disabled
                 />
               </div>
 
@@ -496,13 +539,41 @@ const ModificarDatosEmprendimiento = () => {
             </Grid>
 
           </Grid>
-              <Button variant="contained" color="primary" type="submit" className={classes.botonEspacio}>
+              <Button  onClick={()=> setStateOpenDialogMod(true)} variant="contained" color="primary" className={classes.botonEspacio}>
                 Modificar
               </Button>
               <Button  component={LinkRouter} variant="contained" color="secondary" to="/turnos">Volver 
               </Button>
               
 
+
+              <Dialog
+            open={stateOpenDialogMod}
+            onClose={() => setStateOpenDialogMod(false)}
+            aria-labelledby="alert-dialog-title-mod"
+            aria-describedby="alert-dialog-description-mod"
+          >
+            <DialogTitle id="alert-dialog-title-mod">
+              {"¿Estas seguro de modificar los datos emprendimiento?"}
+            </DialogTitle>
+            <DialogActions>
+              <Button
+                onClick={() => setStateOpenDialogMod(false)}
+                color="primary"
+              >
+                Cancelar
+              </Button>
+              <Button
+                color="primary"
+                autoFocus
+                variant="contained"
+                disabled={isSubmitting}
+                onClick={handleSubmit}
+              >
+                Aceptar
+              </Button>
+            </DialogActions>
+          </Dialog>
 
         </form>
         </Grid>

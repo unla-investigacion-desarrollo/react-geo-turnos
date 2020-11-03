@@ -113,6 +113,11 @@ const NavBar = () => {
           component={Link}
           to="/modificarRegistroEmprendimiento"
           >Datos Emprendimiento</MenuItem>
+          <MenuItem 
+          onClick={handleClose}
+          component={Link}
+          to="/modificarTurnoEmprendimiento"
+          >Datos Turno</MenuItem>
           <MenuItem onClick={funcionCerrarSesion}>Cerrar Sesion</MenuItem>
         </Menu>
       </Toolbar>

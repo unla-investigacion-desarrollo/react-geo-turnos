@@ -66,6 +66,7 @@ const CambiarPassword = () => {
     const enviar = (values, { setSubmitting, setFieldError}) => {
         apiCalls.getPassword(localStorage.getItem("token")).then(response => {
               apiCalls.savePassword(values.nuevaPassword);
+              setStateFormExito(true);
         })
         .catch((error) => {
           console.log(error.response);
@@ -92,11 +93,6 @@ const CambiarPassword = () => {
         handleChange,
         handleBlur,
         handleSubmit,
-        isSubmitting,
-        validateForm,
-        setTouched,
-        isValid,
-        setValues,
       } = formik; //destructurar formik
 
     

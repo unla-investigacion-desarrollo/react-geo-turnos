@@ -179,6 +179,10 @@ function getPersonaFisica(parameters) {
   return api.get(`/fisica/${parameters}`);
 }
 
+function putPersonaFisica(parameters){
+  return api.put(`/fisica/${parameters.idPersona}`, parameters);
+}
+
 function getPersona(parameters) {
   return api.get(`/persona/${parameters}`);
 }
@@ -249,6 +253,7 @@ export const apiCalls = {
   getFuncionesPerfil,
   postRestablecerPassword,
   getPersonaFisica,
+  putPersonaFisica,
   getEmprendimientoId,
   getPersona,
   getPassword,
