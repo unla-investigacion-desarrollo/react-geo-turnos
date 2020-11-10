@@ -126,8 +126,8 @@ function postRegistro(parameters) {
   return apiLogIn.post("/fisica", parameters);
 }
 
-function getTurno() {
-  return api.get("/turno", null);
+function getTurno(idEmp, idEstTurno) {
+  return api.get(`/emprendimiento/${idEmp}/turnos?estadoTurno=${idEstTurno}`);
 }
 
 function getPerfil() {

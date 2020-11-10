@@ -17,8 +17,8 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { Link as LinkRouter, Redirect } from "react-router-dom";
 import { apiCalls } from "../../api/apiCalls";
-import { useSelector } from "react-redux";
-import {selectSesion} from "../../datosSesion/sesionSlice";
+import { useSelector, useDispatch } from "react-redux";
+import {selectSesion, cargarNombreEmprendimiento} from "../../datosSesion/sesionSlice";
 import Grid from "@material-ui/core/Grid";
 import Mapa from "../mapa/mapa";
 import { searchPosition } from "../mapa/buscarPosicion";
@@ -119,6 +119,7 @@ const ModificarDatosEmprendimiento = () => {
     const [stateLoc, setStateLoc] = useState([]); //localidades
     const [primeraRenderizacion,setStatePrimRen] = useState(true);
     const [stateOpenDialogMod, setStateOpenDialogMod] = useState(false);
+    const dispatch = useDispatch();
 
     const idEmprendimiento = useSelector(selectSesion).idEmprendimiento;
     const idPersona = useSelector(selectSesion).idPersona;
@@ -175,6 +176,7 @@ const ModificarDatosEmprendimiento = () => {
       apiCalls.putEmprendimiento(formatDatosEmprendimiento(idEmprendimiento,values,values.configLocal,idPersona)).
       then(response =>{
          console.log(response.data);
+          dispatch(cargarNombreEmprendimiento(values.nombre));
          setStateFormExito(true);
       });
 

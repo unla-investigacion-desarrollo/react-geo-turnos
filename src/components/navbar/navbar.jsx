@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -63,13 +63,12 @@ const NavBar = () => {
   const funcionCerrarSesion = () => {
     //se haria un api call para cerrar sesion
     dispatch(borrarDatosSesion());
-    setCerrarSesion(true);
     setAnchorEl(null);
   };
 
+
   return (
     <AppBar position="fixed" className={classes.root}>
-      {cerrarSesion ? <Redirect to="/login" /> : null}
       <Toolbar>
         <Hidden smUp>
           <IconButton

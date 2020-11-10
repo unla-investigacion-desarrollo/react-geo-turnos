@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState, useEffect} from "react";
 import { Formik } from "formik";
 import { Button, Divider, Typography } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
@@ -10,14 +10,16 @@ import CardMedia from "@material-ui/core/CardMedia";
 import { apiCalls } from "../../api/apiCalls";
 import logo from "../../imagenes/logo.jpeg";
 import { Link as LinkRouter, Redirect } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import {cargarDatosSesion as reducerCargarDatos} from "../../datosSesion/sesionSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {cargarDatosSesion as reducerCargarDatos, selectSesion} from "../../datosSesion/sesionSlice";
+import {Android} from '@material-ui/icons';
 
 
 const useStyles = makeStyles((theme) => ({
 
   botonEspacio: {
-    margin: theme.spacing(1),
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
   },
   espacios: {
     "& .MuiTextField-root": {
@@ -45,6 +47,16 @@ const useStyles = makeStyles((theme) => ({
   botonOculto: {
     display: "none",
   },
+  botonAndroid: {
+    marginRight: theme.spacing(2),
+    marginLeft: theme.spacing(2),
+    marginTop: theme.spacing(3),
+    backgroundColor: "#30DA35",
+    "&:hover":{
+      backgroundColor:"#33B237",
+    },
+    color: "white",
+  },
 }));
 
 const validar = (values) => {
@@ -64,7 +76,7 @@ let valoresIniciales = {};
 
 valoresIniciales = {
   usuario: "enzord07@gmail.com",
-  password: "admin",
+  password: "123",
 };
 
 const LogIn = (props) => {
@@ -74,6 +86,7 @@ const LogIn = (props) => {
   const classes = useStyles();
   let claseBotonEnviar;
   const dispatch = useDispatch();
+  const sesion = useSelector(selectSesion);
 
   const cargarDatosSesion = (datos) => {
     let emprendimiento;
@@ -91,6 +104,7 @@ const LogIn = (props) => {
                   apellido: persona.apellido,
                   nombreEmprendimiento: "Sin Emprendimiento",
                   tipoUsuario: perfil.nombre,
+                  idPerfil: perfil.idPerfil
               }));
             } else {
               apiCalls.getEmprendimientoId(datos.data.idEmprendimiento).then(response=>{
@@ -102,6 +116,7 @@ const LogIn = (props) => {
                   apellido: persona.apellido,
                   nombreEmprendimiento: emprendimiento.nombre,
                   tipoUsuario: perfil.nombre,
+                  idPerfil: perfil.idPerfil
                 }));
               });
             }
@@ -114,19 +129,23 @@ const LogIn = (props) => {
     apiCalls.postLogin(datos).then((response) => {
       localStorage.setItem("token", response.data.token);
       cargarDatosSesion(response);
-      if(response.data.idPerfil === 1){
-        setStateIrAdmin(true);
-      }else if(response.data.idPerfil === 3 && response.data.idEmprendimiento !==0){
-        setStateIrTurnos(true);
-      }else{
-        setStateIrRegEmp(true);
-      }
     }).catch((error)=>{
       if(error.response.data.code === "error.reactivar.incorrect.user_password"){
         setFieldError("password", "Usuario o contraseña invalido");
       }
     });;
   };
+
+  useEffect(() => {
+    if(sesion.idPerfil === 1){
+      setStateIrAdmin(true);
+    }else if(sesion.idPerfil === 3 && sesion.idEmprendimiento !==0){
+      setStateIrTurnos(true);
+    }else if(sesion.idEmprendimiento===0 && sesion.idPerfil === 3){
+      setStateIrRegEmp(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sesion.idPersona]);
 
   return (
     <div className={classes.root}>
@@ -161,9 +180,6 @@ const LogIn = (props) => {
                   image={logo}
                 />
                 <CardContent>
-                  <Typography variant="h5" color="initial">
-                    Iniciar Sesion
-                  </Typography>
                   <form onSubmit={handleSubmit} className={classes.espacios}>
                     <div>
                       <TextField
@@ -224,7 +240,20 @@ const LogIn = (props) => {
                       ¿Olvido su contraseña? Restablecer
                     </LinkRouter>
                     <Divider />
-                   
+                    <Grid
+                      container
+                      direction="row"
+                      justify="center"
+                      alignItems="center"
+                    >
+                      <Button
+                        variant="contained"
+                        className={classes.botonAndroid}
+                        startIcon={<Android />}
+                      >
+                        Descarga la App
+                      </Button>
+                    </Grid>
                   </form>
                 </CardContent>
               </Card>

@@ -46,6 +46,7 @@ const ListaSolicitudes = () => {
       idPersona: turno.persona.idPersona,
       observaciones: turno.observaciones,
       usuarioModi: turno.usuarioModi,
+      fechaHora: turno.fechaHora,
     };
   };
 

@@ -14,6 +14,7 @@ export const turnoSlice = createSlice({
   },
   reducers: {
     cargarTurnos: (state, action) => {
+      console.log(action.payload);
       let auxTurnosAceptados = [];
       let auxTurnosPendientes = [];
       let auxTurnosRechazados = [];
