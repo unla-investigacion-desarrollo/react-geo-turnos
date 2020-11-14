@@ -12,6 +12,7 @@ import RegistroEmp from "./components/registro/emprendimiento/registroEmp";
 import RestablecerPass from "./components/login/restablecerPassword";
 import { useDispatch, useSelector } from "react-redux";
 import {cargarDatosSesion, selectSesion, setIniciado} from "./datosSesion/sesionSlice";
+import Index from "./components/index/index";
 
 
 
@@ -42,6 +43,9 @@ function App() {
   return (
     <Router>
       <Switch>
+        <Route exact path="/index">
+          <Index />
+        </Route>
         <Route exact path="/login">
           <LogIn />
         </Route>
