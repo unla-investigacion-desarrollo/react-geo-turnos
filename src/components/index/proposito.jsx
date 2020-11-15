@@ -3,8 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Card, CardContent, Typography,
 List, ListItem, ListItemIcon, ListItemText
 } from '@material-ui/core';
-
-import FolderIcon from '@material-ui/icons/Folder';
+import logo from "../../imagenes/fondoT1.png";
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -14,6 +14,12 @@ const useStyles = makeStyles((theme) => ({
     card: {
         margin: theme.spacing(4),
     },
+    logo: {
+        marginRight:"auto",
+        marginLeft: "auto",
+        height: 250,
+        width: 500,
+    },
 }));
 
 const Proposito = () => {
@@ -22,7 +28,9 @@ const Proposito = () => {
         <div className={classes.root}>
             <Grid container>
                 <Grid item xs={6}>
-                    
+                    <div className={classes.logo}>
+                        <img src={logo} alt=""  className={classes.logo} />  
+                    </div>
                 </Grid>
                 <Grid item xs={6}>
                     <Card className={classes.card}>
@@ -33,7 +41,7 @@ const Proposito = () => {
                             <List>
                                 <ListItem>
                                     <ListItemIcon>
-                                        <FolderIcon />
+                                        <FiberManualRecordIcon />
                                     </ListItemIcon>
                                     <ListItemText
                                         primary="Primer Proposito"
@@ -41,18 +49,18 @@ const Proposito = () => {
                                 </ListItem>
                                 <ListItem>
                                     <ListItemIcon>
-                                        <FolderIcon />
+                                        <FiberManualRecordIcon />
                                     </ListItemIcon>
                                     <ListItemText
-                                        primary="Primer Proposito"
+                                        primary="Segundo Proposito"
                                     />
                                 </ListItem>
                                 <ListItem>
                                     <ListItemIcon>
-                                        <FolderIcon />
+                                        <FiberManualRecordIcon />
                                     </ListItemIcon>
                                     <ListItemText
-                                        primary="Primer Proposito"
+                                        primary="Tercer Proposito"
                                     />
                                 </ListItem>
                             </List>

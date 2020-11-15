@@ -4,7 +4,7 @@ import { Grid, Card, CardContent, Typography,
 List, ListItem, ListItemIcon, ListItemText
 } from '@material-ui/core';
 
-import FolderIcon from '@material-ui/icons/Folder';
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -41,7 +41,7 @@ const Descarga = () => {
                             <List>
                                 <ListItem>
                                     <ListItemIcon>
-                                        <FolderIcon />
+                                        <FiberManualRecordIcon />
                                     </ListItemIcon>
                                     <ListItemText
                                         primary="Primer Paso"
@@ -49,18 +49,18 @@ const Descarga = () => {
                                 </ListItem>
                                 <ListItem>
                                     <ListItemIcon>
-                                        <FolderIcon />
+                                        <FiberManualRecordIcon />
                                     </ListItemIcon>
                                     <ListItemText
-                                        primary="2do Paso"
+                                        primary="Segundo Paso"
                                     />
                                 </ListItem>
                                 <ListItem>
                                     <ListItemIcon>
-                                        <FolderIcon />
+                                        <FiberManualRecordIcon />
                                     </ListItemIcon>
                                     <ListItemText
-                                        primary="3er Paso"
+                                        primary="Tercer Paso"
                                     />
                                 </ListItem>
                             </List>
@@ -70,7 +70,7 @@ const Descarga = () => {
                 <Grid item xs={6}>
                     <div className={classes.card}>
                     <Typography variant="h4" align="center">
-                        Video de Instalacion:
+                        Video de Instalación:
                     </Typography>
                     <div className={classes.video}>
                     <iframe width="700" height="400" 

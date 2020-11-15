@@ -66,6 +66,13 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: "auto",
         width: 400,
     },
+    botonIngresar: {
+      backgroundColor: "#30DA35",
+      "&:hover":{
+        backgroundColor:"#33B237",
+      },
+      color: "white",
+    },
 }));
 
 const handleClick = (event) => {
@@ -135,6 +142,7 @@ const Index = (props) => {
                 </Grid>
                 <Grid item xs={1}>
                     <Button
+                        className={classes.botonIngresar}
                         variant="contained"
                         color="primary"
                         component={Link}

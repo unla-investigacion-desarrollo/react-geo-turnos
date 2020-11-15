@@ -178,6 +178,9 @@ const LogIn = (props) => {
                 <CardMedia
                   className={classes.media}
                   image={logo}
+                  title="Pantalla de Inicio"
+                  component={LinkRouter}
+                  to="/index"
                 />
                 <CardContent>
                   <form onSubmit={handleSubmit} className={classes.espacios}>

@@ -4,7 +4,7 @@ import { Grid, Card, CardContent, Typography,
 List, ListItem, ListItemIcon, ListItemText
 } from '@material-ui/core';
 
-import FolderIcon from '@material-ui/icons/Folder';
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,12 +32,12 @@ const Somos = () => {
                     <Card className={classes.card}>
                         <CardContent>
                             <Typography variant="h4" gutterBottom>
-                                algo de quienes somos:
+                                Algo de quienes somos:
                             </Typography>
                             <List>
                                 <ListItem>
                                     <ListItemIcon>
-                                        <FolderIcon />
+                                        <FiberManualRecordIcon />
                                     </ListItemIcon>
                                     <ListItemText
                                         primary="Somos esto"
@@ -45,7 +45,7 @@ const Somos = () => {
                                 </ListItem>
                                 <ListItem>
                                     <ListItemIcon>
-                                        <FolderIcon />
+                                        <FiberManualRecordIcon />
                                     </ListItemIcon>
                                     <ListItemText
                                         primary="Somos aquello"
@@ -53,7 +53,7 @@ const Somos = () => {
                                 </ListItem>
                                 <ListItem>
                                     <ListItemIcon>
-                                        <FolderIcon />
+                                        <FiberManualRecordIcon />
                                     </ListItemIcon>
                                     <ListItemText
                                         primary="Esto no somos"
@@ -72,7 +72,7 @@ const Somos = () => {
                             <List>
                                 <ListItem>
                                     <ListItemIcon>
-                                        <FolderIcon />
+                                        <FiberManualRecordIcon />
                                     </ListItemIcon>
                                     <ListItemText
                                         primary="Somos esto tambien"
@@ -80,7 +80,7 @@ const Somos = () => {
                                 </ListItem>
                                 <ListItem>
                                     <ListItemIcon>
-                                        <FolderIcon />
+                                        <FiberManualRecordIcon />
                                     </ListItemIcon>
                                     <ListItemText
                                         primary="Nos dicen asi"
@@ -88,7 +88,7 @@ const Somos = () => {
                                 </ListItem>
                                 <ListItem>
                                     <ListItemIcon>
-                                        <FolderIcon />
+                                        <FiberManualRecordIcon />
                                     </ListItemIcon>
                                     <ListItemText
                                         primary="Estudiamos en tal lugar"
