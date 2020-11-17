@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
           minWidth: 400,
         },
       },
-      card: { width: 450 },
+      card: { width: 450,height:380 },
       botonForm: {
         marginRight: theme.spacing(3),
       },
@@ -32,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
 
   const valoresIniciales = () => {
     return {
-      password: "",
       repetirPassword: "",
       nuevaPassword: "",
       repetirNuevaPassword:""
@@ -41,9 +40,6 @@ const useStyles = makeStyles((theme) => ({
 
   const validar = (values) => {
     const errors = {};
-    if (!values.password) {
-        errors.password = "Requirido";
-      }
       if(!values.nuevaPassword){
         errors.nuevaPassword= "Requirido";
       }
@@ -70,7 +66,7 @@ const RestablecerPasswordPaso2 = () => {
         initialValues: valoresIniciales(),
         onSubmit: enviar,
         validate: validar,
-        initialErrors: { password: "error" },
+        initialErrors: { nuevaPassword: "error" },
       });
 
       const {
@@ -108,19 +104,7 @@ const RestablecerPasswordPaso2 = () => {
                 
              <CardContent>
         <form onSubmit={handleSubmit} className={classes.espacios}>
-        <div>
-             <TextField
-                error={errors.password && touched.password ? true : false}
-                id="password"
-                label="Escriba la contraseña antigua"
-                name="password"
-                onBlur={handleBlur}
-                type="password"
-                value={values.password}
-                onChange={handleChange}
-                helperText={errors.password && touched.password && errors.password}
-              />
-        </div>
+      
 
         <div>
               <TextField
@@ -137,6 +121,7 @@ const RestablecerPasswordPaso2 = () => {
                 }
               />
         </div>
+        <br></br>
         <div>
               <TextField
                 error={errors.repetirNuevaPassword && touched.repetirNuevaPassword ? true : false}
@@ -153,6 +138,8 @@ const RestablecerPasswordPaso2 = () => {
               />
         </div>
 
+                <br></br>
+                <br></br>
                     <Grid
                         container
                         direction="row"
