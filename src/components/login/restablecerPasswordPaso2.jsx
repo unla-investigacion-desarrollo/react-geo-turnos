@@ -8,28 +8,26 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import {  Redirect } from "react-router-dom";
+import {Grid,Card,CardContent} from "@material-ui/core";
 import { apiCalls } from "../../api/apiCalls";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      "& .MuiTextField-root": {
-        margin: theme.spacing(1),
-        minWidth: 350,
+        display: "flex",
+        height: "100vh",
+        background: "linear-gradient(top,white  , #0BA3C8 )",
+        "& .MuiTextField-root": {
+          margin: theme.spacing(1),
+          minWidth: 400,
+        },
       },
-    },
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: 300,
-    },
-    selectEmpty: {
-      marginTop: theme.spacing(2),
-    },
-    botonForm: {
-      marginRight: theme.spacing(3),
-    },
-    botonOculto: {
-      display: "none",
-    },
+      card: { width: 450 },
+      botonForm: {
+        marginRight: theme.spacing(3),
+      },
+      botonEspacio: {
+        margin: theme.spacing(1),
+      },
   }));
 
   const valoresIniciales = () => {
@@ -59,24 +57,13 @@ const useStyles = makeStyles((theme) => ({
   };
 
 
-const CambiarPassword = () => {
+const RestablecerPasswordPaso2 = () => {
     const classes = useStyles();
     const [stateFormExito, setStateFormExito] = useState(false);
 
     const enviar = (values, { setSubmitting, setFieldError}) => {
-        apiCalls.getPassword(localStorage.getItem("token")).then(response => {
-              apiCalls.savePassword(values.nuevaPassword);
-              setStateFormExito(true);
-        })
-        .catch((error) => {
-          console.log(error.response);
-          setSubmitting(false);
-          if (
-           error.response.data.code ===
-           "error.reactivar.invalid.token.pwd.mail"
-          )
-            setFieldError("password", "La contraseña no coincide con la de la bdd");
-        });
+    setStateFormExito(true);
+       
   };
 
     const formik = useFormik({
@@ -99,16 +86,28 @@ const CambiarPassword = () => {
 
     return ( 
         
-            <>
+    <div className={classes.root}>
              {
                 stateFormExito ? (
-                    <Redirect to="/turnos" />
+                    <Redirect to="/login" />
                 ) : null /* Redireccionar si se agrega con exito */
             }
-            <Typography variant="h5" color="initial">
-                    Cambiar Contraseña
-                </Typography>
-            <form onSubmit={handleSubmit} className={classes.root}>
+        <Grid container direction="row" justify="center" alignItems="center">
+            <Card className={classes.card}>
+
+                    <Grid
+                        container
+                        direction="row"
+                        justify="center"
+                        alignItems="center"
+                      >
+                       <Typography  variant="h4" color="initial">
+                         Cambiar Contraseña
+                        </Typography>
+                    </Grid>
+                
+             <CardContent>
+        <form onSubmit={handleSubmit} className={classes.espacios}>
         <div>
              <TextField
                 error={errors.password && touched.password ? true : false}
@@ -153,19 +152,34 @@ const CambiarPassword = () => {
                 }
               />
         </div>
-              <Button
-                 variant="contained"
-                color="secondary"
-                onClick={handleSubmit}
-                >
-                Enviar
-            </Button>
+
+                    <Grid
+                        container
+                        direction="row"
+                        justify="center"
+                        alignItems="center"
+                        className={classes.botonEspacio}
+                      >
+                       <Button
+                            variant="contained"
+                            color="secondary"
+                            onClick={handleSubmit}
+                        >
+                        Enviar
+                        </Button>
+                    </Grid>
+              
+            
 
             </form>
-        </>
+        </CardContent>
+
+        </Card>
+     </Grid>
+    </div>
         
 
       );
 }
  
-export default CambiarPassword;
+export default RestablecerPasswordPaso2;

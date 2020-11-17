@@ -13,6 +13,7 @@ import RestablecerPass from "./components/login/restablecerPassword";
 import { useDispatch, useSelector } from "react-redux";
 import {cargarDatosSesion, selectSesion, setIniciado} from "./datosSesion/sesionSlice";
 import Index from "./components/index/index";
+import RestablecerPasswordPaso2 from "./components/login/restablecerPasswordPaso2";
 
 
 
@@ -54,6 +55,9 @@ function App() {
         </Route>
         <Route exact path="/restablecerPassword">
           <RestablecerPass/>
+        </Route>
+        <Route exact path="/restablecerPasswordPaso2">
+          <RestablecerPasswordPaso2/>
         </Route>
         <Route exact path="/registroEmprendimiento">
           <RegistroEmp/>
