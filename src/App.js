@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import "./App.css";
 import Navbar from "./components/navbar/navbar";
 import MenuDrawer from "./components/navbar/menuDrawer";
+import MenuDrawerIndex from "./components/index/menuDrawerIndex";
 import { makeStyles } from "@material-ui/core/styles";
 import Contenido from "./components/contenido/contenido";
 import Hidden from "@material-ui/core/Hidden";
@@ -46,6 +47,10 @@ function App() {
       <Switch>
         <Route exact path="/index">
           <Index />
+          <Hidden mdUp>
+              {/* Para mobile */}
+              <MenuDrawerIndex variante="temporary" />
+          </Hidden>
         </Route>
         <Route exact path="/login">
           <LogIn />

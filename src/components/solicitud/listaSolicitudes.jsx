@@ -19,6 +19,7 @@ import {
 } from "./turnoSlice";
 import { apiCalls } from "../../api/apiCalls";
 import DialogRechazar from "./dialogRechazar";
+import DialogObservacion from "./dialogObservacion";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,43 +37,36 @@ const ListaSolicitudes = () => {
   const dispatch = useDispatch();
   const [stateOpenDialogRechazar, setStateOpenDialogRechazar] = useState(false);
   const [stateTurnoParaDialog,setStateTurnoParaDialog] = useState(null);
+  const [stateOpenDialogObservacion, setStateOpenDialogObservacion] = useState(false);
 
-  const formatearTurno = (idTurno, idEstado) => {
-    let turno = turnosPendientes.find((turno) => turno.idTurno === idTurno);
-    return {
-      idTurno: turno.idTurno,
-      idEmprendimiento: turno.emprendimiento.idEmprendimiento,
-      idEstadoTurno: idEstado,
-      idPersona: turno.persona.idPersona,
-      observaciones: turno.observaciones,
-      usuarioModi: turno.usuarioModi,
-      fechaHora: turno.fechaHora,
-    };
-  };
+
 
   const chequearTurnoAceptar = (idTurno) => {
-    let turnoFormateado = formatearTurno(idTurno, 1);
     apiCalls
-      .putTurno(turnoFormateado)
+      .patchTurno(idTurno,2)
       .then((response) => {
         dispatch(aceptarTurno(idTurno));
       })
-      .catch((error) => dispatch(aceptarTurno(idTurno)));
+      .catch((error) => console.log("ocurrio un error"));
   };
 
   const chequearTurnoRechazar = (idTurno) => {
-    let turnoFormateado = formatearTurno(idTurno, 3);
     apiCalls
-      .putTurno(turnoFormateado)
+      .patchTurno(idTurno,1)
       .then((response) => {
         dispatch(rechazarTurno(idTurno));
       })
-      .catch((error) => dispatch(rechazarTurno(idTurno)));
+      .catch((error) => console.log("ocurrio un error"));
   };
 
   
-  const mostrarDialog = (turno) => {
+  const mostrarDialogRechazar = (turno) => {
     setStateOpenDialogRechazar(true);
+    setStateTurnoParaDialog(turno);
+  }
+
+  const mostrarDialogObservacion = (turno) => {
+    setStateOpenDialogObservacion(true);
     setStateTurnoParaDialog(turno);
   }
 
@@ -85,7 +79,6 @@ const ListaSolicitudes = () => {
         <List className={classes.root}>
           {turnosPendientes.map((turno) => {
             const labelId = `checkbox-list-label-${turno}`;
-
             return (
               <React.Fragment key={turno.idTurno}>
                 <ListItem key={turno.idTurno} role={undefined} dense button>
@@ -97,9 +90,7 @@ const ListaSolicitudes = () => {
                     primary={
                       turno.fechaHora +
                       " - " +
-                      turno.persona.nombre +
-                      " " +
-                      turno.persona.apellido
+                      turno.nombrePersona
                     }
                   />
                   <ListItemSecondaryAction>
@@ -107,7 +98,7 @@ const ListaSolicitudes = () => {
                       size="small"
                       color="secondary"
                       variant="contained"
-                      onClick={() => mostrarDialog(turno)}
+                      onClick={() => mostrarDialogRechazar(turno)}
                       title="Rechazar Turno"
                     >
                       <Close />
@@ -125,6 +116,7 @@ const ListaSolicitudes = () => {
                       size="small"
                       color="primary"
                       variant="contained"
+                      onClick={() =>mostrarDialogObservacion(turno)}
                       title="Observaciones"
                     >
                       <Comments />
@@ -139,6 +131,8 @@ const ListaSolicitudes = () => {
         </List>
         <DialogRechazar turno={stateTurnoParaDialog} cambiarVisible={setStateOpenDialogRechazar} 
           esVisible={stateOpenDialogRechazar} rechazar= {chequearTurnoRechazar}/>
+        <DialogObservacion turno={stateTurnoParaDialog} cambiarVisible={setStateOpenDialogObservacion} 
+          esVisible={stateOpenDialogObservacion}/>
       </Card>
     </>
   );

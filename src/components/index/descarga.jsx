@@ -3,13 +3,15 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Card, CardContent, Typography,
 List, ListItem, ListItemIcon, ListItemText
 } from '@material-ui/core';
-
+import "fontsource-roboto"; // Defaults to weight 400 with all styles included.
+import fondo from "../../imagenes/descargar.jpeg";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      backgroundImage: "url('https://pixnio.com/free-images/2018/12/05/2018-12-05-12-24-50.jpg')",
-      backgroundSize: "cover",
+      backgroundImage: "url("+fondo+")",
+      backgroundSize: "auto",
+      
     },
     card: {
         margin: theme.spacing(4),
@@ -21,6 +23,8 @@ const useStyles = makeStyles((theme) => ({
     },
     titulo: {
         paddingTop: theme.spacing(2),
+        fontFamily: "Roboto",
+        fontWeight: 700,
     }
 }));
 
@@ -28,15 +32,18 @@ const Descarga = () => {
     const classes = useStyles();
     return ( 
         <div className={classes.root}>
-            <Typography variant="h4" align="center" className={classes.titulo}>
-                DESCARGAR APP:
+            <Typography variant="h3" align="center" className={classes.titulo}>
+                DESCARGAR APP
             </Typography>
             <Grid container justify="center" alignItems="center">
                 <Grid item xs={6}>
                 <Card className={classes.card}>
                         <CardContent>
-                            <Typography variant="h4" gutterBottom>
-                                Pasos de Instalación:
+                            <Typography>
+                                <strong>
+                                Recordá que la App es Gratuita y para Ingresar deberás tener un Correo Electrónico (Email) para crear tu cuenta.<br></br><br></br>
+                                Pasos para la descarga
+                                </strong>
                             </Typography>
                             <List>
                                 <ListItem>
@@ -45,22 +52,6 @@ const Descarga = () => {
                                     </ListItemIcon>
                                     <ListItemText
                                         primary="Primer Paso"
-                                    />
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemIcon>
-                                        <FiberManualRecordIcon />
-                                    </ListItemIcon>
-                                    <ListItemText
-                                        primary="Segundo Paso"
-                                    />
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemIcon>
-                                        <FiberManualRecordIcon />
-                                    </ListItemIcon>
-                                    <ListItemText
-                                        primary="Tercer Paso"
                                     />
                                 </ListItem>
                             </List>

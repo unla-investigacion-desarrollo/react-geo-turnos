@@ -3,22 +3,24 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Card, CardContent, Typography,
 List, ListItem, ListItemIcon, ListItemText
 } from '@material-ui/core';
-import logo from "../../imagenes/fondoT1.png";
+import app from "../../imagenes/celular.png";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import fondo from "../../imagenes/propositos.jpeg";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      backgroundImage: "url('https://i.pinimg.com/originals/8d/05/c7/8d05c77aa6281b4af5fb0d1ebfaf66ac.jpg')",
-      backgroundSize: "cover",
+      backgroundImage: "url("+fondo+")",
+      backgroundSize: "repeat",
     },
     card: {
         margin: theme.spacing(4),
     },
     logo: {
+        marginTop:20,
         marginRight:"auto",
         marginLeft: "auto",
-        height: 250,
-        width: 500,
+        height: 600,
+        width: 300,
     },
 }));
 
@@ -29,41 +31,44 @@ const Proposito = () => {
             <Grid container>
                 <Grid item xs={6}>
                     <div className={classes.logo}>
-                        <img src={logo} alt=""  className={classes.logo} />  
+                        <img src={app} alt=""  className={classes.logo} />  
                     </div>
                 </Grid>
                 <Grid item xs={6}>
                     <Card className={classes.card}>
                         <CardContent>
-                            <Typography variant="h4" gutterBottom>
-                                Propósitos:
+                            <Typography>
+                            <strong>¡Encontrá tus negocios de cercanía , infórmate sobre sus horarios de atención y solicita turnos evitando largas filas!</strong>
                             </Typography>
-                            <List>
-                                <ListItem>
-                                    <ListItemIcon>
-                                        <FiberManualRecordIcon />
-                                    </ListItemIcon>
-                                    <ListItemText
-                                        primary="Primer Proposito"
-                                    />
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemIcon>
-                                        <FiberManualRecordIcon />
-                                    </ListItemIcon>
-                                    <ListItemText
-                                        primary="Segundo Proposito"
-                                    />
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemIcon>
-                                        <FiberManualRecordIcon />
-                                    </ListItemIcon>
-                                    <ListItemText
-                                        primary="Tercer Proposito"
-                                    />
-                                </ListItem>
-                            </List>
+                            <br></br><br></br>
+                            <Typography align="center">
+                            <strong>Todos los comercios de tu Barrio en una sola App!</strong>
+                            </Typography>
+                            <br></br><br></br>
+                            <Typography align="right">
+                            <strong>
+                                ¿Tenes un Emprendimiento?<br></br>
+                                Podes agregarlo a nuestro mapa interactivo y 
+                                comenzar a gestionar tu negocio desde la plataforma
+                            </strong>
+                            </Typography>
+                            <br></br><br></br>
+                            <Typography>
+                            <strong>ReactivAR</strong> apunta a beneficiar a la comunidad en el contexto actual de DISPO debido a la pandemia de COVID-19 acercándole soluciones. Se nutre básicamente de los Emprendimientos creados por los usuarios que quieran ingresar su negocio en la plataforma, darles <strong>visibilidad</strong> mediante la aplicación para llegar a más personas y así <strong>reactivar la producción y economía.</strong>                            
+                            </Typography>
+                            <br></br><br></br>
+                            <Typography align="center">
+                            <strong>Descarga Gratuita ✓</strong><br></br>
+                            <strong>Gestión de tu Emprendimiento Sin costo ✓</strong><br></br>
+                            <strong>Facilidad de uso ✓</strong>
+                            </Typography>
+                            <br></br><br></br>
+                            <Typography>
+                            <strong>
+                            Además, puedes saber cuantas personas hay en un Emprendimiento en tiempo real!
+Esto es posible gracias a la lectura de cód. QR que se encuentra en el ingreso de los comercios adheridos a ReactivAR.
+                            </strong>
+                            </Typography>
                         </CardContent>
                     </Card>
                 </Grid>

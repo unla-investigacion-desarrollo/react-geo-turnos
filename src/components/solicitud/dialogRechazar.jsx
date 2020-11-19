@@ -17,15 +17,13 @@ const DialogRechazar = (props) => {
         aria-describedby="alert-dialog-description-Rechazar"
       >
         <DialogTitle id="alert-dialog-title-Rechazar">
-          {"¿Estas seguro de rechazar el turno de "+ props.turno.persona.nombre+"?" }
+          {"¿Estas seguro de rechazar el turno de "+ props.turno.nombrePersona+"?" }
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description-Rechazar">
           {props.turno.fechaHora +
                       " - " +
-                      props.turno.persona.nombre +
-                      " " +
-                      props.turno.persona.apellido}
+                      props.turno.nombrePersona}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

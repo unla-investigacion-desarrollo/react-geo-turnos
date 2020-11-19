@@ -171,8 +171,8 @@ function putTurno(parameters) {
   return api.put(`/turno/${parameters.idTurno}`, parameters);
 }
 
-function postRestablecerPassword(parameters) {
-  return api.post("/persona/resetpassword/", parameters);
+function postRestablecerPassword(email) {
+  return api.post(`/persona/resetPassword?email=${email}`);
 }
 
 function getPersonaFisica(parameters) {
@@ -206,6 +206,16 @@ function postEmprendimiento(parameters) {
 
 function putEmprendimiento(parameters){
   return api.put(`/emprendimiento/${parameters.idEmprendimiento}`, parameters);
+}
+
+function getTurnosEmprendimiento(idEmprendimiento, date) {
+  return api.get("/turno/emprendimiento/" + idEmprendimiento, {
+    params: {fecha: date}
+  });
+}
+
+function patchTurno(idTurno, idEstado){
+  return api.patch(`/turno/${idTurno}`,{idEstadoTurno: idEstado});
 }
 
 export const apiCalls = {
@@ -260,4 +270,6 @@ export const apiCalls = {
   savePassword,
   postEmprendimiento,
   putEmprendimiento,
+  getTurnosEmprendimiento,
+  patchTurno,
 };

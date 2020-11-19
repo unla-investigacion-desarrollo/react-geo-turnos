@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -12,6 +12,9 @@ import Card from "@material-ui/core/Card";
 import { selectTurnosAceptados, deshacerAceptado } from "./turnoSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { ArrowBack } from "@material-ui/icons";
+import Comments from "@material-ui/icons/Comment";
+import { apiCalls } from "../../api/apiCalls";
+import DialogObservacion from "./dialogObservacion";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -24,10 +27,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
 const ListaAceptados = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const turnosAceptados = useSelector(selectTurnosAceptados);
+  const [stateTurnoParaDialog,setStateTurnoParaDialog] = useState(null);
+  const [stateOpenDialogObservacion, setStateOpenDialogObservacion] = useState(false);
+
+  const chequearDeshacerTurno = (idTurno) => {
+    apiCalls
+      .patchTurno(idTurno,3)
+      .then((response) => {
+        dispatch(deshacerAceptado(idTurno));
+      })
+      .catch((error) => console.log("ocurrio un error"));
+  };
+
+  const mostrarDialogObservacion = (turno) => {
+    setStateOpenDialogObservacion(true);
+    setStateTurnoParaDialog(turno);
+  }
+
   return (
     <>
       <Typography variant="h5" color="initial">
@@ -37,7 +59,6 @@ const ListaAceptados = () => {
         <List className={classes.root}>
           {turnosAceptados.map((turno) => {
             const labelId = `checkbox-list-label-${turno}`;
-
             return (
               <React.Fragment key={turno.idTurno}>
                 <ListItem key={turno.idTurno} role={undefined} dense button>
@@ -49,9 +70,7 @@ const ListaAceptados = () => {
                     primary={
                       turno.fechaHora +
                       " - " +
-                      turno.persona.nombre +
-                      " " +
-                      turno.persona.apellido
+                      turno.nombrePersona
                     }
                   />
                   <ListItemSecondaryAction>
@@ -59,20 +78,20 @@ const ListaAceptados = () => {
                       size="small"
                       color="secondary"
                       variant="contained"
-                      onClick={() => dispatch(deshacerAceptado(turno.idTurno))}
+                      onClick={() => chequearDeshacerTurno(turno.idTurno)}
                       title="Cancelar Aceptacion"
                     >
                       <ArrowBack />
                     </IconButton>
-                    <Button
+                    <IconButton
                       size="small"
                       color="primary"
                       variant="contained"
-                      endIcon={<Input />}
-                      title="Atender Persona"
+                      onClick={() =>mostrarDialogObservacion(turno)}
+                      title="Observaciones"
                     >
-                      Atender
-                    </Button>
+                      <Comments />
+                    </IconButton>
                   </ListItemSecondaryAction>
                 </ListItem>
                 <Divider />
@@ -80,6 +99,8 @@ const ListaAceptados = () => {
             );
           })}
         </List>
+        <DialogObservacion turno={stateTurnoParaDialog} cambiarVisible={setStateOpenDialogObservacion} 
+          esVisible={stateOpenDialogObservacion}/>
       </Card>
     </>
   );

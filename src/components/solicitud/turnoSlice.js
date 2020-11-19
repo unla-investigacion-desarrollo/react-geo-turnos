@@ -19,11 +19,9 @@ export const turnoSlice = createSlice({
       let auxTurnosPendientes = [];
       let auxTurnosRechazados = [];
       action.payload.forEach((turno) => {
-        if (turno.estadoTurno.estado === "Disponible") {
+        if (turno.idEstadoTurno === 2) {
           auxTurnosAceptados.push(turno);
-        } else if (turno.estadoTurno.estado === "Rechazado") {
-          auxTurnosRechazados.push(turno);
-        } else {
+        } else if (turno.idEstadoTurno === 3) {
           auxTurnosPendientes.push(turno);
         }
       });

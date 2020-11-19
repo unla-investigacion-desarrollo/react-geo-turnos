@@ -15,6 +15,13 @@ import Descarga from './descarga';
 import Videos from './videos';
 import Somos from './somos';
 import { Link } from "react-router-dom";
+import Hidden from "@material-ui/core/Hidden";
+import IconButton from "@material-ui/core/IconButton";
+import { useDispatch, useSelector } from "react-redux";
+import { switchMostrarMenu } from "../navbar/menuSlice";
+import {
+  Menu as MenuIcon,
+} from "@material-ui/icons";
 
 const altoSeccion = 600;
 
@@ -42,7 +49,8 @@ const useStyles = makeStyles((theme) => ({
     buttonAppBar: {
         color: "white",
         fontSize: 24,
-        marginRight: theme.spacing(8),
+        marginRight: "auto",
+        marginLeft: "auto",
     },
     buttonAppBarUltimo: {
         color: "white",
@@ -56,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
     gridLogo:{
         background: "linear-gradient(left,white  , #0BA3C8 )",
         height: 63,
+        paddingLeft: theme.spacing(1),
     },
     toolbar:{
         padding: 0,
@@ -117,28 +126,57 @@ ScrollTop.propTypes = {
 
 const Index = (props) => {
     const classes = useStyles();
+    const dispatch = useDispatch();
   return (
     <React.Fragment>
       <CssBaseline />
       <AppBar className={classes.appbar} position="fixed">
         <Toolbar className={classes.toolbar}>
+        <Hidden smUp>
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+            onClick={() => dispatch(switchMostrarMenu())}
+          >
+            <MenuIcon />
+          </IconButton>
+        </Hidden>
             <Grid container justify="center" alignItems="center">
                 <Grid item xs={2} className={classes.gridLogo}>
                     <img src={logo} alt="" className={classes.logo} />
                 </Grid>
                 <Grid item xs={9}>
-                    <Button className={classes.buttonAppBar} onClick={handleClick} seccion="#seccion1">
-                        Propositos
-                    </Button>
-                    <Button className={classes.buttonAppBar} onClick={handleClick} seccion="#seccion2">
-                        Descargar App
-                    </Button>
-                    <Button className={classes.buttonAppBar} onClick={handleClick} seccion="#seccion3">
-                        Videos Tutoriales
-                    </Button>
-                    <Button className={classes.buttonAppBarUltimo} onClick={handleClick} seccion="#seccion4">
-                        Quiénes Somos
-                    </Button>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-around"
+                    alignItems="center"
+                  >
+                  <Hidden smDown>
+                    <Grid item>
+                      <Button className={classes.buttonAppBar} onClick={handleClick} seccion="#seccion1">
+                          Propositos
+                      </Button>
+                    </Grid>
+                    <Grid item>
+                      <Button className={classes.buttonAppBar} onClick={handleClick} seccion="#seccion2">
+                          Descargar App
+                      </Button>
+                    </Grid>
+                    <Grid item>
+                      <Button className={classes.buttonAppBar} onClick={handleClick} seccion="#seccion3">
+                          Videos Tutoriales
+                      </Button>
+                    </Grid>
+                    <Grid item>
+                      <Button className={classes.buttonAppBar} onClick={handleClick} seccion="#seccion4">
+                          Quiénes Somos
+                      </Button>
+                    </Grid>
+                    </Hidden>
+                  </Grid>
                 </Grid>
                 <Grid item xs={1}>
                     <Button

@@ -3,13 +3,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Card, CardContent, Typography,
 List, ListItem, ListItemIcon, ListItemText
 } from '@material-ui/core';
-
+import fondo from "../../imagenes/videostuto.jpeg";
 import FolderIcon from '@material-ui/icons/Folder';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      backgroundImage: "url('https://fondosmil.com/fondo/12455.jpg')",
-      backgroundSize: "cover",
+      backgroundImage: "url("+fondo+")",
+      backgroundSize: "100% 100%",
     },
     card: {
         margin: theme.spacing(4),
@@ -22,6 +22,8 @@ const useStyles = makeStyles((theme) => ({
     titulo: {
         color: "white",
         paddingTop: theme.spacing(2),
+        fontFamily: "Roboto",
+        fontWeight: 700,
     }
 }));
 
@@ -29,8 +31,11 @@ const Videos = () => {
     const classes = useStyles();
     return ( 
         <div className={classes.root}>
-            <Typography variant="h4" align="center" className={classes.titulo}>
-                VIDEOS TUTORIALES:
+            <Typography variant="h3" align="center" className={classes.titulo}>
+                VIDEOS TUTORIALES
+            </Typography>
+            <Typography align="center">
+            Aquí podrás consultar nuestros  videotutoriales en caso de que tengas alguna duda. La duración de cada video es menor a dos minutos. 
             </Typography>
             <Grid container justify="center" alignItems="center">
                 <Grid item xs={6}>
@@ -86,6 +91,9 @@ const Videos = () => {
                     </div>
                 </Grid>
             </Grid>
+            <Typography align="center">
+            Sí aún te encuentras con alguna duda o problema puede escribir a nuestro email de contacto : reactivar@unla.com
+            </Typography>
         </div> 
     );
 }
