@@ -141,7 +141,8 @@ const LogIn = (props) => {
       setStateIrAdmin(true);
     }else if(sesion.idPerfil === 3 && sesion.idEmprendimiento !==0){
       setStateIrTurnos(true);
-    }else if(sesion.idEmprendimiento===0 && sesion.idPerfil === 3){
+    }else if(sesion.idEmprendimiento===0 && sesion.idPerfil === 2){
+      console.log("entra al if");
       setStateIrRegEmp(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

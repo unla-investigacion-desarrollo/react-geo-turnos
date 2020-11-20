@@ -42,78 +42,79 @@ const Contenido = () => {
           Raiz
         </Route>
         <Route path={`${path}productos/nuevo`}>
-          <Permiso idPerfil={1}/>
+          <Permiso idPerfil={[1]}/>
           <FormProducto />
         </Route>
         <Route path={`${path}productos/:id`}>
-          <Permiso idPerfil={1}/>
+          <Permiso idPerfil={[1]}/>
           <FormProducto variante="modificar" />
         </Route>
         <Route path={`${path}productos`}>
-          <Permiso idPerfil={1}/>
+          <Permiso idPerfil={[1]}/>
           <ListaProductos />
         </Route>
         <Route path={`${path}marcas/nuevo`}>
-          <Permiso idPerfil={1}/>
+          <Permiso idPerfil={[1]}/>
           <Marca />
         </Route>
         <Route path={`${path}marcas/:id`}>
-          <Permiso idPerfil={1}/>
+          <Permiso idPerfil={[1]}/>
           <Marca variante="modificar" />
         </Route>
         <Route path={`${path}marcas`}>
-          <Permiso idPerfil={1}/>
+          <Permiso idPerfil={[1]}/>
           <ListaMarcas />
         </Route>
         <Route path={`${path}categorias/nuevo`}>
-          <Permiso idPerfil={1}/>
+          <Permiso idPerfil={[1]}/>
           <Categoria />
         </Route>
         <Route path={`${path}categorias/:id`}>
-          <Permiso idPerfil={1}/>
+          <Permiso idPerfil={[1]}/>
           <Categoria variante="modificar" />
         </Route>
         <Route path={`${path}categorias`}>
-          <Permiso idPerfil={1}/>
+          <Permiso idPerfil={[1]}/>
           <ListaCategorias />
         </Route>
         <Route path={`${path}rubros/nuevo`}>
-          <Permiso idPerfil={1}/>
+          <Permiso idPerfil={[1]}/>
           <Rubro />
         </Route>
         <Route path={`${path}rubros/:id`}>
-          <Permiso idPerfil={1}/>
+          <Permiso idPerfil={[1]}/>
           <Rubro variante="modificar" />
         </Route>
         <Route path={`${path}rubros`}>
-          <Permiso idPerfil={1}/>
+          <Permiso idPerfil={[1]}/>
           <ListaRubros />
         </Route>
         <Route path={`${path}tipoEmprendimientos/nuevo`}>
-          <Permiso idPerfil={1}/>
+          <Permiso idPerfil={[1]}/>
           <TipoEmprendimiento />
         </Route>
         <Route path={`${path}tipoEmprendimientos/:id`}>
-          <Permiso idPerfil={1}/>
+          <Permiso idPerfil={[1]}/>
           <TipoEmprendimiento variante="modificar" />
         </Route>
         <Route path={`${path}tipoEmprendimientos`}>
-          <Permiso idPerfil={1}/>
+          <Permiso idPerfil={[1]}/>
           <ListaTipoEmprendimientos />
         </Route>
         <Route path={`${path}turnos`}>
+        <Permiso idPerfil={[1,3]}/>
           <VistaTurnos />
         </Route>
         <Route path={`${path}perfiles/nuevo`}>
-          <Permiso idPerfil={1}/>
+          <Permiso idPerfil={[1]}/>
           <Perfil />
         </Route>
         <Route path={`${path}perfiles/:id`}>
-          <Permiso idPerfil={1}/>
+          <Permiso idPerfil={[1]}/>
           <Perfil variante="modificar" />
         </Route>
         <Route path={`${path}perfiles`}>
-          <Permiso idPerfil={1}/>
+          <Permiso idPerfil={[1]}/>
           <ListaPerfiles />
         </Route>
         <Route  path={`${path}modificarRegistroDatosPersonales`}>

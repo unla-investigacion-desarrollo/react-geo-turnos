@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     },
     buttonAppBar: {
         color: "white",
-        fontSize: 24,
+        fontSize: 19,
         marginRight: "auto",
         marginLeft: "auto",
     },
@@ -82,6 +82,9 @@ const useStyles = makeStyles((theme) => ({
       },
       color: "white",
     },
+    menuButton:{
+      marginLeft: theme.spacing(0.4),
+    }
 }));
 
 const handleClick = (event) => {
@@ -132,7 +135,7 @@ const Index = (props) => {
       <CssBaseline />
       <AppBar className={classes.appbar} position="fixed">
         <Toolbar className={classes.toolbar}>
-        <Hidden smUp>
+        <Hidden mdUp>
           <IconButton
             edge="start"
             className={classes.menuButton}
@@ -144,10 +147,10 @@ const Index = (props) => {
           </IconButton>
         </Hidden>
             <Grid container justify="center" alignItems="center">
-                <Grid item xs={2} className={classes.gridLogo}>
+                <Grid item xs={2} md={2} className={classes.gridLogo}>
                     <img src={logo} alt="" className={classes.logo} />
                 </Grid>
-                <Grid item xs={9}>
+                <Grid item xs={7} md={9}>
                   <Grid
                     container
                     direction="row"
@@ -178,7 +181,7 @@ const Index = (props) => {
                     </Hidden>
                   </Grid>
                 </Grid>
-                <Grid item xs={1}>
+                <Grid item xs={3} md={1}>
                     <Button
                         className={classes.botonIngresar}
                         variant="contained"

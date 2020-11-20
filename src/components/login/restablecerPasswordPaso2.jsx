@@ -7,8 +7,9 @@ import {
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import {  Redirect } from "react-router-dom";
-import {Grid,Card,CardContent} from "@material-ui/core";
+import {  Redirect, useParams } from "react-router-dom";
+import {Grid,Card,CardContent, CardMedia, Dialog, DialogTitle, DialogActions} from "@material-ui/core";
+import logo from "../../imagenes/logo.jpeg";
 import { apiCalls } from "../../api/apiCalls";
 
 const useStyles = makeStyles((theme) => ({
@@ -21,18 +22,20 @@ const useStyles = makeStyles((theme) => ({
           minWidth: 400,
         },
       },
-      card: { width: 450,height:380 },
+      card: { width: 450 },
       botonForm: {
         marginRight: theme.spacing(3),
       },
       botonEspacio: {
         margin: theme.spacing(1),
       },
+      media: {
+        height: 140,
+      },
   }));
 
   const valoresIniciales = () => {
     return {
-      repetirPassword: "",
       nuevaPassword: "",
       repetirNuevaPassword:""
     };
@@ -56,11 +59,23 @@ const useStyles = makeStyles((theme) => ({
 const RestablecerPasswordPaso2 = () => {
     const classes = useStyles();
     const [stateFormExito, setStateFormExito] = useState(false);
-
+    const [stateOpenDialogExito,setStateOpenDialogExito] = useState(false);
+    const [stateOpenDialogError,setStateOpenDialogError] = useState(false);
+    const { token } = useParams();
+    
     const enviar = (values, { setSubmitting, setFieldError}) => {
-    setStateFormExito(true);
-       
-  };
+      const datos = {
+        newPassword: values.nuevaPassword,
+        token: token,
+      }
+      apiCalls.savePassword(datos).then((response)=>{
+        setStateOpenDialogExito(true);
+      }).catch((error)=>{
+        setStateOpenDialogError(true);
+      });
+    };
+
+    
 
     const formik = useFormik({
         initialValues: valoresIniciales(),
@@ -90,7 +105,10 @@ const RestablecerPasswordPaso2 = () => {
             }
         <Grid container direction="row" justify="center" alignItems="center">
             <Card className={classes.card}>
-
+                <CardMedia
+                  className={classes.media}
+                  image={logo}
+                />
                     <Grid
                         container
                         direction="row"
@@ -156,7 +174,37 @@ const RestablecerPasswordPaso2 = () => {
                         </Button>
                     </Grid>
               
-            
+              <Dialog
+                open={stateOpenDialogExito}
+                onClose={() =>setStateOpenDialogExito(false)}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"Su contraseña ha sido cambiada exitosamente"}
+                </DialogTitle>
+                <DialogActions>
+                  <Button onClick={() => setStateFormExito(true)} variant="contained" color="primary">
+                    Volver a Login
+                  </Button>
+                </DialogActions>
+              </Dialog>
+
+              <Dialog
+                open={stateOpenDialogError}
+                onClose={() =>setStateOpenDialogError(false)}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"Ha ocurrido un error inesperado"}
+                </DialogTitle>
+                <DialogActions>
+                  <Button onClick={() =>setStateOpenDialogError(false)} variant="contained" color="primary">
+                    Cerrar
+                  </Button>
+                </DialogActions>
+              </Dialog>
 
             </form>
         </CardContent>

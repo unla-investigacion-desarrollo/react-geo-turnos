@@ -197,7 +197,7 @@ function getPassword(parameters){
 }
 
 function savePassword(parameters){
-  return api.post(`/persona/savePassword/${parameters}`)
+  return api.post("/persona/savePassword",parameters);
 }
 
 function postEmprendimiento(parameters) {
@@ -217,6 +217,11 @@ function getTurnosEmprendimiento(idEmprendimiento, date) {
 function patchTurno(idTurno, idEstado){
   return api.patch(`/turno/${idTurno}`,{idEstadoTurno: idEstado});
 }
+
+function getValidarMail(token) {
+  return api.get(`/persona/validateEmail?token=${token}`);
+}
+
 
 export const apiCalls = {
   postArticulo,
@@ -272,4 +277,5 @@ export const apiCalls = {
   putEmprendimiento,
   getTurnosEmprendimiento,
   patchTurno,
+  getValidarMail,
 };

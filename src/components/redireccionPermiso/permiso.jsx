@@ -6,7 +6,7 @@ import { selectSesion} from "../../datosSesion/sesionSlice";
 const Permiso = (props) => {
     const sesion = useSelector(selectSesion);
     return ( <>
-        {sesion.idPerfil===props.idPerfil? null: (<Redirect to="/403"/>)}
+        {props.idPerfil.includes(sesion.idPerfil)? null: sesion.iniciado?(<Redirect to="/403"/>):null}
     </> );
 }
  

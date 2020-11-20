@@ -14,10 +14,27 @@ const useStyles = makeStyles((theme) => ({
     card: {
         margin: theme.spacing(4),
     },
+    cont:{
+        maxHeight: "400px",
+        overflow: "hidden",
+    },
     video: {
         marginRight: "auto",
         marginLeft: "auto",
-        width: 700,
+        position: "relative",
+        paddingBottom: "56.25%",
+        maxWidth: "700px",
+        height: 0,
+        overflow: "hidden",
+    },
+    iframe: {
+        position: "absolute",
+        top:0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        maxWidth: "700px",
+        maxHeight: "400px",
     },
     titulo: {
         color: "white",
@@ -38,52 +55,60 @@ const Videos = () => {
             Aquí podrás consultar nuestros  videotutoriales en caso de que tengas alguna duda. La duración de cada video es menor a dos minutos. 
             </Typography>
             <Grid container justify="center" alignItems="center">
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={12} md={6}>
                     <div className={classes.card}>
+                    <div className={classes.cont}>
                     <div className={classes.video}>
-                        <iframe  width="700" height="400" 
+                        <iframe  width="700" height="400" className={classes.iframe}
                         src="https://www.youtube.com/embed/668nUCeBHyY" frameborder="0" 
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                         allowfullscreen></iframe>
+                    </div>
                     </div>
                     <Typography variant="h4" align="center">
                         Ingreso a la plataforma
                     </Typography>
                     </div>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={12} md={6}>
                     <div className={classes.card}>
+                    <div className={classes.cont}>
                     <div className={classes.video}>
-                        <iframe  width="700" height="400" 
+                        <iframe  width="700" height="400" className={classes.iframe}
                         src="https://www.youtube.com/embed/668nUCeBHyY" frameborder="0" 
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                         allowfullscreen></iframe>
+                    </div>
                     </div>
                     <Typography variant="h4" align="center">
                         Cargar mi emprendimiento
                     </Typography>
                     </div>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={12} md={6}>
                     <div className={classes.card}>
+                    <div className={classes.cont}>
                     <div className={classes.video}>
-                        <iframe  width="700" height="400" 
+                        <iframe  width="700" height="400" className={classes.iframe}
                         src="https://www.youtube.com/embed/668nUCeBHyY" frameborder="0" 
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                         allowfullscreen></iframe>
+                    </div>
                     </div>
                     <Typography variant="h4" align="center">
                         Buscar negocios cercanos
                     </Typography>
                     </div>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={12} md={6}>
                     <div className={classes.card}>
+                    <div className={classes.cont}>
                     <div className={classes.video}>
-                        <iframe  width="700" height="400" 
+                        <iframe  width="700" height="400" className={classes.iframe}
                         src="https://www.youtube.com/embed/668nUCeBHyY" frameborder="0" 
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                         allowfullscreen></iframe>
+                    </div>
                     </div>
                     <Typography variant="h4" align="center">
                         Solicitar turno

@@ -15,6 +15,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {cargarDatosSesion, selectSesion, setIniciado} from "./datosSesion/sesionSlice";
 import Index from "./components/index/index";
 import RestablecerPasswordPaso2 from "./components/login/restablecerPasswordPaso2";
+import ValidacionCuenta from "./components/registro/persona/validacionCuenta";
+import Permiso from "./components/redireccionPermiso/permiso";
 
 
 
@@ -61,11 +63,14 @@ function App() {
         <Route exact path="/restablecerPassword">
           <RestablecerPass/>
         </Route>
-        <Route exact path="/restablecerPasswordPaso2">
+        <Route exact path="/restablecerPasswordPaso2/:token">
           <RestablecerPasswordPaso2/>
         </Route>
         <Route exact path="/registroEmprendimiento">
           <RegistroEmp/>
+        </Route>
+        <Route exact path="/validacionCuenta/:token">
+          <ValidacionCuenta/>
         </Route> 
 
         <Route path="/">

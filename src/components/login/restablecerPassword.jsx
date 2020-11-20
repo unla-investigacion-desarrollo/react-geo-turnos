@@ -74,7 +74,6 @@ const RestablecerPass = () => {
       {
         setSubmitting(false);
         setStateOpenDialogRecEmail(true);
-        setStateFormExito(true);
       }).catch((error) => {
         console.log(error);
         setStateOpenDialogErrorEmail(true);
@@ -172,17 +171,8 @@ const RestablecerPass = () => {
               {"Si los datos son correctos verifique su email"}
             </DialogTitle>
             <DialogActions>
-              <Button onClick={() => setStateOpenDialogRecEmail(false)} color="primary">
-                Cancelar
-              </Button>
-              <Button
-                color="primary"
-                autoFocus
-                variant="contained"
-                disabled={isSubmitting}
-                onClick={handleSubmit}
-              >
-                Aceptar
+              <Button onClick={() => setStateFormExito(true)} variant="contained" color="primary">
+                Volver a Login
               </Button>
             </DialogActions>
           </Dialog>

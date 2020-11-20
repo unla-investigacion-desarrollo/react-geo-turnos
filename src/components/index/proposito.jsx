@@ -29,12 +29,12 @@ const Proposito = () => {
     return ( 
         <div className={classes.root}>
             <Grid container>
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={12} md={6}>
                     <div className={classes.logo}>
                         <img src={app} alt=""  className={classes.logo} />  
                     </div>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={12} md={6}>
                     <Card className={classes.card}>
                         <CardContent>
                             <Typography>
