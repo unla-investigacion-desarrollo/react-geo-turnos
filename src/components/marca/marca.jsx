@@ -354,9 +354,6 @@ const Marca = (props) => {
             </DialogActions>
           </Dialog>
         </div>
-        {JSON.stringify(values)}
-        <br></br>
-        {JSON.stringify(errors)}
       </form>
     </div>
   );

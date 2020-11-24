@@ -517,9 +517,6 @@ const useStyles = makeStyles((theme) => ({
           </form>
            
         </Grid>
-        {JSON.stringify(values)}
-        <br></br>
-        {JSON.stringify(errors)}
         </div>
     );
   };

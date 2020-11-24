@@ -531,7 +531,6 @@ const RegistroDatosEmprendimiento = (props) => {
             <Link href="/login">Cancelar</Link>
           </Grid>
         </form>
-        {JSON.stringify(values)}
       </Grid>
     </div>
   );
