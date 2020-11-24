@@ -75,8 +75,8 @@ const validar = (values) => {
 let valoresIniciales = {};
 
 valoresIniciales = {
-  usuario: "enzord07@gmail.com",
-  password: "123",
+  usuario: "",
+  password: "",
 };
 
 const LogIn = (props) => {
